@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Example results section based on the eRm CMLE results: | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Example results section based on the eRm CMLE results: | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Example results section based on the eRm CMLE results: | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+<meta name="author" content="Stefanie A. Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"/>
+<link rel="next" href="MFR-model.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.1</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.2</b> Online Resources</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>1.3</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>2.1</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>2.2</b> Dichotomous Rasch Model Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.2.2</b> Run the Dichotomous Rasch Model</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary"><i class="fa fa-check"></i><b>2.2.3</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map"><i class="fa fa-check"></i><b>2.2.4</b> Wright Map</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters"><i class="fa fa-check"></i><b>2.2.5</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-response-functions"><i class="fa fa-check"></i><b>2.2.6</b> Item Response Functions</a></li>
+<li class="chapter" data-level="2.2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-and-item-fit"><i class="fa fa-check"></i><b>2.2.7</b> Person Parameters and Item Fit</a></li>
+<li class="chapter" data-level="2.2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit"><i class="fa fa-check"></i><b>2.2.8</b> Person Fit</a></li>
+<li class="chapter" data-level="2.2.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>2.2.9</b> Summarize the Results in Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>2.3</b> Dichotomous Rasch Model Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>2.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-data-for-analysis"><i class="fa fa-check"></i><b>2.3.2</b> Prepare Data for Analysis</a></li>
+<li class="chapter" data-level="2.3.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model-1"><i class="fa fa-check"></i><b>2.3.3</b> Run the Dichotomous Rasch model</a></li>
+<li class="chapter" data-level="2.3.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-1"><i class="fa fa-check"></i><b>2.3.4</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.3.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-1"><i class="fa fa-check"></i><b>2.3.5</b> Wright Map</a></li>
+<li class="chapter" data-level="2.3.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-1"><i class="fa fa-check"></i><b>2.3.6</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.3.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit"><i class="fa fa-check"></i><b>2.3.7</b> Item Fit</a></li>
+<li class="chapter" data-level="2.3.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters"><i class="fa fa-check"></i><b>2.3.8</b> Person Parameters</a></li>
+<li class="chapter" data-level="2.3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit-1"><i class="fa fa-check"></i><b>2.3.9</b> Person Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>2.4</b> Dichotomous Rasch Model Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#estimate-the-dichotomous-rasch-model-using-jmle"><i class="fa fa-check"></i><b>2.4.1</b> Estimate the Dichotomous Rasch Model using JMLE</a></li>
+<li class="chapter" data-level="2.4.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-2"><i class="fa fa-check"></i><b>2.4.2</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.4.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-2"><i class="fa fa-check"></i><b>2.4.3</b> Wright Map</a></li>
+<li class="chapter" data-level="2.4.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-2"><i class="fa fa-check"></i><b>2.4.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.4.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-1"><i class="fa fa-check"></i><b>2.4.5</b> Person Parameters</a></li>
+<li class="chapter" data-level="2.4.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-and-person-fit"><i class="fa fa-check"></i><b>2.4.6</b> Item and Person Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>2.5</b> Example Results Section based on the eRm CMLE results:</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exericise"><i class="fa fa-check"></i><b>2.6</b> Exericise</a></li>
+<li class="chapter" data-level="2.7" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>2.7</b> Bibliography</a></li>
+<li class="chapter" data-level="2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.8</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a><ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>3.2</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>3.3</b> Rasch Model Fit Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>3.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="3.3.2" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-analysis"><i class="fa fa-check"></i><b>3.3.2</b> Rasch Model Analysis</a></li>
+<li class="chapter" data-level="3.3.3" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality"><i class="fa fa-check"></i><b>3.3.3</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="3.3.4" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>3.3.4</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.3.5" data-path="MD-fit.html"><a href="MD-fit.html#summaries-of-residuals-infit-outfit-statistics"><i class="fa fa-check"></i><b>3.3.5</b> Summaries of Residuals: Infit &amp; Outfit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4</b> Graphical Displays for Evaluating Model-Data Fit</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#plots-of-standardized-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Plots of Standardized Residuals</a></li>
+<li class="chapter" data-level="3.4.2" data-path="MD-fit.html"><a href="MD-fit.html#empirical-item-response-functions"><i class="fa fa-check"></i><b>3.4.2</b> Empirical Item Response Functions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="MD-fit.html"><a href="MD-fit.html#reliability"><i class="fa fa-check"></i><b>3.4.3</b> Reliability</a></li>
+<li class="chapter" data-level="3.4.4" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-person-separation"><i class="fa fa-check"></i><b>3.4.4</b> Reliability of Person Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>3.5</b> Rasch Model Fit Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>3.5.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#run-the-rasch-model"><i class="fa fa-check"></i><b>3.6</b> Run the Rasch Model</a></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality-1"><i class="fa fa-check"></i><b>3.7</b> Evaluate Unidimensionality</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations-1"><i class="fa fa-check"></i><b>3.7.1</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.7.2" data-path="MD-fit.html"><a href="MD-fit.html#numeric-fit-statistics"><i class="fa fa-check"></i><b>3.7.2</b> Numeric Fit Statistics</a></li>
+<li class="chapter" data-level="3.7.3" data-path="MD-fit.html"><a href="MD-fit.html#graphical-fit-analysis"><i class="fa fa-check"></i><b>3.7.3</b> Graphical Fit Analysis</a></li>
+<li class="chapter" data-level="3.7.4" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-separation"><i class="fa fa-check"></i><b>3.7.4</b> Reliability of Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>3.8</b> Rasch Model Fit Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="MD-fit.html"><a href="MD-fit.html#run-the-rasch-model-1"><i class="fa fa-check"></i><b>3.8.1</b> Run the Rasch Model</a></li>
+<li class="chapter" data-level="3.8.2" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality-2"><i class="fa fa-check"></i><b>3.8.2</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="3.8.3" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations-2"><i class="fa fa-check"></i><b>3.8.3</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.8.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-and-person-fit"><i class="fa fa-check"></i><b>3.8.4</b> Item and Person Fit</a></li>
+<li class="chapter" data-level="3.8.5" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-separation-1"><i class="fa fa-check"></i><b>3.8.5</b> Reliability of Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exericise"><i class="fa fa-check"></i><b>3.9</b> Exericise</a></li>
+<li class="chapter" data-level="3.10" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>3.10</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>4.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="4.2" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>4.2</b> Rating Scale Model Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>4.2.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="4.2.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>4.2.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map"><i class="fa fa-check"></i><b>4.2.3</b> Wright Map</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters"><i class="fa fa-check"></i><b>4.2.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.2.5" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>4.2.5</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-and-item-fit"><i class="fa fa-check"></i><b>4.2.6</b> Person Parameters and Item Fit</a></li>
+<li class="chapter" data-level="4.2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit"><i class="fa fa-check"></i><b>4.2.7</b> Person Fit</a></li>
+<li class="chapter" data-level="4.2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>4.2.8</b> Summarize the Results in Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>4.3</b> Rating Scale Model Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>4.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-data-for-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Prepare Data for Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model-1"><i class="fa fa-check"></i><b>4.3.3</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-1"><i class="fa fa-check"></i><b>4.3.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.3.5" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>4.3.5</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit"><i class="fa fa-check"></i><b>4.3.6</b> Item Fit</a></li>
+<li class="chapter" data-level="4.3.7" data-path="RS-model.html"><a href="RS-model.html#person-paramters"><i class="fa fa-check"></i><b>4.3.7</b> Person Paramters</a></li>
+<li class="chapter" data-level="4.3.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit-1"><i class="fa fa-check"></i><b>4.3.8</b> Person FIt</a></li>
+<li class="chapter" data-level="4.3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-1"><i class="fa fa-check"></i><b>4.3.9</b> Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>4.4</b> Rating Scale Model Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="RS-model.html"><a href="RS-model.html#prepare-for-the-analyses"><i class="fa fa-check"></i><b>4.4.1</b> Prepare for the Analyses</a></li>
+<li class="chapter" data-level="4.4.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model-2"><i class="fa fa-check"></i><b>4.4.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-2"><i class="fa fa-check"></i><b>4.4.3</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.4.4" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots-2"><i class="fa fa-check"></i><b>4.4.4</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.4.5" data-path="RS-model.html"><a href="RS-model.html#item-fit-1"><i class="fa fa-check"></i><b>4.4.5</b> Item Fit</a></li>
+<li class="chapter" data-level="4.4.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters"><i class="fa fa-check"></i><b>4.4.6</b> Person Parameters</a></li>
+<li class="chapter" data-level="4.4.7" data-path="RS-model.html"><a href="RS-model.html#person-fit-2"><i class="fa fa-check"></i><b>4.4.7</b> Person Fit</a></li>
+<li class="chapter" data-level="4.4.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-2"><i class="fa fa-check"></i><b>4.4.8</b> Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>4.5</b> Example Results Section based on the eRm CMLE Results:</a></li>
+<li class="chapter" data-level="4.6" data-path="RS-model.html"><a href="RS-model.html#exercise"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>4.7</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>5</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="PC-model.html"><a href="PC-model.html#partial-credit-model"><i class="fa fa-check"></i><b>5.1</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="PC-model.html"><a href="PC-model.html#model-requirements"><i class="fa fa-check"></i><b>5.1.1</b> Model Requirements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html"><i class="fa fa-check"></i><b>6</b> Running the Partial Credit Model in R</a><ul>
+<li class="chapter" data-level="6.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>6.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="6.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>6.2</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="6.3" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#getting-started"><i class="fa fa-check"></i><b>6.3</b> Getting Started</a></li>
+<li class="chapter" data-level="6.4" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>6.4</b> Run the Partial Credit Model</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html"><i class="fa fa-check"></i><b>7</b> Plot a Wright Map to visualize item and person locations:</a><ul>
+<li class="chapter" data-level="7.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-parameters"><i class="fa fa-check"></i><b>7.1</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#plot-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>7.1.1</b> Plot item response functions (rating scale category probability plots)</a></li>
+<li class="chapter" data-level="7.1.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-parameters"><i class="fa fa-check"></i><b>7.1.2</b> Examine person parameters</a></li>
+<li class="chapter" data-level="7.1.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-fit-statistics"><i class="fa fa-check"></i><b>7.1.3</b> Examine item fit statistics</a></li>
+<li class="chapter" data-level="7.1.4" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-fit-statistics"><i class="fa fa-check"></i><b>7.1.4</b> Examine person fit statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>7.2</b> Summarize the results in tables</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#model-summary-table"><i class="fa fa-check"></i><b>7.2.1</b> Model summary table:</a></li>
+<li class="chapter" data-level="7.2.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#item-calibration-table"><i class="fa fa-check"></i><b>7.2.2</b> Item calibration table:</a></li>
+<li class="chapter" data-level="7.2.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#person-calibration-table"><i class="fa fa-check"></i><b>7.2.3</b> Person calibration table:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>8</b> PCM Application with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="8.1" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#getting-started-1"><i class="fa fa-check"></i><b>8.1</b> Getting Started</a></li>
+<li class="chapter" data-level="8.2" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>8.2</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="8.3" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#run-the-partial-credit-model-1"><i class="fa fa-check"></i><b>8.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.4" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-1"><i class="fa fa-check"></i><b>8.4</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>8.4.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit"><i class="fa fa-check"></i><b>8.5</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="8.6" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-1"><i class="fa fa-check"></i><b>8.6</b> Examine person parameters</a></li>
+<li class="chapter" data-level="8.7" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit"><i class="fa fa-check"></i><b>8.7</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="8.8" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map"><i class="fa fa-check"></i><b>8.8</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>9</b> PCM Application with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="9.1" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#getting-started-2"><i class="fa fa-check"></i><b>9.1</b> Getting Started</a></li>
+<li class="chapter" data-level="9.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>9.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="9.3" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-2"><i class="fa fa-check"></i><b>9.3</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>9.3.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit-1"><i class="fa fa-check"></i><b>9.4</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="9.5" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-2"><i class="fa fa-check"></i><b>9.5</b> Examine person parameters</a></li>
+<li class="chapter" data-level="9.6" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit-1"><i class="fa fa-check"></i><b>9.6</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="9.7" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map-1"><i class="fa fa-check"></i><b>9.7</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>10</b> Example results section based on the eRm CMLE results:</a><ul>
+<li class="chapter" data-level="10.1" data-path="RS-model.html"><a href="RS-model.html#exercise"><i class="fa fa-check"></i><b>10.1</b> Exercise</a></li>
+<li class="chapter" data-level="10.2" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>10.2</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="MFR-model.html"><a href="MFR-model.html"><i class="fa fa-check"></i><b>11</b> Many Facet Rasch Model</a><ul>
+<li class="chapter" data-level="11.1" data-path="MFR-model.html"><a href="MFR-model.html#many-facet-rasch-model"><i class="fa fa-check"></i><b>11.1</b> Many-Facet Rasch Model</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="PC-model.html"><a href="PC-model.html#model-requirements"><i class="fa fa-check"></i><b>11.1.1</b> Model Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#getting-started"><i class="fa fa-check"></i><b>11.2</b> Getting Started</a></li>
+<li class="chapter" data-level="11.3" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>11.3</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="11.4" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-components-of-the-mfr-model"><i class="fa fa-check"></i><b>11.4</b> Specify the components of the MFR model</a></li>
+<li class="chapter" data-level="11.5" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-mfrm-formula"><i class="fa fa-check"></i><b>11.5</b> Specify the MFRM formula:</a></li>
+<li class="chapter" data-level="11.6" data-path="MFR-model.html"><a href="MFR-model.html#run-the-pc-mfr-model"><i class="fa fa-check"></i><b>11.6</b> Run the PC-MFR model</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="MFR-model.html"><a href="MFR-model.html#center-the-item-parameter-estimates-for-ease-of-interpretation"><i class="fa fa-check"></i><b>11.6.1</b> Center the item parameter estimates for ease of interpretation</a></li>
+<li class="chapter" data-level="11.6.2" data-path="MFR-model.html"><a href="MFR-model.html#examine-education-locations"><i class="fa fa-check"></i><b>11.6.2</b> Examine education locations:</a></li>
+<li class="chapter" data-level="11.6.3" data-path="MFR-model.html"><a href="MFR-model.html#examine-person-locations"><i class="fa fa-check"></i><b>11.6.3</b> Examine person locations:</a></li>
+<li class="chapter" data-level="11.6.4" data-path="MFR-model.html"><a href="MFR-model.html#store-person-parameters-and-their-standard-errors-in-a-dataframe-object"><i class="fa fa-check"></i><b>11.6.4</b> Store person parameters and their standard errors in a dataframe object:</a></li>
+<li class="chapter" data-level="11.6.5" data-path="MFR-model.html"><a href="MFR-model.html#subtract-the-original-uncentered-item-mean-location-from-the-person-locations"><i class="fa fa-check"></i><b>11.6.5</b> Subtract the original (uncentered) item mean location from the person locations:</a></li>
+<li class="chapter" data-level="11.6.6" data-path="MFR-model.html"><a href="MFR-model.html#student-estimates"><i class="fa fa-check"></i><b>11.6.6</b> Student Estimates</a></li>
+<li class="chapter" data-level="11.6.7" data-path="MFR-model.html"><a href="MFR-model.html#domainrater-fit"><i class="fa fa-check"></i><b>11.6.7</b> Domain/Rater Fit:</a></li>
+<li class="chapter" data-level="11.6.8" data-path="MFR-model.html"><a href="MFR-model.html#plots"><i class="fa fa-check"></i><b>11.6.8</b> Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>12</b> Basics of Differential Item Functioning</a><ul>
+<li class="chapter" data-level="12.1" data-path="DIF.html"><a href="DIF.html#purpose"><i class="fa fa-check"></i><b>12.1</b> Purpose</a></li>
+<li class="chapter" data-level="12.2" data-path="DIF.html"><a href="DIF.html#r-lab-1-dif-analysis-with-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2</b> R-lab 1: DIF Analysis with the Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="DIF.html"><a href="DIF.html#prepare-the-r-package-and-data-set"><i class="fa fa-check"></i><b>12.2.1</b> Prepare the R-package and data set</a></li>
+<li class="chapter" data-level="12.2.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data"><i class="fa fa-check"></i><b>12.2.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.2.3" data-path="DIF.html"><a href="DIF.html#run-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.3</b> Run dichotomous Rasch model</a></li>
+<li class="chapter" data-level="12.2.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.4</b> Analyze the data using the dichotomous Rasch model:</a></li>
+<li class="chapter" data-level="12.2.5" data-path="DIF.html"><a href="DIF.html#identify-subgroups"><i class="fa fa-check"></i><b>12.2.5</b> Identify subgroups</a></li>
+<li class="chapter" data-level="12.2.6" data-path="DIF.html"><a href="DIF.html#visualize-the-test-statistics-for-the-item-comparison"><i class="fa fa-check"></i><b>12.2.6</b> Visualize the test statistics for the item comparison</a></li>
+<li class="chapter" data-level="12.2.7" data-path="DIF.html"><a href="DIF.html#export-the-item-comparison-results-for-later-use-using-the-following-code."><i class="fa fa-check"></i><b>12.2.7</b> Export the item comparison results for later use using the following code.</a></li>
+<li class="chapter" data-level="12.2.8" data-path="DIF.html"><a href="DIF.html#plot-the-item-difference"><i class="fa fa-check"></i><b>12.2.8</b> Plot the item difference</a></li>
+<li class="chapter" data-level="12.2.9" data-path="DIF.html"><a href="DIF.html#dif-scatterplots"><i class="fa fa-check"></i><b>12.2.9</b> DIF Scatterplots:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands"><i class="fa fa-check"></i><b>12.3</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.4" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot"><i class="fa fa-check"></i><b>12.4</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.4.1</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="DIF.html"><a href="DIF.html#r-lab-2-dif-analysis-with-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5</b> R-lab 2: DIF Analysis with the Partial Credit Model</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="DIF.html"><a href="DIF.html#load-the-data-into-your-working-environment-and-generate-a-summary-of-responses"><i class="fa fa-check"></i><b>12.5.1</b> Load the data into your working environment and generate a summary of responses</a></li>
+<li class="chapter" data-level="12.5.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data-1"><i class="fa fa-check"></i><b>12.5.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.5.3" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="12.5.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.4</b> Analyze the data using the Partial Credit model:</a></li>
+<li class="chapter" data-level="12.5.5" data-path="DIF.html"><a href="DIF.html#conduct-dif-analyses"><i class="fa fa-check"></i><b>12.5.5</b> Conduct DIF analyses</a></li>
+<li class="chapter" data-level="12.5.6" data-path="DIF.html"><a href="DIF.html#dif-analysis"><i class="fa fa-check"></i><b>12.5.6</b> DIF analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="DIF.html"><a href="DIF.html#compare-thresholds-between-groups"><i class="fa fa-check"></i><b>12.6</b> Compare thresholds between groups:</a></li>
+<li class="chapter" data-level="12.7" data-path="DIF.html"><a href="DIF.html#get-overall-item-se-values"><i class="fa fa-check"></i><b>12.7</b> Get overall item SE values:</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="DIF.html"><a href="DIF.html#make-a-scatterplot"><i class="fa fa-check"></i><b>12.7.1</b> Make a scatterplot</a></li>
+<li class="chapter" data-level="12.7.2" data-path="DIF.html"><a href="DIF.html#create-scatterplot-of-item-measures"><i class="fa fa-check"></i><b>12.7.2</b> Create scatterplot of item measures</a></li>
+<li class="chapter" data-level="12.7.3" data-path="DIF.html"><a href="DIF.html#dif-scatterplot"><i class="fa fa-check"></i><b>12.7.3</b> DIF Scatterplot:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands-1"><i class="fa fa-check"></i><b>12.8</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.9" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot-1"><i class="fa fa-check"></i><b>12.9</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.9.1" data-path="DIF.html"><a href="DIF.html#create-bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.9.1</b> Create bar plot of item differences</a></li>
+<li class="chapter" data-level="12.9.2" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences-1"><i class="fa fa-check"></i><b>12.9.2</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.10" data-path="DIF.html"><a href="DIF.html#example-apa-format-results-section-for-basic-dif-analysis"><i class="fa fa-check"></i><b>12.10</b> Example APA-format results section for basic DIF analysis</a></li>
+<li class="chapter" data-level="12.11" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>12.11</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>13</b> Rating Scale Evaluation</a><ul>
+<li class="chapter" data-level="13.1" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-purpose"><i class="fa fa-check"></i><b>13.1</b> R-lab purpose</a></li>
+<li class="chapter" data-level="13.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>13.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>13.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="13.2.2" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>13.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>13.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="13.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>13.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>13.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="13.4" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>13.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>14</b> Reference &amp; Other Good Stuff</a><ul>
+<li class="chapter" data-level="14.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>14.1</b> Rasch Glossary</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>14.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>14.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="14.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>14.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="14.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>14.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>14.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="14.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>14.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="14.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>14.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="example-results-section-based-on-the-erm-cmle-results" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Example results section based on the eRm CMLE results:</h1>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb99-1"></a><span class="co"># Print Table 1:</span></span>
+<span id="cb99-2"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb99-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb99-3"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb99-3"></a>  PCM_Table1, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb99-4"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb99-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Model Summary Table&#39;</span></span>
+<span id="cb99-5"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb99-5"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-46">Table 10.1: </span>Model Summary Table</caption>
+<thead>
+<tr class="header">
+<th align="left">Statistic</th>
+<th align="right">Items</th>
+<th align="right">Persons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Logit Scale Location Mean</td>
+<td align="right">0.00</td>
+<td align="right">0.96</td>
+</tr>
+<tr class="even">
+<td align="left">Logit Scale Location SD</td>
+<td align="right">1.20</td>
+<td align="right">1.19</td>
+</tr>
+<tr class="odd">
+<td align="left">Standard Error Mean</td>
+<td align="right">0.40</td>
+<td align="right">0.38</td>
+</tr>
+<tr class="even">
+<td align="left">Standard Error SD</td>
+<td align="right">0.18</td>
+<td align="right">0.10</td>
+</tr>
+<tr class="odd">
+<td align="left">Outfit MSE Mean</td>
+<td align="right">1.06</td>
+<td align="right">1.06</td>
+</tr>
+<tr class="even">
+<td align="left">Outfit MSE SD</td>
+<td align="right">0.94</td>
+<td align="right">1.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Infit MSE Mean</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+</tr>
+<tr class="even">
+<td align="left">Infit MSE SD</td>
+<td align="right">0.42</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="odd">
+<td align="left">Std. Outfit Mean</td>
+<td align="right">-0.14</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="even">
+<td align="left">Std. Outfit SD</td>
+<td align="right">2.63</td>
+<td align="right">1.72</td>
+</tr>
+<tr class="odd">
+<td align="left">Std. Infit Mean</td>
+<td align="right">-0.44</td>
+<td align="right">-0.23</td>
+</tr>
+<tr class="even">
+<td align="left">Std. Infit SD</td>
+<td align="right">2.08</td>
+<td align="right">1.55</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1 presents a summary of the results from the analysis of the Liking for Science data (Wright &amp; Masters, 1982) using the Partial Credit Model (PCM; Masters, 1982). One child was excluded from the analysis (Child 2), who gave extreme responses to all of the items (<em>x</em> = 2).</p>
+<p>Specifically, Table 1 summarizes the calibration of the children with non-extreme responses (<em>N</em> = 74) and the items (<em>N</em> = 25) using average logit-scale calibrations, standard errors, and model-data fit statistics. Examination of the results indicates that, on average, the students were located higher on the logit scale (<em>M</em> = 0.96,<em>SD</em> = 1.19), compared to items, whose locations were centered at zero logits (<em>M</em> = 0.00, <em>SD</em> = 1.20). This finding suggests that the items were relatively easy to endorse among the sample of children who participated in this study. The average values of the Standard Error (<em>SE</em>) was comparable for children (<em>M</em> = 0.38) and items (<em>M</em> = 0.40). Average values of model-data fit statistics indicate overall adequate fit to the model, with average Infit and Outfit mean square error (MSE) statistics around 1.00, and average standardized Infit and Outfit statistics near the expected value of 0.00 when data fit the model. However, there was some variability in item fit and person fit, as indicated by relatively large standard errors for the fit statistics. Additional investigation into item fit and person fit is warranted.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb100-1"></a><span class="co"># Print Table 2:</span></span>
+<span id="cb100-2"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb100-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb100-3"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb100-3"></a>  PCM_Table2, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb100-4"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb100-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Item Calibration&#39;</span></span>
+<span id="cb100-5"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb100-5"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-47">Table 10.2: </span>Item Calibration</caption>
+<colgroup>
+<col width="3%" />
+<col width="7%" />
+<col width="13%" />
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Task ID</th>
+<th align="right">Average Rating</th>
+<th align="right">Item Location</th>
+<th align="right">Threshold 1</th>
+<th align="right">Threshold 2</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">i5</td>
+<td align="right">5</td>
+<td align="right">0.49</td>
+<td align="right">2.08</td>
+<td align="right">-0.46</td>
+<td align="right">0.46</td>
+<td align="right">3.72</td>
+<td align="right">6.65</td>
+<td align="right">2.20</td>
+<td align="right">5.05</td>
+</tr>
+<tr class="even">
+<td align="left">i23</td>
+<td align="right">23</td>
+<td align="right">0.56</td>
+<td align="right">1.85</td>
+<td align="right">-0.41</td>
+<td align="right">0.41</td>
+<td align="right">4.36</td>
+<td align="right">8.17</td>
+<td align="right">2.28</td>
+<td align="right">5.58</td>
+</tr>
+<tr class="odd">
+<td align="left">i4</td>
+<td align="right">4</td>
+<td align="right">0.69</td>
+<td align="right">1.72</td>
+<td align="right">-1.23</td>
+<td align="right">1.23</td>
+<td align="right">0.95</td>
+<td align="right">-0.28</td>
+<td align="right">0.96</td>
+<td align="right">-0.26</td>
+</tr>
+<tr class="even">
+<td align="left">i20</td>
+<td align="right">20</td>
+<td align="right">0.67</td>
+<td align="right">1.66</td>
+<td align="right">-0.84</td>
+<td align="right">0.84</td>
+<td align="right">1.71</td>
+<td align="right">3.39</td>
+<td align="right">1.31</td>
+<td align="right">1.89</td>
+</tr>
+<tr class="odd">
+<td align="left">i8</td>
+<td align="right">8</td>
+<td align="right">0.72</td>
+<td align="right">1.56</td>
+<td align="right">-1.03</td>
+<td align="right">1.03</td>
+<td align="right">1.19</td>
+<td align="right">1.16</td>
+<td align="right">1.13</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="even">
+<td align="left">i7</td>
+<td align="right">7</td>
+<td align="right">0.92</td>
+<td align="right">0.95</td>
+<td align="right">-0.78</td>
+<td align="right">0.78</td>
+<td align="right">0.98</td>
+<td align="right">-0.10</td>
+<td align="right">0.94</td>
+<td align="right">-0.38</td>
+</tr>
+<tr class="odd">
+<td align="left">i9</td>
+<td align="right">9</td>
+<td align="right">1.07</td>
+<td align="right">0.57</td>
+<td align="right">-0.56</td>
+<td align="right">0.56</td>
+<td align="right">1.10</td>
+<td align="right">0.61</td>
+<td align="right">1.08</td>
+<td align="right">0.63</td>
+</tr>
+<tr class="even">
+<td align="left">i16</td>
+<td align="right">16</td>
+<td align="right">1.11</td>
+<td align="right">0.45</td>
+<td align="right">-1.21</td>
+<td align="right">1.21</td>
+<td align="right">1.02</td>
+<td align="right">0.17</td>
+<td align="right">1.06</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="odd">
+<td align="left">i25</td>
+<td align="right">25</td>
+<td align="right">1.13</td>
+<td align="right">0.40</td>
+<td align="right">-0.75</td>
+<td align="right">0.75</td>
+<td align="right">0.70</td>
+<td align="right">-1.81</td>
+<td align="right">0.76</td>
+<td align="right">-1.81</td>
+</tr>
+<tr class="even">
+<td align="left">i14</td>
+<td align="right">14</td>
+<td align="right">1.17</td>
+<td align="right">0.28</td>
+<td align="right">-0.95</td>
+<td align="right">0.95</td>
+<td align="right">0.78</td>
+<td align="right">-1.30</td>
+<td align="right">0.85</td>
+<td align="right">-1.07</td>
+</tr>
+<tr class="odd">
+<td align="left">i3</td>
+<td align="right">3</td>
+<td align="right">1.17</td>
+<td align="right">0.27</td>
+<td align="right">-1.07</td>
+<td align="right">1.07</td>
+<td align="right">0.61</td>
+<td align="right">-2.67</td>
+<td align="right">0.64</td>
+<td align="right">-2.83</td>
+</tr>
+<tr class="even">
+<td align="left">i6</td>
+<td align="right">6</td>
+<td align="right">1.21</td>
+<td align="right">0.16</td>
+<td align="right">-1.03</td>
+<td align="right">1.03</td>
+<td align="right">0.80</td>
+<td align="right">-1.17</td>
+<td align="right">0.86</td>
+<td align="right">-0.99</td>
+</tr>
+<tr class="odd">
+<td align="left">i17</td>
+<td align="right">17</td>
+<td align="right">1.27</td>
+<td align="right">0.05</td>
+<td align="right">-0.83</td>
+<td align="right">0.83</td>
+<td align="right">0.59</td>
+<td align="right">-2.49</td>
+<td align="right">0.65</td>
+<td align="right">-2.78</td>
+</tr>
+<tr class="even">
+<td align="left">i22</td>
+<td align="right">22</td>
+<td align="right">1.29</td>
+<td align="right">-0.01</td>
+<td align="right">-0.72</td>
+<td align="right">0.72</td>
+<td align="right">0.70</td>
+<td align="right">-1.61</td>
+<td align="right">0.78</td>
+<td align="right">-1.58</td>
+</tr>
+<tr class="odd">
+<td align="left">i24</td>
+<td align="right">24</td>
+<td align="right">1.43</td>
+<td align="right">-0.30</td>
+<td align="right">-0.46</td>
+<td align="right">0.46</td>
+<td align="right">0.67</td>
+<td align="right">-1.34</td>
+<td align="right">0.77</td>
+<td align="right">-1.60</td>
+</tr>
+<tr class="even">
+<td align="left">i15</td>
+<td align="right">15</td>
+<td align="right">1.48</td>
+<td align="right">-0.53</td>
+<td align="right">-0.72</td>
+<td align="right">0.72</td>
+<td align="right">0.59</td>
+<td align="right">-1.81</td>
+<td align="right">0.73</td>
+<td align="right">-1.85</td>
+</tr>
+<tr class="odd">
+<td align="left">i2</td>
+<td align="right">2</td>
+<td align="right">1.55</td>
+<td align="right">-0.58</td>
+<td align="right">-0.24</td>
+<td align="right">0.24</td>
+<td align="right">0.54</td>
+<td align="right">-1.55</td>
+<td align="right">0.73</td>
+<td align="right">-1.70</td>
+</tr>
+<tr class="even">
+<td align="left">i21</td>
+<td align="right">21</td>
+<td align="right">1.59</td>
+<td align="right">-0.76</td>
+<td align="right">-0.43</td>
+<td align="right">0.43</td>
+<td align="right">0.53</td>
+<td align="right">-1.63</td>
+<td align="right">0.71</td>
+<td align="right">-1.78</td>
+</tr>
+<tr class="odd">
+<td align="left">i13</td>
+<td align="right">13</td>
+<td align="right">1.69</td>
+<td align="right">-0.84</td>
+<td align="right">0.48</td>
+<td align="right">-0.48</td>
+<td align="right">0.66</td>
+<td align="right">-0.52</td>
+<td align="right">0.80</td>
+<td align="right">-0.87</td>
+</tr>
+<tr class="even">
+<td align="left">i1</td>
+<td align="right">1</td>
+<td align="right">1.45</td>
+<td align="right">-0.86</td>
+<td align="right">-1.58</td>
+<td align="right">1.58</td>
+<td align="right">0.65</td>
+<td align="right">-1.96</td>
+<td align="right">0.72</td>
+<td align="right">-2.06</td>
+</tr>
+<tr class="odd">
+<td align="left">i12</td>
+<td align="right">12</td>
+<td align="right">1.83</td>
+<td align="right">-1.12</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">0.57</td>
+<td align="right">-0.98</td>
+<td align="right">0.81</td>
+<td align="right">-1.05</td>
+</tr>
+<tr class="even">
+<td align="left">i11</td>
+<td align="right">11</td>
+<td align="right">1.61</td>
+<td align="right">-1.32</td>
+<td align="right">-1.30</td>
+<td align="right">1.30</td>
+<td align="right">0.58</td>
+<td align="right">-1.78</td>
+<td align="right">0.71</td>
+<td align="right">-1.94</td>
+</tr>
+<tr class="odd">
+<td align="left">i10</td>
+<td align="right">10</td>
+<td align="right">1.73</td>
+<td align="right">-1.50</td>
+<td align="right">-0.75</td>
+<td align="right">0.75</td>
+<td align="right">0.54</td>
+<td align="right">-1.27</td>
+<td align="right">0.75</td>
+<td align="right">-1.26</td>
+</tr>
+<tr class="even">
+<td align="left">i19</td>
+<td align="right">19</td>
+<td align="right">1.88</td>
+<td align="right">-2.05</td>
+<td align="right">-0.19</td>
+<td align="right">0.19</td>
+<td align="right">1.02</td>
+<td align="right">0.26</td>
+<td align="right">0.91</td>
+<td align="right">-0.16</td>
+</tr>
+<tr class="odd">
+<td align="left">i18</td>
+<td align="right">18</td>
+<td align="right">1.93</td>
+<td align="right">-2.13</td>
+<td align="right">0.68</td>
+<td align="right">-0.68</td>
+<td align="right">1.04</td>
+<td align="right">0.43</td>
+<td align="right">1.12</td>
+<td align="right">0.40</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2 includes detailed results for the 25 items included in the analysis, where items are ordered by their overall logit-scale location (i.e., item difficulty) from high (easy to endorse) to low (difficult to endorse). For each item, the average rating is presented, followed by the overall logit-scale location (<em>δ</em>), the location of the item-specific rating scale category thresholds, and item fit statistics. Examination of these results indicates that Item 5 was the most difficult to endorse (<em>Average Rating = 0.49; </em>δ* = 2.08), followed by Item 23 (<em>Average Rating</em> = 0.56; <em>δ</em> = 1.85). The easiest item to endorse was Item 18 (<em>Average Rating</em> = 1.93; <em>δ</em> = -2.13).</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb101-1"></a><span class="co"># Print Table 3:</span></span>
+<span id="cb101-2"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb101-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb101-3"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb101-3"></a>  <span class="kw">head</span>(PCM_Table3,<span class="dv">10</span>), <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb101-4"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb101-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Person Calibration&#39;</span></span>
+<span id="cb101-5"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb101-5"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-48">Table 10.3: </span>Person Calibration</caption>
+<colgroup>
+<col width="3%" />
+<col width="9%" />
+<col width="15%" />
+<col width="16%" />
+<col width="10%" />
+<col width="11%" />
+<col width="12%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Child ID</th>
+<th align="right">Average Rating</th>
+<th align="right">Person Location</th>
+<th align="right">Person SE</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">1.16</td>
+<td align="right">0.67</td>
+<td align="right">0.34</td>
+<td align="right">0.82</td>
+<td align="right">-0.39</td>
+<td align="right">0.93</td>
+<td align="right">-0.18</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="right">1.32</td>
+<td align="right">1.16</td>
+<td align="right">0.36</td>
+<td align="right">0.41</td>
+<td align="right">-1.52</td>
+<td align="right">0.45</td>
+<td align="right">-2.39</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="right">1.04</td>
+<td align="right">0.33</td>
+<td align="right">0.33</td>
+<td align="right">0.64</td>
+<td align="right">-1.11</td>
+<td align="right">0.70</td>
+<td align="right">-1.18</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="right">0.72</td>
+<td align="right">-0.55</td>
+<td align="right">0.34</td>
+<td align="right">1.32</td>
+<td align="right">1.01</td>
+<td align="right">0.78</td>
+<td align="right">-0.85</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">6</td>
+<td align="right">0.92</td>
+<td align="right">0.00</td>
+<td align="right">0.33</td>
+<td align="right">2.36</td>
+<td align="right">3.22</td>
+<td align="right">1.54</td>
+<td align="right">1.90</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="left">7</td>
+<td align="right">1.72</td>
+<td align="right">2.74</td>
+<td align="right">0.47</td>
+<td align="right">1.16</td>
+<td align="right">0.47</td>
+<td align="right">1.81</td>
+<td align="right">1.86</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">8</td>
+<td align="right">1.28</td>
+<td align="right">1.03</td>
+<td align="right">0.35</td>
+<td align="right">0.83</td>
+<td align="right">-0.26</td>
+<td align="right">0.99</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">9</td>
+<td align="right">0.92</td>
+<td align="right">0.00</td>
+<td align="right">0.33</td>
+<td align="right">1.89</td>
+<td align="right">2.34</td>
+<td align="right">1.37</td>
+<td align="right">1.39</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="left">10</td>
+<td align="right">1.08</td>
+<td align="right">0.44</td>
+<td align="right">0.34</td>
+<td align="right">0.64</td>
+<td align="right">-1.05</td>
+<td align="right">0.71</td>
+<td align="right">-1.12</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="left">11</td>
+<td align="right">1.36</td>
+<td align="right">1.28</td>
+<td align="right">0.36</td>
+<td align="right">0.79</td>
+<td align="right">-0.30</td>
+<td align="right">0.99</td>
+<td align="right">0.05</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3 includes detailed results for first 10 children who participated in the Liking for Science survey. For each child, the average rating is presented, followed by their logit-scale location estimate (<em>θ</em>), <em>SE</em>, and model-data fit statistics.</p>
+<p>Figure 1</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb102-1"></a><span class="co"># Plot the variable-Map</span></span>
+<span id="cb102-2"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb102-2"></a><span class="kw">graphics.off</span>()</span>
+<span id="cb102-3"><a href="example-results-section-based-on-the-erm-cmle-results.html#cb102-3"></a><span class="kw">plotPImap</span>(PCM.science, <span class="dt">main =</span> <span class="st">&quot;Liking for Science Rating Scale Model Wright Map&quot;</span>, <span class="dt">sorted =</span> <span class="ot">TRUE</span>, <span class="dt">irug =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>Figure 1 illustrates the calibrations of the children and items on the logit scale that represents the latent variable. The calibrations shown in this figure correspond to the results presented in Table 2 and Table 3 for items and children, respectively.Starting at the bottom of the figure, the horizontal axis (labeled <em>Latent Dimension</em>) is the logit scale that represents the latent variable. Lower numbers on this scale indicate less-favorable attitudes toward science activities, and higher numbers indicate more-favorable attitudes toward science activities. The central panel of the figure shows item difficulty locations on the logit scale for the 25 Liking for Science items included in the analysis; the y-axis for this panel shows the item labels. The items are ordered according to their difficulty order, as estimated with the PCM Easier-to-endorse items appear at the top of the figure, and harder-to-endorse items appear at the bottom of the figure; item labels are shown on the y-axis. For each item, a solid circle plotting symbol shows the overall location estimate. This solid circle symbol is connected to two open-circle symbols that show the locations of the rating scale category thresholds. Each threshold is labeled with a “1” to indicate the threshold between rating scale category <em>x</em> = 0 and <em>x</em> = 1, or a “2” to indicate the threshold between rating scale category <em>x</em> = 1 and <em>x</em> = 2. Examination of the item locations reveals that the threshold locations were ordered as expected for most items, with <span class="math inline">\(\tau\)</span> 1 located lower on the logit scale (<span class="math inline">\(\tau\)</span>) compared to the location estimate for <span class="math inline">\(\tau 2\)</span>. However, the thresholds were disordered for Item 13 and Item 18. In addition, there were some differences in the relative difficulty to endorse the rating scale categories across items. Finally, the upper panel of the figure shows a histogram of person (in this case, children) location estimates on the logit scale.</p>
+<div id="exercise" class="section level2">
+<h2><span class="header-section-number">10.1</span> Exercise</h2>
+<p>Please use the eRm or TAM package to estimate item, threshold, and person locations with the PCM for the Exercise 5 data. The Exercise 5 data include responses from 500 participants to an attitude survey that includes 20 items with a 5-category rating scale. This dataset is the same as the Exercise 4 data. After completing the anaysis, try writing a results section similar to the example in this chapter based on your findings.</p>
+</div>
+<div id="bibliography" class="section level2">
+<h2><span class="header-section-number">10.2</span> Bibliography</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="MFR-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/05-PC_model.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

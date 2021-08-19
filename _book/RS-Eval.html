@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Rating Scale Evaluation | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Rating Scale Evaluation | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Rating Scale Evaluation | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+<meta name="author" content="Stefanie A. Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-08-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="DIF.html"/>
+<link rel="next" href="Ref1.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.1</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.2</b> Online Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>2.1</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>2.2</b> Dichotomous Rasch Model Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>2.3</b> Dichotomous Rasch Model Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>2.4</b> Dichotomous Rasch Model Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section"><i class="fa fa-check"></i><b>2.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exercise"><i class="fa fa-check"></i><b>2.6</b> Exercise</a></li>
+<li class="chapter" data-level="2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.7</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="MD-fit.html"><a href="MD-fit.html#example-data-transitive-reasoning-test-1"><i class="fa fa-check"></i><b>3.2</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>3.3</b> Rasch Model Fit Analysis with CMLE in <em>eRm</em></a></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4</b> Graphical Displays for Evaluating Model-Data Fit</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#reliability"><i class="fa fa-check"></i><b>3.4.1</b> Reliability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>3.5</b> Rasch Model Fit Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>3.6</b> Rasch Model Fit Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#exercise-1"><i class="fa fa-check"></i><b>3.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>4.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="4.2" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>4.2</b> RSM Analysis with CMLE in <em>eRm</em></a></li>
+<li class="chapter" data-level="4.3" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>4.3</b> RSM Analysis with MMLE in <em>TAM</em></a></li>
+<li class="chapter" data-level="4.4" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>4.4</b> RSM Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="4.5" data-path="RS-model.html"><a href="RS-model.html#example-results-section-1"><i class="fa fa-check"></i><b>4.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="4.6" data-path="RS-model.html"><a href="RS-model.html#exercise-2"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>5</b> Partial Credit Model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="PC-model.html"><a href="PC-model.html#example-data-liking-for-science-1"><i class="fa fa-check"></i><b>5.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="5.2" data-path="PC-model.html"><a href="PC-model.html#pcm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>5.2</b> PCM Analysis with CMLE in <em>eRm</em></a></li>
+<li class="chapter" data-level="5.3" data-path="PC-model.html"><a href="PC-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>5.3</b> Summarize the Results in Tables</a></li>
+<li class="chapter" data-level="5.4" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-mmle-in-tam"><i class="fa fa-check"></i><b>5.4</b> PCM Application with MMLE in <em>TAM</em></a></li>
+<li class="chapter" data-level="5.5" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-jmle-in-tam"><i class="fa fa-check"></i><b>5.5</b> PCM Application with JMLE in <em>TAM</em></a></li>
+<li class="chapter" data-level="5.6" data-path="PC-model.html"><a href="PC-model.html#example-results-section-2"><i class="fa fa-check"></i><b>5.6</b> Example results section</a></li>
+<li class="chapter" data-level="5.7" data-path="PC-model.html"><a href="PC-model.html#exercise-3"><i class="fa fa-check"></i><b>5.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="MFR-model.html"><a href="MFR-model.html"><i class="fa fa-check"></i><b>6</b> Many Facet Rasch Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="MFR-model.html"><a href="MFR-model.html#running-the-mfrm-with-wide-format-data-in-tam-package"><i class="fa fa-check"></i><b>6.1</b> Running the MFRM with Wide-Format Data in TAM Package</a></li>
+<li class="chapter" data-level="6.2" data-path="MFR-model.html"><a href="MFR-model.html#another-example-running-pc-mfrm-with-long-format-data-using-the-tam-package"><i class="fa fa-check"></i><b>6.2</b> Another Example: Running PC-MFRM with Long-Format Data using the <em>TAM</em> Package</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-pc-mfrm"><i class="fa fa-check"></i><b>6.2.1</b> Specify the PC-MFRM:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="MFR-model.html"><a href="MFR-model.html#notes-on-formulations-for-many-facet-rasch-models"><i class="fa fa-check"></i><b>6.3</b> Notes on Formulations for Many-Facet Rasch Models</a></li>
+<li class="chapter" data-level="6.4" data-path="MFR-model.html"><a href="MFR-model.html#example-results-section-3"><i class="fa fa-check"></i><b>6.4</b> Example Results Section</a></li>
+<li class="chapter" data-level="6.5" data-path="MFR-model.html"><a href="MFR-model.html#exercise-4"><i class="fa fa-check"></i><b>6.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>7</b> Basics of Differential Item Functioning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-dichotomous-items"><i class="fa fa-check"></i><b>7.1</b> Detecting Differential Item Functioning in R for Dichotomous Items</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="DIF.html"><a href="DIF.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>7.1.1</b> Example Data: Transitive Reasoning</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-polytomous-items"><i class="fa fa-check"></i><b>7.2</b> Detecting Differential Item Functioning in R for Polytomous Items</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="DIF.html"><a href="DIF.html#example-data-style-ratings"><i class="fa fa-check"></i><b>7.2.1</b> Example Data: Style Ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="DIF.html"><a href="DIF.html#exercise-5"><i class="fa fa-check"></i><b>7.3</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>8</b> Rating Scale Evaluation</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="RS-Eval.html"><a href="RS-Eval.html#what-is-rating-scale-evaluation"><i class="fa fa-check"></i><b>8.1</b> What is Rating Scale Evaluation?</a></li>
+<li class="chapter" data-level="8.2" data-path="RS-Eval.html"><a href="RS-Eval.html#rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>8.2</b> Rating Scale Analysis on Example Survey Data</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>8.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="8.2.2" data-path="RS-Eval.html"><a href="RS-Eval.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>8.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>8.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="8.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>8.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>8.3</b> Example APA-format Results section for rating scale analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>9</b> References &amp; Other Good Stuff</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>9.1</b> Rasch Glossary</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>9.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>9.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>9.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>9.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>9.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="9.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>9.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="9.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>9.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="RS_Eval" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Rating Scale Evaluation</h1>
+<p>This chapter provides a basic overview of procedures for evaluating rating scales with Rasch models using R <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2019</a>)</span>. We will use the <em>eRm</em> package <span class="citation">(<a href="#ref-eRm" role="doc-biblioref">Mair, Hatzinger, and Maier 2021</a>)</span> and the <em>TAM</em> package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span> for the analyses in this chapter. We use example data from an attitude survey to demonstrate procedures for evaluating rating scales using the Partial Credit Model (see Chapter 5).</p>
+<div id="what-is-rating-scale-evaluation" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> What is Rating Scale Evaluation?</h2>
+<p>When researchers evaluate rating scales, they examine the degree to which ordinal rating scales (e.g., Likert-type rating scales or rubrics in performance assessments) exhibit useful measurement characteristics. Essentially, rating scale evaluation involves examining rating scales for evidence that the categories are ordered as expected on the construct and that each category reflects a unique range of person locations on the construct. Several researchers (XXXX) have proposed practical guidelines for evaluating rating scales that analysts can use to identify issues and improve their rating scales. For example, Linacre (XXXX) presented a set of X guidelines for rating scales that can</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="RS-Eval.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##] Install &amp; load the eRm package:</span></span>
+<span id="cb1-2"><a href="RS-Eval.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;eRm&quot;)  # Install the pacakage if you do not have it</span></span>
+<span id="cb1-3"><a href="RS-Eval.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+</div>
+<div id="rating-scale-analysis-on-example-survey-data" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Rating Scale Analysis on Example Survey Data</h2>
+<p>For our first analysis, we will try conducting basic rating scale functioning analyses using some example survey data.</p>
+<div id="load-and-investigate-the-data-set" class="section level3" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Load and investigate the data set</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="RS-Eval.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the example survey data into your working environment and generate a summary of the data</span></span>
+<span id="cb2-2"><a href="RS-Eval.html#cb2-2" aria-hidden="true" tabindex="-1"></a>survey.responses <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ratings.csv&quot;</span>)</span>
+<span id="cb2-3"><a href="RS-Eval.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(survey.responses)</span></code></pre></div>
+<pre><code>##        id               i1             i2              i3       
+##  Min.   :  1.00   Min.   :0.00   Min.   :0.000   Min.   :0.000  
+##  1st Qu.: 88.25   1st Qu.:1.00   1st Qu.:1.000   1st Qu.:2.000  
+##  Median :175.50   Median :2.00   Median :2.000   Median :3.000  
+##  Mean   :175.50   Mean   :1.86   Mean   :1.654   Mean   :2.934  
+##  3rd Qu.:262.75   3rd Qu.:3.00   3rd Qu.:3.000   3rd Qu.:4.000  
+##  Max.   :350.00   Max.   :4.00   Max.   :4.000   Max.   :4.000  
+##        i4              i5              i6              i7       
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000  
+##  Median :2.000   Median :2.000   Median :3.000   Median :2.000  
+##  Mean   :1.937   Mean   :2.114   Mean   :2.543   Mean   :2.046  
+##  3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:3.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
+##        i8              i9             i10             i11       
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000  
+##  Median :3.000   Median :2.000   Median :2.000   Median :2.000  
+##  Mean   :2.851   Mean   :2.046   Mean   :2.311   Mean   :2.277  
+##  3rd Qu.:4.000   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:3.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
+##       i12             i13             i14             i15       
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:1.000   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:1.000  
+##  Median :2.000   Median :3.000   Median :3.000   Median :2.000  
+##  Mean   :1.809   Mean   :2.729   Mean   :2.463   Mean   :1.711  
+##  3rd Qu.:3.000   3rd Qu.:4.000   3rd Qu.:3.000   3rd Qu.:3.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000</code></pre>
+<ul>
+<li>Examine the summary of the data to see if there are any missing values or other potentially problematic things we should know about before analyzing the data</li>
+</ul>
+<p>Then, let’s trim the data. Remove the “id” variable from the survey data because it’s not part of the item responses.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="RS-Eval.html#cb4-1" aria-hidden="true" tabindex="-1"></a>survey.responses <span class="ot">&lt;-</span> survey.responses[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-2"><a href="RS-Eval.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the apply function on table() function to check the frequencies of item responses in each category</span></span>
+<span id="cb4-3"><a href="RS-Eval.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(survey.responses,<span class="dv">2</span>,table)</span></code></pre></div>
+<pre><code>##    i1 i2  i3  i4 i5 i6  i7  i8  i9 i10 i11 i12 i13 i14 i15
+## 0  49 71   8  49 32 12  32   9  35  28  27  66   9  22  60
+## 1  92 95  18  75 86 56  88  39  88  57  66  85  41  52  92
+## 2 104 91  91 112 98 99 102  65 100 106  96  81  93  90 107
+## 3  69 70 105  77 78 96  88 119  80  96 105  86 100 114  71
+## 4  36 23 128  37 56 87  40 118  47  63  56  32 107  72  20</code></pre>
+<ul>
+<li>From these results, look to see if there are any categories with very few responses such that recoding might be warranted.</li>
+</ul>
+</div>
+<div id="run-the-partial-credit-model" class="section level3" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Run the Partial Credit Model</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="RS-Eval.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the Partial Credit model on the item responses</span></span>
+<span id="cb6-2"><a href="RS-Eval.html#cb6-2" aria-hidden="true" tabindex="-1"></a>PC_model <span class="ot">&lt;-</span> <span class="fu">PCM</span>(survey.responses)</span>
+<span id="cb6-3"><a href="RS-Eval.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># After above code runs, the results are stored in an object called “PC_model”</span></span></code></pre></div>
+</div>
+<div id="check-categories-for-monotonicity" class="section level3" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Check Categories for Monotonicity</h3>
+<p>Check category threshold estimates for non-decreasing (i.e., monotonic) ordering over increasing categories.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="RS-Eval.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a function that finds the threshold values specific to each item and plots them.</span></span>
+<span id="cb7-2"><a href="RS-Eval.html#cb7-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> survey.responses <span class="co"># update this if needed with the responses object</span></span>
+<span id="cb7-3"><a href="RS-Eval.html#cb7-3" aria-hidden="true" tabindex="-1"></a>model.results <span class="ot">&lt;-</span> PC_model <span class="co"># update this if needed with the model results object</span></span>
+<span id="cb7-4"><a href="RS-Eval.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="RS-Eval.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(responses)){</span>
+<span id="cb7-6"><a href="RS-Eval.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-7"><a href="RS-Eval.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  n.thresholds <span class="ot">&lt;-</span>  <span class="fu">length</span>(<span class="fu">table</span>(responses[, item.number]))<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb7-8"><a href="RS-Eval.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-9"><a href="RS-Eval.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  taus <span class="ot">&lt;-</span> (<span class="fu">thresholds</span>(model.results))</span>
+<span id="cb7-10"><a href="RS-Eval.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-11"><a href="RS-Eval.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  taus.item <span class="ot">&lt;-</span> <span class="fu">c</span>(taus<span class="sc">$</span>threshpar[((item.number<span class="sc">*</span>n.thresholds)<span class="sc">-</span>(n.thresholds<span class="dv">-1</span>))<span class="sc">:</span> (item.number<span class="sc">*</span>n.thresholds)])<span class="sc">*-</span><span class="dv">1</span></span>
+<span id="cb7-12"><a href="RS-Eval.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-13"><a href="RS-Eval.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  taus.item <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">unlist</span>(taus.item))<span class="sc">*-</span><span class="dv">1</span></span>
+<span id="cb7-14"><a href="RS-Eval.html#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-15"><a href="RS-Eval.html#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(taus.item)), taus.item, <span class="at">ylab =</span> <span class="st">&quot;Threshold Location&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Threshold Number&quot;</span>, </span>
+<span id="cb7-16"><a href="RS-Eval.html#cb7-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Item &quot;</span>, item.number, <span class="st">&quot;Threshold Locations&quot;</span>), <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-17"><a href="RS-Eval.html#cb7-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">floor</span>(<span class="fu">min</span>(taus.item)), <span class="fu">ceiling</span>(<span class="fu">max</span>(taus.item))))</span>
+<span id="cb7-18"><a href="RS-Eval.html#cb7-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-19"><a href="RS-Eval.html#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(taus.item)))</span>
+<span id="cb7-20"><a href="RS-Eval.html#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">c</span>(<span class="fu">floor</span>(<span class="fu">min</span>(taus.item))<span class="sc">:</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(taus.item))), </span>
+<span id="cb7-21"><a href="RS-Eval.html#cb7-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">floor</span>(<span class="fu">min</span>(taus.item))<span class="sc">:</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(taus.item))))</span>
+<span id="cb7-22"><a href="RS-Eval.html#cb7-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-23"><a href="RS-Eval.html#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(taus.item)</span>
+<span id="cb7-24"><a href="RS-Eval.html#cb7-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-25"><a href="RS-Eval.html#cb7-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-3.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-4.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-5.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-6.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-7.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-8.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-9.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-10.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-11.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-12.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-13.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-14.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-5-15.png" width="672" /></p>
+<ul>
+<li><p>Running the above code will generate plots for each item that show the estimated location for each threshold.</p></li>
+<li><p>Use the arrow buttons in the Plots window to navigate through the plots and examine the plots for evidence of non-decreasing threshold locations on the y-axis as the thresholds progress along the x-axis.</p></li>
+<li><p>You can also check the distance between the threshold locations for evidence of distinct categories.</p></li>
+</ul>
+<p>You can export the item and threshold location estimates for use in reporting</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="RS-Eval.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Export overall item &amp; threshold estimates:</span></span>
+<span id="cb8-2"><a href="RS-Eval.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="RS-Eval.html#cb8-3" aria-hidden="true" tabindex="-1"></a>item.estimates <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(taus<span class="sc">$</span>threshtable)</span>
+<span id="cb8-4"><a href="RS-Eval.html#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="RS-Eval.html#cb8-5" aria-hidden="true" tabindex="-1"></a>item.estimates <span class="ot">&lt;-</span> <span class="fu">round</span>(item.estimates, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb8-6"><a href="RS-Eval.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="RS-Eval.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(item.estimates, <span class="at">file =</span> <span class="st">&quot;item_thresholds_PC_Model.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="examine-category-probability-curves" class="section level3" number="8.2.4">
+<h3><span class="header-section-number">8.2.4</span> Examine Category Probability curves</h3>
+<p>Examine category probability curves for evidence of distinct and ordered categories.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="RS-Eval.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function below that finds the threshold values specific to each item and plots them.</span></span>
+<span id="cb9-2"><a href="RS-Eval.html#cb9-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> survey.responses <span class="co"># update to data object if using with other dataset!</span></span>
+<span id="cb9-3"><a href="RS-Eval.html#cb9-3" aria-hidden="true" tabindex="-1"></a>model.results <span class="ot">&lt;-</span> PC_model <span class="co"># update to model object if using with other dataset!</span></span>
+<span id="cb9-4"><a href="RS-Eval.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(survey.responses)){</span>
+<span id="cb9-5"><a href="RS-Eval.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plotICC</span>(model.results, <span class="at">item.subset =</span> item.number)</span>
+<span id="cb9-6"><a href="RS-Eval.html#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-3.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-4.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-5.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-6.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-7.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-8.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-9.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-10.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-11.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-12.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-13.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-14.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-7-15.png" width="672" /></p>
+<p>The code above will produce category probability plots in the Plots window.</p>
+<ul>
+<li>Use the arrow buttons in the Plots window to navigate through the plots and examine the plots for evidence of:
+<ul>
+<li>Ordered category curves</li>
+<li>Distinct (modal) categories</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="example-apa-format-results-section-for-rating-scale-analysis" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Example APA-format Results section for rating scale analysis</h2>
+<p>We analyzed 350 participants’ responses to a 15-item survey that included items with five ordered categories (<span class="math inline">\(X\)</span> = 0, 1, 2, 3, or 4) for evidence of useful rating scale category functioning. Specifically, following <span class="citation"><a href="#ref-Optimizing_RS" role="doc-biblioref">Linacre</a> (<a href="#ref-Optimizing_RS" role="doc-biblioref">2002</a>)</span> and <span class="citation"><a href="#ref-Invar_measurement" role="doc-biblioref">Engelhard and Wind</a> (<a href="#ref-Invar_measurement" role="doc-biblioref">2018</a>)</span>, we examined the survey item responses for evidence of directional orientation with the latent variable and distinct categories on the construct. So that we could consider category functioning specific to each item with the most diagnostic utility, we used the Partial Credit Model <span class="citation">(<a href="#ref-PCM" role="doc-biblioref">Masters 1982</a>)</span> to analyze the data. We conducted the analyses using the Extended Rasch Models (“eRm”) package <span class="citation">(<a href="#ref-eRm" role="doc-biblioref">Mair, Hatzinger, and Maier 2021</a>)</span> for R.</p>
+<div class="figure">
+<img src="RSA_Table1.png" alt="" />
+<p class="caption">Table1:Item and Threshold Location Estimates from the Partial Credit Model</p>
+</div>
+<p>Participant responses to all 15 items included observations in all five rating scale categories. All of the items included at least 10 responses in each category except for the lowest rating scale category (<span class="math inline">\(X\)</span> = 0) for Item 3 (frequency = 8), Item 8 (frequency = 9), and Item 13 (frequency = 9). In a future administration of this survey, researchers may consider reducing the scale length for these items to avoid unstable estimates.</p>
+<div class="figure">
+<img src="RSA_Figure1.png" alt="" />
+<p class="caption">Figure 1:Threshold Locations for Item3</p>
+</div>
+<p>First, we examined the estimated threshold locations for each item for evidence of directional orientation with the latent variable (i.e., non-decreasing locations as categories increase). Because all of the items included responses in five categories, there were four threshold estimates for each item (<span class="math inline">\(τ_{i1}\)</span>,<span class="math inline">\(τ_{i2}\)</span>,<span class="math inline">\(τ_{i3}\)</span>,<span class="math inline">\(τ_{i4}\)</span>). Accordingly, we examined whether <span class="math inline">\(τ_{i1}\)</span> ≤$ τ_{i2}$, <span class="math inline">\(τ_{i2}\)</span> ≤ <span class="math inline">\(τ_{i3}\)</span>, and <span class="math inline">\(τ_{i3}\)</span> ≤ <span class="math inline">\(τ_{i4}\)</span> for each item. Table 1 includes the threshold estimates for each item, along with the overall item location estimate. For Item 3, the first and second threshold were disordered (<span class="math inline">\(τ_{3,1}\)</span> = -1.46,<span class="math inline">\(τ_{3,2}\)</span> = -1.68; see Figure 1). For all of the other items, the thresholds were ordered as expected given the ordinal rating scale categories.</p>
+<div class="figure">
+<img src="RSA_Figure2.png" alt="" />
+<p class="caption">Figure 2: Category Probability Curves for Item 3</p>
+</div>
+<p>Next, we examined category probability curves for evidence that the rating scale categories were ordered as expected (non-decreasing threshold locations over increasing categories) and distinct for each item. Distinct categories imply that each rating scale category describes a meaningful range of locations on the logit scale that represents the construct. The categories appeared to function as expected for all of the items except Item 3 (see Figure 2). For this item, the first and second rating scale categories were disordered.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Invar_measurement" class="csl-entry">
+Engelhard, George, and Stefanie A. Wind. 2018. <em>Invariant Measurement with Raters and Rating Scales: Rasch Models for Rater-Mediated Assessments</em>. Taylor &amp; Francis.
+</div>
+<div id="ref-Optimizing_RS" class="csl-entry">
+Linacre, John M. 2002. <span>“Optimizing Rating Scale Category Effectiveness.”</span> <em>Journal of Applied Measurement</em> 3 (1): 85–106.
+</div>
+<div id="ref-eRm" class="csl-entry">
+Mair, Patrick, Reinhold Hatzinger, and Marco Johannes Maier. 2021. <em><span class="nocase">eRm: Extended Rasch Modeling</span></em>. <a href="https://cran.r-project.org/package=eRm">https://cran.r-project.org/package=eRm</a>.
+</div>
+<div id="ref-PCM" class="csl-entry">
+Masters, Geoff. 1982. <span>“A Rasch Model for Partial Credit Scoring.”</span> <em>Psychometrika</em> 47 (2): 149–74. https://doi.org/<a href="https://doi.org/10.1007/BF02296272">https://doi.org/10.1007/BF02296272</a>.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-TAM" class="csl-entry">
+Robitzsch, Alexander, Thomas Kiefer, and Margaret Wu. 2021. <em>TAM: Test Analysis Modules</em>. <a href="https://CRAN.R-project.org/package=TAM">https://CRAN.R-project.org/package=TAM</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="DIF.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Ref1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/08-RatingScaleEvaluation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

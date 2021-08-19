@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 View(difficulty) | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 View(difficulty) | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 View(difficulty) | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  
+
+<meta name="author" content="Stefanie Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-01-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Dich-Rasch-model.html"/>
+<link rel="next" href="MD-fit.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction-to-the-book"><i class="fa fa-check"></i><b>1.1</b> Introduction to the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.2</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.3</b> Online Resources</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>1.4</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.1</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-equation"><i class="fa fa-check"></i><b>2.1.1</b> Model Equation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-requirements"><i class="fa fa-check"></i><b>2.1.2</b> Model Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#running-dichotomous-rasch-model-in-r"><i class="fa fa-check"></i><b>2.2</b> Running Dichotomous Rasch Model in R</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>2.2.1</b> Example Data: Transitive Reasoning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#the-tam-package"><i class="fa fa-check"></i><b>2.2.2</b> The TAM Package</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#install-and-load-the-package"><i class="fa fa-check"></i><b>2.3</b> Install and load the package:</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>2.3.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.3.2</b> Run the Dichotomous Rasch Model</a></li>
+<li class="chapter" data-level="2.3.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary"><i class="fa fa-check"></i><b>2.3.3</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.3.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#plot-a-wright-map-to-visualize-item-and-person-locations"><i class="fa fa-check"></i><b>2.3.4</b> Plot a Wright Map to visualize item and person locations:</a></li>
+<li class="chapter" data-level="2.3.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters"><i class="fa fa-check"></i><b>2.3.5</b> Examine Item Parameters:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="viewdifficulty.html"><a href="viewdifficulty.html"><i class="fa fa-check"></i><b>3</b> View(difficulty)</a><ul>
+<li class="chapter" data-level="3.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#descriptive-statistics-for-item-locations"><i class="fa fa-check"></i><b>3.1</b> Descriptive Statistics for Item Locations</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#person-parameters"><i class="fa fa-check"></i><b>3.1.1</b> Person Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="viewdifficulty.html"><a href="viewdifficulty.html#descriptive-statistics-for-person-locations"><i class="fa fa-check"></i><b>3.2</b> Descriptive Statistics for Person Locations</a></li>
+<li class="chapter" data-level="3.3" data-path="viewdifficulty.html"><a href="viewdifficulty.html#person-fit-statistics"><i class="fa fa-check"></i><b>3.3</b> Person Fit Statistics</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>3.3.1</b> Summarize the results in tables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="viewdifficulty.html"><a href="viewdifficulty.html#model-summary-table"><i class="fa fa-check"></i><b>3.4</b> Model summary table:</a></li>
+<li class="chapter" data-level="3.5" data-path="viewdifficulty.html"><a href="viewdifficulty.html#item-calibration-table"><i class="fa fa-check"></i><b>3.5</b> Item calibration table:</a></li>
+<li class="chapter" data-level="3.6" data-path="viewdifficulty.html"><a href="viewdifficulty.html#person-calibration-table"><i class="fa fa-check"></i><b>3.6</b> Person calibration table:</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#runing-the-dichotomous-rasch-model-with-joint-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Runing the Dichotomous Rasch Model with Joint Maximum Likelihood Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="viewdifficulty.html"><a href="viewdifficulty.html#estimate-the-dichotomous-rasch-model-using-jmle"><i class="fa fa-check"></i><b>3.7</b> Estimate the Dichotomous Rasch Model using JMLE</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#overall-model-summary-1"><i class="fa fa-check"></i><b>3.7.1</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="3.7.2" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-wright-map"><i class="fa fa-check"></i><b>3.7.2</b> JMLE Wright Map</a></li>
+<li class="chapter" data-level="3.7.3" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-item-parameters"><i class="fa fa-check"></i><b>3.7.3</b> JMLE Item Parameters:</a></li>
+<li class="chapter" data-level="3.7.4" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-person-parameters"><i class="fa fa-check"></i><b>3.7.4</b> JMLE Person Parameters:</a></li>
+<li class="chapter" data-level="3.7.5" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-fit-statistics"><i class="fa fa-check"></i><b>3.7.5</b> JMLE Fit Statistics</a></li>
+<li class="chapter" data-level="3.7.6" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-item-fit-statistics"><i class="fa fa-check"></i><b>3.7.6</b> JMLE Item Fit Statistics:</a></li>
+<li class="chapter" data-level="3.7.7" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-person-fit-statistics"><i class="fa fa-check"></i><b>3.7.7</b> JMLE Person Fit Statistics:</a></li>
+<li class="chapter" data-level="3.7.8" data-path="viewdifficulty.html"><a href="viewdifficulty.html#summarize-the-results-from-the-jmle-dichotomous-rasch-model-analysis"><i class="fa fa-check"></i><b>3.7.8</b> Summarize the results from the JMLE dichotomous Rasch model analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="viewdifficulty.html"><a href="viewdifficulty.html#model-summary-table-1"><i class="fa fa-check"></i><b>3.8</b> Model summary table:</a></li>
+<li class="chapter" data-level="3.9" data-path="viewdifficulty.html"><a href="viewdifficulty.html#jmle-item-calibration-table"><i class="fa fa-check"></i><b>3.9</b> JMLE item calibration table:</a></li>
+<li class="chapter" data-level="3.10" data-path="viewdifficulty.html"><a href="viewdifficulty.html#person-calibration-table-1"><i class="fa fa-check"></i><b>3.10</b> Person calibration table:</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="viewdifficulty.html"><a href="viewdifficulty.html#compare-the-estimated-parameters-between-jmle-and-mmle-methods"><i class="fa fa-check"></i><b>3.10.1</b> Compare the estimated parameters between JMLE and MMLE methods</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="viewdifficulty.html"><a href="viewdifficulty.html#compare-item-estimates"><i class="fa fa-check"></i><b>3.11</b> Compare item estimates:</a></li>
+<li class="chapter" data-level="3.12" data-path="viewdifficulty.html"><a href="viewdifficulty.html#compare-person-estimates"><i class="fa fa-check"></i><b>3.12</b> Compare person estimates:</a></li>
+<li class="chapter" data-level="3.13" data-path="viewdifficulty.html"><a href="viewdifficulty.html#example-apa-style-results-section-based-on-the-mmle-results"><i class="fa fa-check"></i><b>3.13</b> Example APA-Style Results Section based on the MMLE results:</a></li>
+<li class="chapter" data-level="3.14" data-path="viewdifficulty.html"><a href="viewdifficulty.html#exericise"><i class="fa fa-check"></i><b>3.14</b> Exericise</a></li>
+<li class="chapter" data-level="3.15" data-path="viewdifficulty.html"><a href="viewdifficulty.html#references"><i class="fa fa-check"></i><b>3.15</b> References</a></li>
+<li class="chapter" data-level="3.16" data-path="viewdifficulty.html"><a href="viewdifficulty.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>3.16</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>4</b> Evaluating the Quality of Measures</a><ul>
+<li class="chapter" data-level="4.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>4.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="4.2" data-path="MD-fit.html"><a href="MD-fit.html#rasch-measurement-theory-perspective-on-model-data-fit"><i class="fa fa-check"></i><b>4.2</b> Rasch Measurement Theory Perspective on Model-Data Fit</a></li>
+<li class="chapter" data-level="4.3" data-path="MD-fit.html"><a href="MD-fit.html#residual-based-fit-analyses"><i class="fa fa-check"></i><b>4.3</b> Residual-Based Fit Analyses</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>4.3.1</b> Example Data: Transitive Reasoning</a></li>
+<li class="chapter" data-level="4.3.2" data-path="MD-fit.html"><a href="MD-fit.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>4.3.2</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>4.3.3</b> Getting Started</a></li>
+<li class="chapter" data-level="4.3.4" data-path="MD-fit.html"><a href="MD-fit.html#analyze-the-data-using-a-rasch-model"><i class="fa fa-check"></i><b>4.3.4</b> Analyze the data using a Rasch model</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>4.3.5</b> Run the Dichotomous Rasch Model</a></li>
+<li class="chapter" data-level="4.3.6" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality"><i class="fa fa-check"></i><b>4.3.6</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="4.3.7" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>4.3.7</b> Principal components analysis of standardized residual correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="MD-fit.html"><a href="MD-fit.html#conduct-a-pca-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>4.4</b> Conduct a PCA of Standardized Residual Correlations:</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="MD-fit.html"><a href="MD-fit.html#summaries-of-residuals-infit-outfit"><i class="fa fa-check"></i><b>4.4.1</b> Summaries of Residuals: Infit &amp; Outfit</a></li>
+<li class="chapter" data-level="4.4.2" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>4.4.2</b> Graphical Displays for Evaluating Model-Data Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="MD-fit.html"><a href="MD-fit.html#plots-of-standardized-residuals"><i class="fa fa-check"></i><b>4.5</b> Plots of Standardized Residuals</a></li>
+<li class="chapter" data-level="4.6" data-path="MD-fit.html"><a href="MD-fit.html#empirical-item-response-functions"><i class="fa fa-check"></i><b>4.6</b> Empirical item response functions</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="MD-fit.html"><a href="MD-fit.html#Reliability"><i class="fa fa-check"></i><b>4.6.1</b> Reliability Indices in Rasch Measurement</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="MD-fit.html"><a href="MD-fit.html#supplmentary-learning-materials"><i class="fa fa-check"></i><b>4.7</b> Supplmentary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>5</b> Rating Scale Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="RS-model.html"><a href="RS-model.html#rasch-rating-scale-model"><i class="fa fa-check"></i><b>5.1</b> Rasch Rating Scale Model</a></li>
+<li class="chapter" data-level="5.2" data-path="RS-model.html"><a href="RS-model.html#r-lab-rasch-rating-scale-model-with-erm-package"><i class="fa fa-check"></i><b>5.2</b> R-Lab: Rasch Rating Scale Model with “eRm” package</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="RS-model.html"><a href="RS-model.html#load-the-packages-that-required-for-the-rasch-rating-scale-analysis"><i class="fa fa-check"></i><b>5.2.1</b> Load the packages that required for the Rasch Rating Scale Analysis</a></li>
+<li class="chapter" data-level="5.2.2" data-path="RS-model.html"><a href="RS-model.html#information-about-the-data"><i class="fa fa-check"></i><b>5.2.2</b> Information about the data</a></li>
+<li class="chapter" data-level="5.2.3" data-path="RS-model.html"><a href="RS-model.html#get-data-prepared"><i class="fa fa-check"></i><b>5.2.3</b> Get Data Prepared</a></li>
+<li class="chapter" data-level="5.2.4" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>5.2.4</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="RS-model.html"><a href="RS-model.html#wright-map-expected-response-curves-item-characteristic-curves"><i class="fa fa-check"></i><b>5.2.5</b> Wright Map &amp; Expected Response Curves &amp; Item characteristic curves</a></li>
+<li class="chapter" data-level="5.2.6" data-path="RS-model.html"><a href="RS-model.html#item-estimates-and-fit-statistics"><i class="fa fa-check"></i><b>5.2.6</b> Item estimates and fit Statistics</a></li>
+<li class="chapter" data-level="5.2.7" data-path="RS-model.html"><a href="RS-model.html#person-estimates-and-fit-statistics"><i class="fa fa-check"></i><b>5.2.7</b> Person estimates and fit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="RS-model.html"><a href="RS-model.html#another-example-with-erm-package"><i class="fa fa-check"></i><b>5.3</b> Another Example with “eRm” package</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="RS-model.html"><a href="RS-model.html#load-the-example-data"><i class="fa fa-check"></i><b>5.3.1</b> Load the example data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model-on-the-data"><i class="fa fa-check"></i><b>5.3.2</b> Run the Rating Scale model on the data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="RS-model.html"><a href="RS-model.html#examine-item-difficulty-and-threshold-ses"><i class="fa fa-check"></i><b>5.3.3</b> Examine item difficulty and threshold SEs</a></li>
+<li class="chapter" data-level="5.3.4" data-path="RS-model.html"><a href="RS-model.html#examine-person-locations-theta-and-ses"><i class="fa fa-check"></i><b>5.3.4</b> Examine Person locations (theta) and SEs</a></li>
+<li class="chapter" data-level="5.3.5" data-path="RS-model.html"><a href="RS-model.html#exam-the-item-and-person-fit-statistics"><i class="fa fa-check"></i><b>5.3.5</b> Exam the item and person fit statistics</a></li>
+<li class="chapter" data-level="5.3.6" data-path="RS-model.html"><a href="RS-model.html#graphic-information"><i class="fa fa-check"></i><b>5.3.6</b> Graphic Information</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="MD-fit.html"><a href="MD-fit.html#supplmentary-learning-materials"><i class="fa fa-check"></i><b>5.4</b> Supplmentary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>6</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="6.1" data-path="PC-model.html"><a href="PC-model.html#partial-credit-model"><i class="fa fa-check"></i><b>6.1</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="PC-model.html"><a href="PC-model.html#recall-rating-scale-model-key-features"><i class="fa fa-check"></i><b>6.1.1</b> Recall: Rating Scale Model Key Features</a></li>
+<li class="chapter" data-level="6.1.2" data-path="PC-model.html"><a href="PC-model.html#motivation-for-the-partial-credit-pc-model"><i class="fa fa-check"></i><b>6.1.2</b> Motivation for the Partial Credit (PC) Model</a></li>
+<li class="chapter" data-level="6.1.3" data-path="PC-model.html"><a href="PC-model.html#partial-credit-model-formula"><i class="fa fa-check"></i><b>6.1.3</b> Partial Credit Model Formula</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="PC-model.html"><a href="PC-model.html#r-lab-rasch-partial-credit-model-with-erm-package"><i class="fa fa-check"></i><b>6.2</b> R-Lab: Rasch Partial Credit Model with “eRm” package</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="PC-model.html"><a href="PC-model.html#prepare-the-r-package-the-data"><i class="fa fa-check"></i><b>6.2.1</b> Prepare the R package &amp; the data</a></li>
+<li class="chapter" data-level="6.2.2" data-path="PC-model.html"><a href="PC-model.html#r-lab-partial-credit-model-with-erm-package"><i class="fa fa-check"></i><b>6.2.2</b> R-Lab: Partial Credit Model with “eRm” package</a></li>
+<li class="chapter" data-level="6.2.3" data-path="RS-model.html"><a href="RS-model.html#wright-map-expected-response-curves-item-characteristic-curves"><i class="fa fa-check"></i><b>6.2.3</b> Wright Map &amp; Expected Response Curves &amp; Item characteristic curves</a></li>
+<li class="chapter" data-level="6.2.4" data-path="RS-model.html"><a href="RS-model.html#examine-item-difficulty-and-threshold-ses"><i class="fa fa-check"></i><b>6.2.4</b> Examine item difficulty and threshold SEs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="RS-model.html"><a href="RS-model.html#examine-person-locations-theta-and-ses"><i class="fa fa-check"></i><b>6.2.5</b> Examine Person locations (theta) and SEs</a></li>
+<li class="chapter" data-level="6.2.6" data-path="RS-model.html"><a href="RS-model.html#exam-the-item-and-person-fit-statistics"><i class="fa fa-check"></i><b>6.2.6</b> Exam the item and person fit statistics</a></li>
+<li class="chapter" data-level="6.2.7" data-path="PC-model.html"><a href="PC-model.html#calculate-the-personitem-separation-reliability"><i class="fa fa-check"></i><b>6.2.7</b> Calculate the Person/Item Separation Reliability</a></li>
+<li class="chapter" data-level="6.2.8" data-path="PC-model.html"><a href="PC-model.html#exercise"><i class="fa fa-check"></i><b>6.2.8</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="MD-fit.html"><a href="MD-fit.html#supplmentary-learning-materials"><i class="fa fa-check"></i><b>6.3</b> Supplmentary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html"><i class="fa fa-check"></i><b>7</b> Many Facet Rasch Model</a><ul>
+<li class="chapter" data-level="7.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#motivation"><i class="fa fa-check"></i><b>7.1</b> Motivation</a></li>
+<li class="chapter" data-level="7.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#introduction-to-many-facet-rasch-mfr-model"><i class="fa fa-check"></i><b>7.2</b> Introduction to Many-Facet Rasch (MFR) Model</a></li>
+<li class="chapter" data-level="7.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#why-use-the-mfr-model"><i class="fa fa-check"></i><b>7.3</b> Why use the MFR model?</a></li>
+<li class="chapter" data-level="7.4" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#mfr-calibrations"><i class="fa fa-check"></i><b>7.4</b> MFR Calibrations</a></li>
+<li class="chapter" data-level="7.5" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#r-lab-runing-the-rasch-many-facet-model-in-r"><i class="fa fa-check"></i><b>7.5</b> R-Lab: Runing the Rasch Many-Facet Model in R</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#prepare-the-dataset"><i class="fa fa-check"></i><b>7.5.1</b> Prepare the Dataset</a></li>
+<li class="chapter" data-level="7.5.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#run-the-mfr-model-using-the-tam-package"><i class="fa fa-check"></i><b>7.5.2</b> Run the MFR model using the TAM package</a></li>
+<li class="chapter" data-level="7.5.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#test-taker-estimates"><i class="fa fa-check"></i><b>7.5.3</b> Test-taker Estimates</a></li>
+<li class="chapter" data-level="7.5.4" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#items-estimates"><i class="fa fa-check"></i><b>7.5.4</b> Item’s Estimates</a></li>
+<li class="chapter" data-level="7.5.5" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#plots"><i class="fa fa-check"></i><b>7.5.5</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#reference"><i class="fa fa-check"></i><b>7.6</b> Reference</a></li>
+<li class="chapter" data-level="7.7" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#example-2"><i class="fa fa-check"></i><b>7.7</b> Example 2:</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#student-estimates"><i class="fa fa-check"></i><b>7.7.1</b> Student Estimates</a></li>
+<li class="chapter" data-level="7.7.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#domainrater-fit"><i class="fa fa-check"></i><b>7.7.2</b> Domain/Rater Fit:</a></li>
+<li class="chapter" data-level="7.7.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#plots-1"><i class="fa fa-check"></i><b>7.7.3</b> Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>8</b> Basics of Differential Item Functioning</a><ul>
+<li class="chapter" data-level="8.1" data-path="DIF.html"><a href="DIF.html#purpose"><i class="fa fa-check"></i><b>8.1</b> Purpose</a></li>
+<li class="chapter" data-level="8.2" data-path="DIF.html"><a href="DIF.html#r-lab-1-dif-analysis-with-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>8.2</b> R-lab 1: DIF Analysis with the Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="DIF.html"><a href="DIF.html#prepare-the-r-package-and-data-set"><i class="fa fa-check"></i><b>8.2.1</b> Prepare the R-package and data set</a></li>
+<li class="chapter" data-level="8.2.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data"><i class="fa fa-check"></i><b>8.2.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="8.2.3" data-path="DIF.html"><a href="DIF.html#run-dichotomous-rasch-model"><i class="fa fa-check"></i><b>8.2.3</b> Run dichotomous Rasch model</a></li>
+<li class="chapter" data-level="8.2.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>8.2.4</b> Analyze the data using the dichotomous Rasch model:</a></li>
+<li class="chapter" data-level="8.2.5" data-path="DIF.html"><a href="DIF.html#identify-subgroups"><i class="fa fa-check"></i><b>8.2.5</b> Identify subgroups</a></li>
+<li class="chapter" data-level="8.2.6" data-path="DIF.html"><a href="DIF.html#visualize-the-test-statistics-for-the-item-comparison"><i class="fa fa-check"></i><b>8.2.6</b> Visualize the test statistics for the item comparison</a></li>
+<li class="chapter" data-level="8.2.7" data-path="DIF.html"><a href="DIF.html#export-the-item-comparison-results-for-later-use-using-the-following-code."><i class="fa fa-check"></i><b>8.2.7</b> Export the item comparison results for later use using the following code.</a></li>
+<li class="chapter" data-level="8.2.8" data-path="DIF.html"><a href="DIF.html#plot-the-item-difference"><i class="fa fa-check"></i><b>8.2.8</b> Plot the item difference</a></li>
+<li class="chapter" data-level="8.2.9" data-path="DIF.html"><a href="DIF.html#dif-scatterplots"><i class="fa fa-check"></i><b>8.2.9</b> DIF Scatterplots:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands"><i class="fa fa-check"></i><b>8.3</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="8.4" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot"><i class="fa fa-check"></i><b>8.4</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences"><i class="fa fa-check"></i><b>8.4.1</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="DIF.html"><a href="DIF.html#r-lab-2-dif-analysis-with-the-partial-credit-model"><i class="fa fa-check"></i><b>8.5</b> R-lab 2: DIF Analysis with the Partial Credit Model</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="DIF.html"><a href="DIF.html#load-the-data-into-your-working-environment-and-generate-a-summary-of-responses"><i class="fa fa-check"></i><b>8.5.1</b> Load the data into your working environment and generate a summary of responses</a></li>
+<li class="chapter" data-level="8.5.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data-1"><i class="fa fa-check"></i><b>8.5.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="8.5.3" data-path="DIF.html"><a href="DIF.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>8.5.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.5.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-partial-credit-model"><i class="fa fa-check"></i><b>8.5.4</b> Analyze the data using the Partial Credit model:</a></li>
+<li class="chapter" data-level="8.5.5" data-path="DIF.html"><a href="DIF.html#conduct-dif-analyses"><i class="fa fa-check"></i><b>8.5.5</b> Conduct DIF analyses</a></li>
+<li class="chapter" data-level="8.5.6" data-path="DIF.html"><a href="DIF.html#dif-analysis"><i class="fa fa-check"></i><b>8.5.6</b> DIF analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="DIF.html"><a href="DIF.html#compare-thresholds-between-groups"><i class="fa fa-check"></i><b>8.6</b> Compare thresholds between groups:</a></li>
+<li class="chapter" data-level="8.7" data-path="DIF.html"><a href="DIF.html#get-overall-item-se-values"><i class="fa fa-check"></i><b>8.7</b> Get overall item SE values:</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="DIF.html"><a href="DIF.html#make-a-scatterplot"><i class="fa fa-check"></i><b>8.7.1</b> Make a scatterplot</a></li>
+<li class="chapter" data-level="8.7.2" data-path="DIF.html"><a href="DIF.html#create-scatterplot-of-item-measures"><i class="fa fa-check"></i><b>8.7.2</b> Create scatterplot of item measures</a></li>
+<li class="chapter" data-level="8.7.3" data-path="DIF.html"><a href="DIF.html#dif-scatterplot"><i class="fa fa-check"></i><b>8.7.3</b> DIF Scatterplot:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands-1"><i class="fa fa-check"></i><b>8.8</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="8.9" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot-1"><i class="fa fa-check"></i><b>8.9</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="8.9.1" data-path="DIF.html"><a href="DIF.html#create-bar-plot-of-item-differences"><i class="fa fa-check"></i><b>8.9.1</b> Create bar plot of item differences</a></li>
+<li class="chapter" data-level="8.9.2" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences-1"><i class="fa fa-check"></i><b>8.9.2</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="DIF.html"><a href="DIF.html#example-apa-format-results-section-for-basic-dif-analysis"><i class="fa fa-check"></i><b>8.10</b> Example APA-format results section for basic DIF analysis</a></li>
+<li class="chapter" data-level="8.11" data-path="viewdifficulty.html"><a href="viewdifficulty.html#references"><i class="fa fa-check"></i><b>8.11</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>9</b> Rating Scale Evaluation</a><ul>
+<li class="chapter" data-level="9.1" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-purpose"><i class="fa fa-check"></i><b>9.1</b> R-lab purpose</a></li>
+<li class="chapter" data-level="9.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>9.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>9.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="9.2.2" data-path="DIF.html"><a href="DIF.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>9.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="9.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>9.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="9.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>9.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>9.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="9.4" data-path="viewdifficulty.html"><a href="viewdifficulty.html#references"><i class="fa fa-check"></i><b>9.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>10</b> Reference &amp; Other Good Stuff</a><ul>
+<li class="chapter" data-level="10.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>10.1</b> Rasch Glossary</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>10.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="10.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>10.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="10.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>10.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="10.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>10.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>10.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="10.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>10.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="10.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>10.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="viewdifficulty" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> View(difficulty)</h1>
+<div class="figure">
+<img src="screenshots/Cha2_ViewDiff.png" alt="" />
+<p class="caption">View Item Difficulty</p>
+</div>
+<p>The item difficulty parameters (<em>xsi</em>) are the item location estimates on the logit scale that represents the latent variable. Assuming that the responses are scored such that lower scores (x = 0) indicate lower locations on the latent variable (e.g., incorrect, negative, or absent responses), then <em>lower</em> item estimates on the logit scale indicate items that are <em>more difficult</em> or require persons to have relatively <em>higher locations</em> on the construct to provide a correct response. On the other hand, <em>higher</em> item estimates on the logit scale indicate items that are <em>easier</em> or require persons to have relatively <em>lower locations</em> on the construct to provide a correct response. In our analysis, Task 9 is the most difficult item (<code>xsi</code> = 1.00), whereas Task 6 is the easiest item (<code>xsi</code> = -4.07).</p>
+<p>The standard error (<em>se.xsi</em>) for each item is an estimate of the precision of the item difficulty estimates, where larger standard errors indicate less-precise estimates. Standard errors are reported on the same logit scale as item locations. In our analysis, the standard errors range from 0.11 for Task 9 and Task 10, which were the items with the most precise estimates, to 0.31 for Task 6, which was the item with the least precise estimate. These differences largely reflect differences in item targeting to the person locations (see the Wright Map above).</p>
+<div id="descriptive-statistics-for-item-locations" class="section level2">
+<h2><span class="header-section-number">3.1</span> Descriptive Statistics for Item Locations</h2>
+<p>Next, let’s calculate descriptive statistics to better understand the distribution of the item locations and standard errors. We will do so using the <em>summary()</em> function and the <em>sd()</em> function:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="viewdifficulty.html#cb24-1"></a><span class="kw">summary</span>(difficulty)</span></code></pre></div>
+<pre><code>##       xsi             se.xsi      
+##  Min.   :-4.070   Min.   :0.1062  
+##  1st Qu.:-2.968   1st Qu.:0.1275  
+##  Median :-1.842   Median :0.1373  
+##  Mean   :-1.936   Mean   :0.1715  
+##  3rd Qu.:-1.550   3rd Qu.:0.2000  
+##  Max.   : 1.002   Max.   :0.3113</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="viewdifficulty.html#cb26-1"></a><span class="kw">sd</span>(difficulty<span class="op">$</span>xsi)</span></code></pre></div>
+<pre><code>## [1] 1.567723</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="viewdifficulty.html#cb28-1"></a><span class="kw">sd</span>(difficulty<span class="op">$</span>se.xsi)</span></code></pre></div>
+<pre><code>## [1] 0.07179407</code></pre>
+<p>We can also visualize the item difficulty estimates using a simple histogram by using the <em>hist()</em> function. In our plot, we specified a custom title using <em>main =</em> and a custom x-axis label using <em>xlab =</em>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="viewdifficulty.html#cb30-1"></a><span class="kw">hist</span>(difficulty<span class="op">$</span>xsi, <span class="dt">main =</span> <span class="st">&quot;Histogram of Item Difficulty Estimates for the Transitive Reasoning Data&quot;</span>,</span>
+<span id="cb30-2"><a href="viewdifficulty.html#cb30-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Item Difficulty Estimates in Logits&quot;</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+## Item Fit Statistics
+As a final step in our preliminary item analysis, we will conduct a brief exploration of item fit statistics. We explore item fit in more detail in Chapter 3.</p>
+<p>To calculate numeric item fit statistics, we will use the function <em>tam.fit()</em> from TAM on the model object (<em>dichot.transreas</em>). We will store the item fit results in a new object called <em>item.fit</em>, and then format this object as a dataframe for easy manipulation and exporting:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="viewdifficulty.html#cb31-1"></a>item.fit &lt;-<span class="st"> </span><span class="kw">tam.fit</span>(dichot.transreas) </span></code></pre></div>
+<pre><code>## Item fit calculation based on 40 simulations
+## |**********|
+## |----------|</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="viewdifficulty.html#cb33-1"></a>item.fit &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(item.fit<span class="op">$</span>itemfit)</span></code></pre></div>
+<p>Next, we will request a summary of the numeric fit statistics using the <em>summary()</em> function:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="viewdifficulty.html#cb34-1"></a><span class="kw">summary</span>(item.fit)</span></code></pre></div>
+<pre><code>##    parameter     Outfit          Outfit_t          Outfit_p       
+##  task_01:1   Min.   :0.4026   Min.   :-2.7592   Min.   :0.001352  
+##  task_02:1   1st Qu.:0.8134   1st Qu.:-1.7878   1st Qu.:0.037440  
+##  task_03:1   Median :0.9347   Median :-0.5186   Median :0.095101  
+##  task_04:1   Mean   :0.9011   Mean   :-0.2235   Mean   :0.241390  
+##  task_05:1   3rd Qu.:1.0550   3rd Qu.: 0.9638   3rd Qu.:0.305411  
+##  task_06:1   Max.   :1.2391   Max.   : 3.2047   Max.   :0.971394  
+##  (Other):4                                                        
+##   Outfit_pholm         Infit           Infit_t            Infit_p       
+##  Min.   :0.01352   Min.   :0.9004   Min.   :-0.73335   Min.   :0.08313  
+##  1st Qu.:0.28849   1st Qu.:0.9255   1st Qu.:-0.30610   1st Qu.:0.48239  
+##  Median :0.50563   Median :0.9741   Median :-0.07768   Median :0.69335  
+##  Mean   :0.56675   Mean   :0.9892   Mean   : 0.15680   Mean   :0.59964  
+##  3rd Qu.:1.00000   3rd Qu.:1.0291   3rd Qu.: 0.41541   3rd Qu.:0.78920  
+##  Max.   :1.00000   Max.   :1.1232   Max.   : 1.73282   Max.   :0.91542  
+##                                                                         
+##   Infit_pholm    
+##  Min.   :0.8313  
+##  1st Qu.:1.0000  
+##  Median :1.0000  
+##  Mean   :0.9831  
+##  3rd Qu.:1.0000  
+##  Max.   :1.0000  
+## </code></pre>
+<p>The <em>item.fit</em> object includes mean square error (<em>MSE</em>) and standardized (<em>t</em>) versions of the Outfit and Infit statistics for Rasch models.These statistics are summaries of the residuals associated with each item. The <em>Outfit</em> and <em>Infit</em> statistics are the <em>MSE</em> versions and the <em>Outfit_t</em> and <em>Infit_t</em> statistics are the standardized versions of the statistics. TAM also reports a <em>p</em> value for the standardized fit statistics (<em>Outfit_p</em> and <em>Infit_p</em>), along with adjusted significance values (<em>Infit_pholm</em> and <em>Outfit_pholm</em>).</p>
+<p>In general, the MSE versions of Outfit and Infit are expected to be close to 1.00 and the standardized versions of Outfit and Infit are expected to be around 0.00 when data fit the Rasch model expectations. We discuss fit analysis in more detail in Chapter 3.</p>
+<div id="person-parameters" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Person Parameters</h3>
+<p>The next step in our analysis is to examine person location parameters (i.e., person achievement or ability estimates). When the default MMLE method is used to estimate the dichotomous Rasch model, person parameters are calculated after the item locations are estimated. As a result, the person estimation procedure for this model requires additional iterations.</p>
+<p>In the following code, we calculate person locations that correspond to our model using the <em>tam.wle()</em> function with the dichotomous Rasch model object (<em>dichot.transreas</em>). We stored the results in a new data frame called <em>achievement</em>, and then requested a summary of the estimation results using <em>summary()</em>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="viewdifficulty.html#cb36-1"></a>achievement &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">tam.wle</span>(dichot.transreas))</span></code></pre></div>
+<pre><code>## Iteration in WLE/MLE estimation  1   | Maximal change  2.783 
+## Iteration in WLE/MLE estimation  2   | Maximal change  0.8352 
+## Iteration in WLE/MLE estimation  3   | Maximal change  0.0976 
+## Iteration in WLE/MLE estimation  4   | Maximal change  0.0058 
+## Iteration in WLE/MLE estimation  5   | Maximal change  4e-04 
+## Iteration in WLE/MLE estimation  6   | Maximal change  0 
+## ----
+##  WLE Reliability= 0.308</code></pre>
+<p>We can examine the achievement data frame by clicking on it in the <em>Environment</em> pane of R Studio or by using the <em>View()</em> function with the <em>achievement</em> object:</p>
+<p>[Cheng - can we add a screenshot here with an arrow pointing to the Environment pane?]</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="viewdifficulty.html#cb38-1"></a><span class="co"># View(achievement)</span></span></code></pre></div>
+<p>The <em>achievement</em> data frame includes the following variables:</p>
+<ul>
+<li><strong>pid</strong>: Person identification number (based on person ordering in the item response matrix)</li>
+<li><strong>N.items</strong>: Number of scored item responses for each person</li>
+<li><strong>PersonScores</strong>: Sum of scored item responses for each person</li>
+<li><strong>PersonMax</strong>: Maximum possible score for item responses</li>
+<li><strong>theta</strong>: Person location estimate on the logit scale that represents the latent variable. Assuming that the responses are scored such that lower scores (x = 0) indicate lower locations on the latent variable (e.g., incorrect, negative, or absent responses), then <em>lower</em> person location estimates on the logit scale indicate persons who have <em>lower</em> locations on the latent variable (i.e., lower achievement, ability, agreeableness, etc.). On the other hand, <em>higher</em> person estimates on the logit scale indicate persons who have higher locations on the latent variable (i.e., higher achievement, ability, agreeableness, etc.).</li>
+<li><strong>error</strong>: Standard error for person location estimate. Larger standard errors indicate less-precise estimates. Standard errors are reported on the same logit scale as person locations.</li>
+<li><strong>WLE.rel</strong>: Reliability of person separation statistic. This value is interpreted similarly to Cronbach’s alpha (Cronbach, 1951) when there is good fit between the data and the Rasch model (Andrich, 1982). However, it is important to note that these coefficients are not equivalent because alpha is based on an assumption of linearity and the Rasch reliabilty of separation statistic is based on a linear, interval-level scale when good model-data fit (discussed in Chapter 3) is observed.</li>
+</ul>
+</div>
+</div>
+<div id="descriptive-statistics-for-person-locations" class="section level2">
+<h2><span class="header-section-number">3.2</span> Descriptive Statistics for Person Locations</h2>
+<p>Next, we will calculate descriptive statistics to better understand the distribution of the person estimates. We will do so using the <em>summary()</em> function with the <em>achievement</em> object:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="viewdifficulty.html#cb39-1"></a><span class="kw">summary</span>(achievement)</span></code></pre></div>
+<pre><code>##       pid         N.items    PersonScores      PersonMax      theta         
+##  Min.   :  1   Min.   :10   Min.   : 1.000   Min.   :10   Min.   :-4.52847  
+##  1st Qu.:107   1st Qu.:10   1st Qu.: 7.000   1st Qu.:10   1st Qu.:-0.87730  
+##  Median :213   Median :10   Median : 8.000   Median :10   Median :-0.16326  
+##  Mean   :213   Mean   :10   Mean   : 7.828   Mean   :10   Mean   :-0.05565  
+##  3rd Qu.:319   3rd Qu.:10   3rd Qu.: 9.000   3rd Qu.:10   3rd Qu.: 0.79170  
+##  Max.   :425   Max.   :10   Max.   :10.000   Max.   :10   Max.   : 2.34713  
+##      error           WLE.rel      
+##  Min.   :0.7509   Min.   :0.3083  
+##  1st Qu.:0.8191   1st Qu.:0.3083  
+##  Median :0.9172   Median :0.3083  
+##  Mean   :1.0227   Mean   :0.3083  
+##  3rd Qu.:1.1107   3rd Qu.:0.3083  
+##  Max.   :1.7628   Max.   :0.3083</code></pre>
+<p>We can also visualize the person location estimates using a simple histogram by using the <em>hist()</em> function. In our plot, we specified a custom title using <em>main =</em> and a custom x-axis label using <em>xlab =</em>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="viewdifficulty.html#cb41-1"></a><span class="kw">hist</span>(achievement<span class="op">$</span>theta, <span class="dt">main =</span> <span class="st">&quot;Histogram of Person Achievement Estimates </span><span class="ch">\n</span><span class="st">for the Transitive Reasoning Data&quot;</span>,</span>
+<span id="cb41-2"><a href="viewdifficulty.html#cb41-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Person Achievement Estimates in Logits&quot;</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="person-fit-statistics" class="section level2">
+<h2><span class="header-section-number">3.3</span> Person Fit Statistics</h2>
+<p>As a final step in our preliminary person analysis, we will conduct a brief exploration of person fit statistics. We explore person fit in more detail in Chapter 3.</p>
+<p>To calculate numeric person fit statistics, we will use the function <em>tam.personfit()</em> from TAM on the model object (<em>dichot.transreas</em>). We will store the person fit results in a new object called <em>person.fit</em>, which is a dataframe:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="viewdifficulty.html#cb42-1"></a>person.fit &lt;-<span class="st"> </span><span class="kw">tam.personfit</span>(dichot.transreas) </span></code></pre></div>
+<p>Next, we will request a summary of the numeric person fit statistics using the <em>summary()</em> function:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="viewdifficulty.html#cb43-1"></a><span class="kw">summary</span>(person.fit)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t      infitPerson     infitPerson_t    
+##  Min.   :0.04345   Min.   :-0.95682   Min.   :0.1569   Min.   :-1.5005  
+##  1st Qu.:0.16336   1st Qu.:-0.63449   1st Qu.:0.3612   1st Qu.:-0.9719  
+##  Median :0.46292   Median :-0.06803   Median :0.6428   Median :-0.5789  
+##  Mean   :0.61007   Mean   : 0.05769   Mean   :0.7735   Mean   :-0.2965  
+##  3rd Qu.:0.84563   3rd Qu.: 0.68928   3rd Qu.:1.0648   3rd Qu.: 0.2985  
+##  Max.   :4.21519   Max.   : 2.84245   Max.   :2.2006   Max.   : 2.5767</code></pre>
+<p>The <em>person.fit</em> object includes mean square error (<em>MSE</em>) and standardized (<em>t</em>) versions of the person Outfit and Infit statistics for Rasch models.These statistics are summaries of the residuals associated with each person The <em>Outfit</em> and <em>Infit</em> statistics are the MSE versions and the <em>Outfit_t</em> and <em>Infit_t</em> statistics are the standardized versions of the statistics.</p>
+<p>In general, the MSE versions of Outfit and Infit are expected to be close to 1.00 and the standardized versions of Outfit and Infit are expected to be around 0.00 when data fit the Rasch model expectations. We discuss fit analysis in more detail in Chapter 3.</p>
+<div id="summarize-the-results-in-tables" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Summarize the results in tables</h3>
+<p>As a final step, we will create tables that summarize the calibrations of the items and persons from our dichotomous Rasch model analysis.</p>
+<p>Table 1 is an overall model summary table that provides an overview of the logit scale locations, standard errors, fit statistics, and reliability statistics for items and persons. This type of table is useful for reporting the results from Rasch model analyses because it provides a quick overview of the location estimates and numeric model-data fit statistics for the items and persons in the analysis.</p>
+</div>
+</div>
+<div id="model-summary-table" class="section level2">
+<h2><span class="header-section-number">3.4</span> Model summary table:</h2>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="viewdifficulty.html#cb45-1"></a>summary.table.statistics &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Logit Scale Location Mean&quot;</span>,</span>
+<span id="cb45-2"><a href="viewdifficulty.html#cb45-2"></a>                              <span class="st">&quot;Logit Scale Location SD&quot;</span>,</span>
+<span id="cb45-3"><a href="viewdifficulty.html#cb45-3"></a>                              <span class="st">&quot;Standard Error Mean&quot;</span>,</span>
+<span id="cb45-4"><a href="viewdifficulty.html#cb45-4"></a>                              <span class="st">&quot;Standard Error SD&quot;</span>,</span>
+<span id="cb45-5"><a href="viewdifficulty.html#cb45-5"></a>                              <span class="st">&quot;Outfit MSE Mean&quot;</span>,</span>
+<span id="cb45-6"><a href="viewdifficulty.html#cb45-6"></a>                              <span class="st">&quot;Outfit MSE SD&quot;</span>,</span>
+<span id="cb45-7"><a href="viewdifficulty.html#cb45-7"></a>                              <span class="st">&quot;Infit MSE Mean&quot;</span>,</span>
+<span id="cb45-8"><a href="viewdifficulty.html#cb45-8"></a>                              <span class="st">&quot;Infit MSE SD&quot;</span>,</span>
+<span id="cb45-9"><a href="viewdifficulty.html#cb45-9"></a>                              <span class="st">&quot;Std. Outfit Mean&quot;</span>,</span>
+<span id="cb45-10"><a href="viewdifficulty.html#cb45-10"></a>                              <span class="st">&quot;Std. Outfit SD&quot;</span>,</span>
+<span id="cb45-11"><a href="viewdifficulty.html#cb45-11"></a>                              <span class="st">&quot;Std. Infit Mean&quot;</span>,</span>
+<span id="cb45-12"><a href="viewdifficulty.html#cb45-12"></a>                              <span class="st">&quot;Std. Infit SD&quot;</span>,</span>
+<span id="cb45-13"><a href="viewdifficulty.html#cb45-13"></a>                              <span class="st">&quot;Reliability of Separation&quot;</span>)</span>
+<span id="cb45-14"><a href="viewdifficulty.html#cb45-14"></a>                              </span>
+<span id="cb45-15"><a href="viewdifficulty.html#cb45-15"></a>item.summary.results &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">mean</span>(difficulty<span class="op">$</span>xsi),</span>
+<span id="cb45-16"><a href="viewdifficulty.html#cb45-16"></a>                              <span class="kw">sd</span>(difficulty<span class="op">$</span>xsi),</span>
+<span id="cb45-17"><a href="viewdifficulty.html#cb45-17"></a>                              <span class="kw">mean</span>(difficulty<span class="op">$</span>se.xsi),</span>
+<span id="cb45-18"><a href="viewdifficulty.html#cb45-18"></a>                              <span class="kw">sd</span>(difficulty<span class="op">$</span>se.xsi),</span>
+<span id="cb45-19"><a href="viewdifficulty.html#cb45-19"></a>                              <span class="kw">mean</span>(item.fit<span class="op">$</span>Outfit),</span>
+<span id="cb45-20"><a href="viewdifficulty.html#cb45-20"></a>                              <span class="kw">sd</span>(item.fit<span class="op">$</span>Outfit),</span>
+<span id="cb45-21"><a href="viewdifficulty.html#cb45-21"></a>                              <span class="kw">mean</span>(item.fit<span class="op">$</span>Infit),</span>
+<span id="cb45-22"><a href="viewdifficulty.html#cb45-22"></a>                              <span class="kw">sd</span>(item.fit<span class="op">$</span>Infit),</span>
+<span id="cb45-23"><a href="viewdifficulty.html#cb45-23"></a>                              <span class="kw">mean</span>(item.fit<span class="op">$</span>Outfit_t),</span>
+<span id="cb45-24"><a href="viewdifficulty.html#cb45-24"></a>                              <span class="kw">sd</span>(item.fit<span class="op">$</span>Outfit_t),</span>
+<span id="cb45-25"><a href="viewdifficulty.html#cb45-25"></a>                              <span class="kw">mean</span>(item.fit<span class="op">$</span>Infit_t),</span>
+<span id="cb45-26"><a href="viewdifficulty.html#cb45-26"></a>                              <span class="kw">sd</span>(item.fit<span class="op">$</span>Infit_t),</span>
+<span id="cb45-27"><a href="viewdifficulty.html#cb45-27"></a>                              dichot.transreas<span class="op">$</span>EAP.rel)  </span>
+<span id="cb45-28"><a href="viewdifficulty.html#cb45-28"></a></span>
+<span id="cb45-29"><a href="viewdifficulty.html#cb45-29"></a>person.summary.results &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">mean</span>(achievement<span class="op">$</span>theta),</span>
+<span id="cb45-30"><a href="viewdifficulty.html#cb45-30"></a>                              <span class="kw">sd</span>(achievement<span class="op">$</span>theta),</span>
+<span id="cb45-31"><a href="viewdifficulty.html#cb45-31"></a>                              <span class="kw">mean</span>(achievement<span class="op">$</span>error),</span>
+<span id="cb45-32"><a href="viewdifficulty.html#cb45-32"></a>                              <span class="kw">sd</span>(achievement<span class="op">$</span>error),</span>
+<span id="cb45-33"><a href="viewdifficulty.html#cb45-33"></a>                              <span class="kw">mean</span>(person.fit<span class="op">$</span>outfitPerson),</span>
+<span id="cb45-34"><a href="viewdifficulty.html#cb45-34"></a>                              <span class="kw">sd</span>(person.fit<span class="op">$</span>outfitPerson),</span>
+<span id="cb45-35"><a href="viewdifficulty.html#cb45-35"></a>                              <span class="kw">mean</span>(person.fit<span class="op">$</span>infitPerson),</span>
+<span id="cb45-36"><a href="viewdifficulty.html#cb45-36"></a>                              <span class="kw">sd</span>(person.fit<span class="op">$</span>infitPerson),</span>
+<span id="cb45-37"><a href="viewdifficulty.html#cb45-37"></a>                              <span class="kw">mean</span>(person.fit<span class="op">$</span>outfitPerson_t),</span>
+<span id="cb45-38"><a href="viewdifficulty.html#cb45-38"></a>                              <span class="kw">sd</span>(person.fit<span class="op">$</span>outfitPerson_t),</span>
+<span id="cb45-39"><a href="viewdifficulty.html#cb45-39"></a>                              <span class="kw">mean</span>(person.fit<span class="op">$</span>infitPerson_t),</span>
+<span id="cb45-40"><a href="viewdifficulty.html#cb45-40"></a>                              <span class="kw">sd</span>(person.fit<span class="op">$</span>infitPerson_t),</span>
+<span id="cb45-41"><a href="viewdifficulty.html#cb45-41"></a>                              <span class="kw">mean</span>(achievement<span class="op">$</span>WLE.rel))</span>
+<span id="cb45-42"><a href="viewdifficulty.html#cb45-42"></a></span>
+<span id="cb45-43"><a href="viewdifficulty.html#cb45-43"></a><span class="co"># Round the values for presentation in a table:</span></span>
+<span id="cb45-44"><a href="viewdifficulty.html#cb45-44"></a>item.summary.results_rounded &lt;-<span class="st"> </span><span class="kw">round</span>(item.summary.results, <span class="dt">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb45-45"><a href="viewdifficulty.html#cb45-45"></a></span>
+<span id="cb45-46"><a href="viewdifficulty.html#cb45-46"></a>person.summary.results_rounded &lt;-<span class="st"> </span><span class="kw">round</span>(person.summary.results, <span class="dt">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb45-47"><a href="viewdifficulty.html#cb45-47"></a></span>
+<span id="cb45-48"><a href="viewdifficulty.html#cb45-48"></a>Table1 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(summary.table.statistics,</span>
+<span id="cb45-49"><a href="viewdifficulty.html#cb45-49"></a>                           item.summary.results_rounded, </span>
+<span id="cb45-50"><a href="viewdifficulty.html#cb45-50"></a>                           person.summary.results_rounded)</span>
+<span id="cb45-51"><a href="viewdifficulty.html#cb45-51"></a></span>
+<span id="cb45-52"><a href="viewdifficulty.html#cb45-52"></a><span class="co"># add descriptive column labels:</span></span>
+<span id="cb45-53"><a href="viewdifficulty.html#cb45-53"></a><span class="kw">names</span>(Table1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Statistic&quot;</span>, <span class="st">&quot;Items&quot;</span>, <span class="st">&quot;Persons&quot;</span>)  </span></code></pre></div>
+</div>
+<div id="item-calibration-table" class="section level2">
+<h2><span class="header-section-number">3.5</span> Item calibration table:</h2>
+<p>Table 2 is a table that summarizes the calibrations of individual items. For datasets with manageable sample sizes such as the transitive reasoning data example in this chapter, we recommend reporting details about each item in a table similar to this one.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="viewdifficulty.html#cb46-1"></a><span class="co"># Calculate the proportion correct for each task:</span></span>
+<span id="cb46-2"><a href="viewdifficulty.html#cb46-2"></a>TaskCorrect &lt;-<span class="st"> </span><span class="kw">apply</span>(transreas.responses, <span class="dv">2</span>, sum)</span>
+<span id="cb46-3"><a href="viewdifficulty.html#cb46-3"></a>PropCorrect &lt;-<span class="st"> </span>(TaskCorrect<span class="op">/</span><span class="kw">nrow</span>(transreas.responses))</span>
+<span id="cb46-4"><a href="viewdifficulty.html#cb46-4"></a></span>
+<span id="cb46-5"><a href="viewdifficulty.html#cb46-5"></a><span class="co"># Combine item calibration results in a table:</span></span>
+<span id="cb46-6"><a href="viewdifficulty.html#cb46-6"></a>Table2 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(item.fit<span class="op">$</span>parameter, </span>
+<span id="cb46-7"><a href="viewdifficulty.html#cb46-7"></a>                           PropCorrect,</span>
+<span id="cb46-8"><a href="viewdifficulty.html#cb46-8"></a>                           difficulty<span class="op">$</span>xsi,</span>
+<span id="cb46-9"><a href="viewdifficulty.html#cb46-9"></a>                           difficulty<span class="op">$</span>se.xsi,</span>
+<span id="cb46-10"><a href="viewdifficulty.html#cb46-10"></a>                           item.fit<span class="op">$</span>Outfit,</span>
+<span id="cb46-11"><a href="viewdifficulty.html#cb46-11"></a>                           item.fit<span class="op">$</span>Outfit_t,</span>
+<span id="cb46-12"><a href="viewdifficulty.html#cb46-12"></a>                           item.fit<span class="op">$</span>Infit,</span>
+<span id="cb46-13"><a href="viewdifficulty.html#cb46-13"></a>                           item.fit<span class="op">$</span>Infit_t)</span>
+<span id="cb46-14"><a href="viewdifficulty.html#cb46-14"></a><span class="kw">names</span>(Table2) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Task ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Item Location&quot;</span>,<span class="st">&quot;Item SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)                           </span>
+<span id="cb46-15"><a href="viewdifficulty.html#cb46-15"></a></span>
+<span id="cb46-16"><a href="viewdifficulty.html#cb46-16"></a><span class="co"># Sort Table 2 by Item difficulty:</span></span>
+<span id="cb46-17"><a href="viewdifficulty.html#cb46-17"></a>Table2 &lt;-<span class="st"> </span>Table2[<span class="kw">order</span>(<span class="op">-</span>Table2<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>),]</span>
+<span id="cb46-18"><a href="viewdifficulty.html#cb46-18"></a></span>
+<span id="cb46-19"><a href="viewdifficulty.html#cb46-19"></a><span class="co"># Round the numeric values (all columns except the first one) to 2 digits:</span></span>
+<span id="cb46-20"><a href="viewdifficulty.html#cb46-20"></a>Table2[, <span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(Table2[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div id="person-calibration-table" class="section level2">
+<h2><span class="header-section-number">3.6</span> Person calibration table:</h2>
+<p>Finally, Table 3 provides a summary of the person calibrations. When there is a relatively large person sample size, it may be more useful to present the results as they relate to individual persons or subsets of the person sample as they are relevant to the purpose of the analysis.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="viewdifficulty.html#cb47-1"></a><span class="co"># Calculate proportion correct for persons:</span></span>
+<span id="cb47-2"><a href="viewdifficulty.html#cb47-2"></a>PersonPropCorrect &lt;-<span class="st"> </span>achievement<span class="op">$</span>PersonScores <span class="op">/</span><span class="st"> </span>achievement<span class="op">$</span>PersonMax</span>
+<span id="cb47-3"><a href="viewdifficulty.html#cb47-3"></a></span>
+<span id="cb47-4"><a href="viewdifficulty.html#cb47-4"></a><span class="co"># Combine person calibration results in a table:</span></span>
+<span id="cb47-5"><a href="viewdifficulty.html#cb47-5"></a>Table3 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(achievement<span class="op">$</span>pid,</span>
+<span id="cb47-6"><a href="viewdifficulty.html#cb47-6"></a>                          PersonPropCorrect,</span>
+<span id="cb47-7"><a href="viewdifficulty.html#cb47-7"></a>                          achievement<span class="op">$</span>theta,</span>
+<span id="cb47-8"><a href="viewdifficulty.html#cb47-8"></a>                          achievement<span class="op">$</span>error,</span>
+<span id="cb47-9"><a href="viewdifficulty.html#cb47-9"></a>                          person.fit<span class="op">$</span>outfitPerson,</span>
+<span id="cb47-10"><a href="viewdifficulty.html#cb47-10"></a>                          person.fit<span class="op">$</span>outfitPerson_t,</span>
+<span id="cb47-11"><a href="viewdifficulty.html#cb47-11"></a>                          person.fit<span class="op">$</span>infitPerson,</span>
+<span id="cb47-12"><a href="viewdifficulty.html#cb47-12"></a>                          person.fit<span class="op">$</span>infitPerson_t)</span>
+<span id="cb47-13"><a href="viewdifficulty.html#cb47-13"></a>                          </span>
+<span id="cb47-14"><a href="viewdifficulty.html#cb47-14"></a><span class="kw">names</span>(Table3) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Person ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Person Location&quot;</span>,<span class="st">&quot;Person SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)</span>
+<span id="cb47-15"><a href="viewdifficulty.html#cb47-15"></a></span>
+<span id="cb47-16"><a href="viewdifficulty.html#cb47-16"></a><span class="co"># Round the numeric values (all columns except the first one) to 2 digits:</span></span>
+<span id="cb47-17"><a href="viewdifficulty.html#cb47-17"></a>Table3[, <span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(Table3[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div id="runing-the-dichotomous-rasch-model-with-joint-maximum-likelihood-estimation" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Runing the Dichotomous Rasch Model with Joint Maximum Likelihood Estimation</h3>
+<p>We can also use the <em>tam.jml()</em> function to estimate the dichotomous Rasch model using Joint Maximum Likelihood Estimation (JMLE), which is the same estimation method that is used in the Facets software program (Linacre, 2020b) and the Winsteps software program (Linacre, 2020b), which are popular standlone software programs for Rasch analyses.</p>
+<p>With the exception of the model estimation code, most of the code for the JMLE approach is the same as the previous analysis with MMLE. Accordingly, we provide fewer explanations in our presentation of this code.</p>
+</div>
+</div>
+<div id="estimate-the-dichotomous-rasch-model-using-jmle" class="section level2">
+<h2><span class="header-section-number">3.7</span> Estimate the Dichotomous Rasch Model using JMLE</h2>
+<p>We already prepared the transitive reasoning data for analysis when we checked the data and isolated the item response matrix (<em>transreas.responses</em>) earlier in this chapter. We can begin our analysis using the <em>tam.jml()</em> function with this response matrix:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="viewdifficulty.html#cb48-1"></a><span class="co"># Running the Dichotomous Rasch Model use tam.jml() function</span></span>
+<span id="cb48-2"><a href="viewdifficulty.html#cb48-2"></a>jmle.dichot.transreas &lt;-<span class="st"> </span><span class="kw">tam.jml</span>(transreas.responses)</span></code></pre></div>
+<pre><code>## ....................................................
+## Iteration 1     2021-01-05 14:02:20
+##  MLE/WLE estimation        |-----
+##  Item parameter estimation |----
+##   Deviance= 2632.1968
+##   Maximum MLE/WLE change: 2.41503
+##   Maximum item parameter change: 0.722963
+## ....................................................
+## Iteration 2     2021-01-05 14:02:20
+##  MLE/WLE estimation        |----
+##  Item parameter estimation |---
+##   Deviance= 2612.3093 | Deviance change: 19.8875
+##   Maximum MLE/WLE change: 0.433396
+##   Maximum item parameter change: 0.16293
+## ....................................................
+## Iteration 3     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |---
+##   Deviance= 2608.5991 | Deviance change: 3.7102
+##   Maximum MLE/WLE change: 0.124529
+##   Maximum item parameter change: 0.050192
+## ....................................................
+## Iteration 4     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |--
+##   Deviance= 2607.6332 | Deviance change: 0.9659
+##   Maximum MLE/WLE change: 0.037588
+##   Maximum item parameter change: 0.015646
+## ....................................................
+## Iteration 5     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |--
+##   Deviance= 2607.3466 | Deviance change: 0.2867
+##   Maximum MLE/WLE change: 0.011585
+##   Maximum item parameter change: 0.004908
+## ....................................................
+## Iteration 6     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |--
+##   Deviance= 2607.2576 | Deviance change: 0.089
+##   Maximum MLE/WLE change: 0.003612
+##   Maximum item parameter change: 0.001546
+## ....................................................
+## Iteration 7     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |--
+##   Deviance= 2607.2296 | Deviance change: 0.028
+##   Maximum MLE/WLE change: 0.001133
+##   Maximum item parameter change: 0.000488
+## ....................................................
+## Iteration 8     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |--
+##   Deviance= 2607.2207 | Deviance change: 0.0089
+##   Maximum MLE/WLE change: 0.00036
+##   Maximum item parameter change: 0.000155
+## ....................................................
+## Iteration 9     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |-
+##   Deviance= 2607.218 | Deviance change: 0.0027
+##   Maximum MLE/WLE change: 0.000127
+##   Maximum item parameter change: 7.6e-05
+## ....................................................
+## Iteration 10     2021-01-05 14:02:20
+##  MLE/WLE estimation        |---
+##  Item parameter estimation |-
+##   Deviance= 2607.2171 | Deviance change: 9e-04
+##   Maximum MLE/WLE change: 2.4e-05
+##   Maximum item parameter change: 1.4e-05
+## 
+##  MLE/WLE estimation        |------
+## ....................................................
+## 
+## Start:  2021-01-05 14:02:20
+## End:  2021-01-05 14:02:20 
+## Time difference of 0.02343106 secs</code></pre>
+<div id="overall-model-summary-1" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> Overall Model Summary</h3>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="viewdifficulty.html#cb50-1"></a><span class="co"># Request a summary of the model results</span></span>
+<span id="cb50-2"><a href="viewdifficulty.html#cb50-2"></a><span class="kw">summary</span>(jmle.dichot.transreas)</span></code></pre></div>
+<pre><code>## ------------------------------------------------------------
+## TAM 3.5-19 (2020-05-05 22:45:39) 
+## R version 3.6.3 (2020-02-29) x86_64, darwin15.6.0 | nodename=Chengs-iMac | login=root 
+## 
+## Start of Analysis: 2021-01-05 14:02:20 
+## End of Analysis: 2021-01-05 14:02:20 
+## Time difference of 0.02343106 secs
+## Computation time: 0.02343106 
+## 
+## Joint Maximum Likelihood Estimation in TAM 
+## 
+## IRT Model
+## Call:
+## tam.jml(resp = transreas.responses)
+## 
+## ------------------------------------------------------------
+## Number of iterations = 10 
+## 
+## Deviance = 2607.22  | Log Likelihood = -1303.61 
+## Number of persons = 425 
+## Number of items = 10 
+## constraint = cases 
+## bias = TRUE 
+## ------------------------------------------------------------
+## Person Parameters xsi
+## M = 0 
+## SD = 1.47 
+## ------------------------------------------------------------
+## Item Parameters xsi
+##    xsi.label xsi.index    xsi se.xsi
+## 1    task_01         1 -3.234  0.224
+## 2    task_02         2 -1.767  0.140
+## 3    task_03         3 -2.435  0.169
+## 4    task_04         4 -1.581  0.134
+## 5    task_05         5 -1.714  0.138
+## 6    task_06         6 -4.128  0.326
+## 7    task_07         7 -2.049  0.150
+## 8    task_08         8 -3.873  0.292
+## 9    task_09         9  1.046  0.125
+## 10   task_10        10 -0.118  0.115
+## ------------------------------------------------------------
+## Item Parameters -A*Xsi
+##       item   N     M xsi.item AXsi_.Cat1 B.Cat1.Dim1
+## 1  task_01 425 0.941   -3.234     -3.234           1
+## 2  task_02 425 0.809   -1.767     -1.767           1
+## 3  task_03 425 0.885   -2.435     -2.435           1
+## 4  task_04 425 0.784   -1.581     -1.581           1
+## 5  task_05 425 0.802   -1.714     -1.714           1
+## 6  task_06 425 0.974   -4.128     -4.128           1
+## 7  task_07 425 0.845   -2.049     -2.049           1
+## 8  task_08 425 0.967   -3.873     -3.873           1
+## 9  task_09 425 0.301    1.046      1.046           1
+## 10 task_10 425 0.520   -0.118     -0.118           1</code></pre>
+</div>
+<div id="jmle-wright-map" class="section level3">
+<h3><span class="header-section-number">3.7.2</span> JMLE Wright Map</h3>
+<p>When the JMLE estimation method is used, we need to specify the item location estimates and the person location estimates as vectors in the plotting function for the Wright Map. We will also use a different function to plot the Wright Map: <em>wrightMap()</em>, which takes arguments for the item and person locations.</p>
+<p>In the following code, we saved the item locations in a vector called <em>difficulty</em>, and the person locations in a vector called <em>theta</em>. Then, we used these vectors as arguments in the <em>wrightMap()</em> function to create the Wright Map:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="viewdifficulty.html#cb52-1"></a>jmle.difficulty &lt;-<span class="st"> </span>jmle.dichot.transreas<span class="op">$</span>xsi</span>
+<span id="cb52-2"><a href="viewdifficulty.html#cb52-2"></a>theta &lt;-<span class="st"> </span>jmle.dichot.transreas<span class="op">$</span>theta</span>
+<span id="cb52-3"><a href="viewdifficulty.html#cb52-3"></a><span class="kw">wrightMap</span>(<span class="dt">thetas =</span> theta, <span class="dt">thresholds =</span> jmle.difficulty, <span class="dt">show.thr.lab=</span><span class="ot">FALSE</span>, <span class="dt">main.title =</span> <span class="st">&quot;Transitive Reasoning Wright Map: JMLE&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre><code>##             [,1]
+##  [1,] -3.2344237
+##  [2,] -1.7665739
+##  [3,] -2.4352438
+##  [4,] -1.5813350
+##  [5,] -1.7144842
+##  [6,] -4.1281759
+##  [7,] -2.0494100
+##  [8,] -3.8725301
+##  [9,]  1.0461546
+## [10,] -0.1178787</code></pre>
+</div>
+<div id="jmle-item-parameters" class="section level3">
+<h3><span class="header-section-number">3.7.3</span> JMLE Item Parameters:</h3>
+<p>When we plotted the Wright Map, we created an object with the item difficulty parameters. We can find the standard errors for the item estimates by using the <em>$</em> operator to extract <em>errorP</em> from the model results.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="viewdifficulty.html#cb54-1"></a>jmle.item.se &lt;-<span class="st"> </span>jmle.dichot.transreas<span class="op">$</span>errorP</span></code></pre></div>
+<p>Next, we will combine the item IDs, item location estimates, and item standard errors in a data frame:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="viewdifficulty.html#cb55-1"></a>jmle.item.estimates &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>),</span>
+<span id="cb55-2"><a href="viewdifficulty.html#cb55-2"></a>                                        jmle.difficulty,</span>
+<span id="cb55-3"><a href="viewdifficulty.html#cb55-3"></a>                                        jmle.item.se)</span>
+<span id="cb55-4"><a href="viewdifficulty.html#cb55-4"></a><span class="kw">names</span>(jmle.item.estimates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Item ID&quot;</span>, <span class="st">&quot;Item Location&quot;</span>, <span class="st">&quot;Item Location SE&quot;</span>)</span></code></pre></div>
+<p>Now we can examine the item parameters in more detail by viewing the <em>jmle.item.estimates</em> object in the preview window, calculating summary statistics, and plotting a simple histogram of the person location estimates:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="viewdifficulty.html#cb56-1"></a><span class="co"># View(jmle.item.estimates)</span></span>
+<span id="cb56-2"><a href="viewdifficulty.html#cb56-2"></a><span class="kw">summary</span>(jmle.item.estimates)</span></code></pre></div>
+<pre><code>##     Item ID      Item Location    Item Location SE
+##  Min.   : 1.00   Min.   :-4.128   Min.   :0.1146  
+##  1st Qu.: 3.25   1st Qu.:-3.035   1st Qu.:0.1350  
+##  Median : 5.50   Median :-1.908   Median :0.1450  
+##  Mean   : 5.50   Mean   :-1.985   Mean   :0.1812  
+##  3rd Qu.: 7.75   3rd Qu.:-1.615   3rd Qu.:0.2105  
+##  Max.   :10.00   Max.   : 1.046   Max.   :0.3256</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="viewdifficulty.html#cb58-1"></a><span class="kw">sd</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>)</span></code></pre></div>
+<pre><code>## [1] 1.594497</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="viewdifficulty.html#cb60-1"></a><span class="kw">hist</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>, <span class="dt">main =</span> <span class="st">&quot;Histogram of Item Location Estimates </span><span class="ch">\n</span><span class="st">for the Transitive Reasoning Data: JMLE&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Item Location Estimates in Logits&quot;</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="jmle-person-parameters" class="section level3">
+<h3><span class="header-section-number">3.7.4</span> JMLE Person Parameters:</h3>
+<p>Unlike the MMLE estimation approach, the JMLE approach calculates item parameters and person parameters in the same step. As a result, we do not need to use a separate function to find the person parameter estimates from our model.</p>
+<p>When we plotted the Wright Map, we already saved the theta estimates in a vector called <em>thetas</em>. We can find the standard errors for the person estimates by using the <em>$</em> operator to extract <em>errorWLE</em> from the model results:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="viewdifficulty.html#cb61-1"></a>jmle.person.se &lt;-<span class="st"> </span>jmle.dichot.transreas<span class="op">$</span>errorWLE</span></code></pre></div>
+<p>Next, we will combine the person IDs, location estimates, and standard errors in a data frame:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="viewdifficulty.html#cb62-1"></a>jmle.person.estimates &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(transreas<span class="op">$</span>Student, theta, jmle.person.se)</span>
+<span id="cb62-2"><a href="viewdifficulty.html#cb62-2"></a><span class="kw">names</span>(jmle.person.estimates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Student ID&quot;</span>, <span class="st">&quot;Theta&quot;</span>, <span class="st">&quot;Theta SE&quot;</span>)</span></code></pre></div>
+<p>Now we can examine the person parameters in more detail by viewing the <em>jmle.person.estimates</em> object in the preview window, calculating summary statistics, and plotting a simple histogram of the person location estimates:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="viewdifficulty.html#cb63-1"></a><span class="co"># View(jmle.person.estimates)</span></span>
+<span id="cb63-2"><a href="viewdifficulty.html#cb63-2"></a><span class="kw">summary</span>(jmle.person.estimates)</span></code></pre></div>
+<pre><code>##    Student ID      Theta            Theta SE     
+##  Min.   :  1   Min.   :-5.2246   Min.   :0.7704  
+##  1st Qu.:107   1st Qu.:-0.9721   1st Qu.:0.8477  
+##  Median :213   Median :-0.1294   Median :0.9596  
+##  Mean   :213   Mean   : 0.0000   Mean   :1.0252  
+##  3rd Qu.:319   3rd Qu.: 1.0732   3rd Qu.:1.1674  
+##  Max.   :425   Max.   : 2.6489   Max.   :1.4953</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="viewdifficulty.html#cb65-1"></a><span class="kw">sd</span>(jmle.person.estimates<span class="op">$</span>Theta)</span></code></pre></div>
+<pre><code>## [1] 1.472164</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="viewdifficulty.html#cb67-1"></a><span class="kw">hist</span>(jmle.person.estimates<span class="op">$</span>Theta, <span class="dt">main =</span> <span class="st">&quot;Histogram of Person Location Estimates </span><span class="ch">\n</span><span class="st">for the Transitive Reasoning Data: JMLE&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Person Location Estimates in Logits&quot;</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="jmle-fit-statistics" class="section level3">
+<h3><span class="header-section-number">3.7.5</span> JMLE Fit Statistics</h3>
+<p>When JMLE is used, TAM calculates both person and item fit using a single function: <em>tam.jml.fit()</em>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="viewdifficulty.html#cb68-1"></a>jmle.fit &lt;-<span class="st"> </span><span class="kw">tam.jml.fit</span>(jmle.dichot.transreas) </span></code></pre></div>
+</div>
+<div id="jmle-item-fit-statistics" class="section level3">
+<h3><span class="header-section-number">3.7.6</span> JMLE Item Fit Statistics:</h3>
+<p>Now that we have calculated fit statistics for items and persons, we will save the item fit statistics in a data frame called <em>jmle.item.fit</em>. We can examine the item fit statistics in more detail by printing the <em>jmle.item.fit</em> object to the console or preview window and calculating summary statistics:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="viewdifficulty.html#cb69-1"></a>jmle.item.fit &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(jmle.fit<span class="op">$</span>fit.item)</span>
+<span id="cb69-2"><a href="viewdifficulty.html#cb69-2"></a>jmle.item.fit</span></code></pre></div>
+<pre><code>##            item outfitItem outfitItem_t infitItem infitItem_t
+## task_01 task_01  0.4420089   -1.6559613 0.6950708  -2.3161703
+## task_02 task_02  1.0221315    0.1803034 1.0758295   1.0613255
+## task_03 task_03  0.4834787   -2.3565396 0.7056770  -3.3346910
+## task_04 task_04  1.1717216    1.0243575 1.1555052   2.2693943
+## task_05 task_05  0.8205063   -1.0015131 0.9787715  -0.2834854
+## task_06 task_06  0.1317884   -2.1305158 0.5047768  -2.6925253
+## task_07 task_07  0.5649507   -2.3418462 0.7743924  -2.9933893
+## task_08 task_08  0.2276766   -1.9276522 0.5928374  -2.3783305
+## task_09 task_09  0.9080487   -0.6432021 0.8760388  -2.0782574
+## task_10 task_10  0.8011164   -2.1908602 0.8817901  -2.4902719</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="viewdifficulty.html#cb71-1"></a><span class="co"># View(jmle.item.fit)</span></span>
+<span id="cb71-2"><a href="viewdifficulty.html#cb71-2"></a><span class="kw">summary</span>(jmle.item.fit)</span></code></pre></div>
+<pre><code>##       item     outfitItem      outfitItem_t       infitItem     
+##  task_01:1   Min.   :0.1318   Min.   :-2.3565   Min.   :0.5048  
+##  task_02:1   1st Qu.:0.4524   1st Qu.:-2.1758   1st Qu.:0.6977  
+##  task_03:1   Median :0.6830   Median :-1.7918   Median :0.8252  
+##  task_04:1   Mean   :0.6573   Mean   :-1.3043   Mean   :0.8241  
+##  task_05:1   3rd Qu.:0.8862   3rd Qu.:-0.7328   3rd Qu.:0.9545  
+##  task_06:1   Max.   :1.1717   Max.   : 1.0244   Max.   :1.1555  
+##  (Other):4                                                      
+##   infitItem_t     
+##  Min.   :-3.3347  
+##  1st Qu.:-2.6420  
+##  Median :-2.3472  
+##  Mean   :-1.5236  
+##  3rd Qu.:-0.7322  
+##  Max.   : 2.2694  
+## </code></pre>
+</div>
+<div id="jmle-person-fit-statistics" class="section level3">
+<h3><span class="header-section-number">3.7.7</span> JMLE Person Fit Statistics:</h3>
+<p>Next, we will save the person fit statistics in a data frame called <em>jmle.person.fit</em>. We can examine the person fit statistics in more detail by viewing it in the preview window and calculating summary statistics:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="viewdifficulty.html#cb73-1"></a>jmle.person.fit &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(jmle.fit<span class="op">$</span>fit.person)</span>
+<span id="cb73-2"><a href="viewdifficulty.html#cb73-2"></a><span class="co"># View(jmle.person.fit)</span></span>
+<span id="cb73-3"><a href="viewdifficulty.html#cb73-3"></a><span class="kw">summary</span>(jmle.person.fit)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t     infitPerson     infitPerson_t    
+##  Min.   :0.03243   Min.   :-0.8953   Min.   :0.1269   Min.   :-1.4431  
+##  1st Qu.:0.16217   1st Qu.:-0.6121   1st Qu.:0.3708   1st Qu.:-0.9011  
+##  Median :0.45652   Median : 0.1160   Median :0.6354   Median :-0.4169  
+##  Mean   :0.65734   Mean   : 0.1771   Mean   :0.8135   Mean   :-0.1853  
+##  3rd Qu.:0.89616   3rd Qu.: 0.7080   3rd Qu.:1.1277   3rd Qu.: 0.4825  
+##  Max.   :5.16763   Max.   : 2.9012   Max.   :2.2997   Max.   : 2.5966</code></pre>
+</div>
+<div id="summarize-the-results-from-the-jmle-dichotomous-rasch-model-analysis" class="section level3">
+<h3><span class="header-section-number">3.7.8</span> Summarize the results from the JMLE dichotomous Rasch model analysis</h3>
+<p>Next, we will create summary tables for the item and person estimates using a similar approach as we used for the MMLE analysis earlier in this chapter.</p>
+</div>
+</div>
+<div id="model-summary-table-1" class="section level2">
+<h2><span class="header-section-number">3.8</span> Model summary table:</h2>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="viewdifficulty.html#cb75-1"></a>jmle.summary.table.statistics &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Logit Scale Location Mean&quot;</span>,</span>
+<span id="cb75-2"><a href="viewdifficulty.html#cb75-2"></a>                              <span class="st">&quot;Logit Scale Location SD&quot;</span>,</span>
+<span id="cb75-3"><a href="viewdifficulty.html#cb75-3"></a>                              <span class="st">&quot;Standard Error Mean&quot;</span>,</span>
+<span id="cb75-4"><a href="viewdifficulty.html#cb75-4"></a>                              <span class="st">&quot;Standard Error SD&quot;</span>,</span>
+<span id="cb75-5"><a href="viewdifficulty.html#cb75-5"></a>                              <span class="st">&quot;Outfit MSE Mean&quot;</span>,</span>
+<span id="cb75-6"><a href="viewdifficulty.html#cb75-6"></a>                              <span class="st">&quot;Outfit MSE SD&quot;</span>,</span>
+<span id="cb75-7"><a href="viewdifficulty.html#cb75-7"></a>                              <span class="st">&quot;Infit MSE Mean&quot;</span>,</span>
+<span id="cb75-8"><a href="viewdifficulty.html#cb75-8"></a>                              <span class="st">&quot;Infit MSE SD&quot;</span>,</span>
+<span id="cb75-9"><a href="viewdifficulty.html#cb75-9"></a>                              <span class="st">&quot;Std. Outfit Mean&quot;</span>,</span>
+<span id="cb75-10"><a href="viewdifficulty.html#cb75-10"></a>                              <span class="st">&quot;Std. Outfit SD&quot;</span>,</span>
+<span id="cb75-11"><a href="viewdifficulty.html#cb75-11"></a>                              <span class="st">&quot;Std. Infit Mean&quot;</span>,</span>
+<span id="cb75-12"><a href="viewdifficulty.html#cb75-12"></a>                              <span class="st">&quot;Std. Infit SD&quot;</span>,</span>
+<span id="cb75-13"><a href="viewdifficulty.html#cb75-13"></a>                              <span class="st">&quot;Reliability of Separation&quot;</span>)</span>
+<span id="cb75-14"><a href="viewdifficulty.html#cb75-14"></a></span>
+<span id="cb75-15"><a href="viewdifficulty.html#cb75-15"></a>jmle.item.summary.results &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">mean</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>),</span>
+<span id="cb75-16"><a href="viewdifficulty.html#cb75-16"></a>                              <span class="kw">sd</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>),</span>
+<span id="cb75-17"><a href="viewdifficulty.html#cb75-17"></a>                              <span class="kw">mean</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location SE</span><span class="st">`</span>),</span>
+<span id="cb75-18"><a href="viewdifficulty.html#cb75-18"></a>                              <span class="kw">sd</span>(jmle.item.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Item Location SE</span><span class="st">`</span>),</span>
+<span id="cb75-19"><a href="viewdifficulty.html#cb75-19"></a>                              <span class="kw">mean</span>(jmle.item.fit<span class="op">$</span>outfitItem),</span>
+<span id="cb75-20"><a href="viewdifficulty.html#cb75-20"></a>                              <span class="kw">sd</span>(jmle.item.fit<span class="op">$</span>outfitItem),</span>
+<span id="cb75-21"><a href="viewdifficulty.html#cb75-21"></a>                              <span class="kw">mean</span>(jmle.item.fit<span class="op">$</span>infitItem),</span>
+<span id="cb75-22"><a href="viewdifficulty.html#cb75-22"></a>                              <span class="kw">sd</span>(jmle.item.fit<span class="op">$</span>infitItem),</span>
+<span id="cb75-23"><a href="viewdifficulty.html#cb75-23"></a>                              <span class="kw">mean</span>(jmle.item.fit<span class="op">$</span>outfitItem_t),</span>
+<span id="cb75-24"><a href="viewdifficulty.html#cb75-24"></a>                              <span class="kw">sd</span>(jmle.item.fit<span class="op">$</span>outfitItem_t),</span>
+<span id="cb75-25"><a href="viewdifficulty.html#cb75-25"></a>                              <span class="kw">mean</span>(jmle.item.fit<span class="op">$</span>infitItem_t),</span>
+<span id="cb75-26"><a href="viewdifficulty.html#cb75-26"></a>                              <span class="kw">sd</span>(jmle.item.fit<span class="op">$</span>infitItem_t),</span>
+<span id="cb75-27"><a href="viewdifficulty.html#cb75-27"></a>                              jmle.dichot.transreas<span class="op">$</span>WLEreliability)</span>
+<span id="cb75-28"><a href="viewdifficulty.html#cb75-28"></a></span>
+<span id="cb75-29"><a href="viewdifficulty.html#cb75-29"></a><span class="co">#*#*# Item reliability</span></span>
+<span id="cb75-30"><a href="viewdifficulty.html#cb75-30"></a></span>
+<span id="cb75-31"><a href="viewdifficulty.html#cb75-31"></a></span>
+<span id="cb75-32"><a href="viewdifficulty.html#cb75-32"></a>jmle.person.summary.results &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">mean</span>(jmle.person.estimates<span class="op">$</span>Theta),</span>
+<span id="cb75-33"><a href="viewdifficulty.html#cb75-33"></a>                              <span class="kw">sd</span>(jmle.person.estimates<span class="op">$</span>Theta),</span>
+<span id="cb75-34"><a href="viewdifficulty.html#cb75-34"></a>                              <span class="kw">mean</span>(jmle.person.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Theta SE</span><span class="st">`</span>),</span>
+<span id="cb75-35"><a href="viewdifficulty.html#cb75-35"></a>                              <span class="kw">sd</span>(jmle.person.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Theta SE</span><span class="st">`</span>),</span>
+<span id="cb75-36"><a href="viewdifficulty.html#cb75-36"></a>                              <span class="kw">mean</span>(jmle.person.fit<span class="op">$</span>outfitPerson),</span>
+<span id="cb75-37"><a href="viewdifficulty.html#cb75-37"></a>                              <span class="kw">sd</span>(jmle.person.fit<span class="op">$</span>outfitPerson),</span>
+<span id="cb75-38"><a href="viewdifficulty.html#cb75-38"></a>                              <span class="kw">mean</span>(jmle.person.fit<span class="op">$</span>infitPerson),</span>
+<span id="cb75-39"><a href="viewdifficulty.html#cb75-39"></a>                              <span class="kw">sd</span>(jmle.person.fit<span class="op">$</span>infitPerson),</span>
+<span id="cb75-40"><a href="viewdifficulty.html#cb75-40"></a>                              <span class="kw">mean</span>(jmle.person.fit<span class="op">$</span>outfitPerson_t),</span>
+<span id="cb75-41"><a href="viewdifficulty.html#cb75-41"></a>                              <span class="kw">sd</span>(jmle.person.fit<span class="op">$</span>outfitPerson_t),</span>
+<span id="cb75-42"><a href="viewdifficulty.html#cb75-42"></a>                              <span class="kw">mean</span>(jmle.person.fit<span class="op">$</span>infitPerson_t),</span>
+<span id="cb75-43"><a href="viewdifficulty.html#cb75-43"></a>                              <span class="kw">sd</span>(jmle.person.fit<span class="op">$</span>infitPerson_t),</span>
+<span id="cb75-44"><a href="viewdifficulty.html#cb75-44"></a>                              <span class="kw">mean</span>(achievement<span class="op">$</span>WLE.rel))</span>
+<span id="cb75-45"><a href="viewdifficulty.html#cb75-45"></a></span>
+<span id="cb75-46"><a href="viewdifficulty.html#cb75-46"></a><span class="co"># Round the values for presentation in a table:</span></span>
+<span id="cb75-47"><a href="viewdifficulty.html#cb75-47"></a>jmle.item.summary.results_rounded &lt;-<span class="st"> </span><span class="kw">round</span>(jmle.item.summary.results, <span class="dt">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb75-48"><a href="viewdifficulty.html#cb75-48"></a></span>
+<span id="cb75-49"><a href="viewdifficulty.html#cb75-49"></a>jmle.person.summary.results_rounded &lt;-<span class="st"> </span><span class="kw">round</span>(jmle.person.summary.results, <span class="dt">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb75-50"><a href="viewdifficulty.html#cb75-50"></a></span>
+<span id="cb75-51"><a href="viewdifficulty.html#cb75-51"></a>jmle.Table1 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(jmle.summary.table.statistics,</span>
+<span id="cb75-52"><a href="viewdifficulty.html#cb75-52"></a>                           jmle.item.summary.results_rounded, </span>
+<span id="cb75-53"><a href="viewdifficulty.html#cb75-53"></a>                           jmle.person.summary.results_rounded)</span>
+<span id="cb75-54"><a href="viewdifficulty.html#cb75-54"></a></span>
+<span id="cb75-55"><a href="viewdifficulty.html#cb75-55"></a><span class="co"># Add descriptive column labels:</span></span>
+<span id="cb75-56"><a href="viewdifficulty.html#cb75-56"></a><span class="kw">names</span>(jmle.Table1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Statistic&quot;</span>, <span class="st">&quot;Items&quot;</span>, <span class="st">&quot;Persons&quot;</span>)</span></code></pre></div>
+</div>
+<div id="jmle-item-calibration-table" class="section level2">
+<h2><span class="header-section-number">3.9</span> JMLE item calibration table:</h2>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="viewdifficulty.html#cb76-1"></a><span class="co"># Calculate the proportion correct for each task:</span></span>
+<span id="cb76-2"><a href="viewdifficulty.html#cb76-2"></a></span>
+<span id="cb76-3"><a href="viewdifficulty.html#cb76-3"></a>TaskCorrect &lt;-<span class="st"> </span><span class="kw">apply</span>(transreas.responses, <span class="dv">2</span>, sum)</span>
+<span id="cb76-4"><a href="viewdifficulty.html#cb76-4"></a>PropCorrect &lt;-<span class="st"> </span>(TaskCorrect<span class="op">/</span><span class="kw">nrow</span>(transreas.responses))</span>
+<span id="cb76-5"><a href="viewdifficulty.html#cb76-5"></a></span>
+<span id="cb76-6"><a href="viewdifficulty.html#cb76-6"></a>jmle.Table2 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(jmle.item.fit<span class="op">$</span>item, </span>
+<span id="cb76-7"><a href="viewdifficulty.html#cb76-7"></a>                           PropCorrect,</span>
+<span id="cb76-8"><a href="viewdifficulty.html#cb76-8"></a>                           jmle.difficulty,</span>
+<span id="cb76-9"><a href="viewdifficulty.html#cb76-9"></a>                           jmle.item.se,</span>
+<span id="cb76-10"><a href="viewdifficulty.html#cb76-10"></a>                           item.fit<span class="op">$</span>Outfit,</span>
+<span id="cb76-11"><a href="viewdifficulty.html#cb76-11"></a>                           item.fit<span class="op">$</span>Outfit_t,</span>
+<span id="cb76-12"><a href="viewdifficulty.html#cb76-12"></a>                           item.fit<span class="op">$</span>Infit,</span>
+<span id="cb76-13"><a href="viewdifficulty.html#cb76-13"></a>                           item.fit<span class="op">$</span>Infit_t)</span>
+<span id="cb76-14"><a href="viewdifficulty.html#cb76-14"></a><span class="kw">names</span>(jmle.Table2) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Task ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Item Location&quot;</span>,<span class="st">&quot;Item SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)                           </span>
+<span id="cb76-15"><a href="viewdifficulty.html#cb76-15"></a></span>
+<span id="cb76-16"><a href="viewdifficulty.html#cb76-16"></a><span class="co"># Sort the table by Item difficulty:</span></span>
+<span id="cb76-17"><a href="viewdifficulty.html#cb76-17"></a>jmle.Table2 &lt;-<span class="st"> </span>jmle.Table2[<span class="kw">order</span>(<span class="op">-</span>jmle.Table2<span class="op">$</span><span class="st">`</span><span class="dt">Item Location</span><span class="st">`</span>),]</span>
+<span id="cb76-18"><a href="viewdifficulty.html#cb76-18"></a></span>
+<span id="cb76-19"><a href="viewdifficulty.html#cb76-19"></a><span class="co"># Round the numeric values (all columns except the first one) for presentation in a table:</span></span>
+<span id="cb76-20"><a href="viewdifficulty.html#cb76-20"></a>jmle.Table2[, <span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(jmle.Table2[, <span class="dv">-1</span>], <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div id="person-calibration-table-1" class="section level2">
+<h2><span class="header-section-number">3.10</span> Person calibration table:</h2>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="viewdifficulty.html#cb77-1"></a><span class="co"># calculate proportion correct for persons:</span></span>
+<span id="cb77-2"><a href="viewdifficulty.html#cb77-2"></a>PersonPropCorrect &lt;-<span class="st"> </span>achievement<span class="op">$</span>PersonScores <span class="op">/</span><span class="st"> </span>achievement<span class="op">$</span>PersonMax</span>
+<span id="cb77-3"><a href="viewdifficulty.html#cb77-3"></a></span>
+<span id="cb77-4"><a href="viewdifficulty.html#cb77-4"></a>jmle.Table3 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(jmle.person.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Student ID</span><span class="st">`</span>,</span>
+<span id="cb77-5"><a href="viewdifficulty.html#cb77-5"></a>                                PersonPropCorrect,</span>
+<span id="cb77-6"><a href="viewdifficulty.html#cb77-6"></a>                                jmle.person.estimates<span class="op">$</span>Theta,</span>
+<span id="cb77-7"><a href="viewdifficulty.html#cb77-7"></a>                                jmle.person.estimates<span class="op">$</span><span class="st">`</span><span class="dt">Theta SE</span><span class="st">`</span>,</span>
+<span id="cb77-8"><a href="viewdifficulty.html#cb77-8"></a>                                jmle.person.fit<span class="op">$</span>outfitPerson,</span>
+<span id="cb77-9"><a href="viewdifficulty.html#cb77-9"></a>                                jmle.person.fit<span class="op">$</span>outfitPerson_t,</span>
+<span id="cb77-10"><a href="viewdifficulty.html#cb77-10"></a>                                jmle.person.fit<span class="op">$</span>infitPerson,</span>
+<span id="cb77-11"><a href="viewdifficulty.html#cb77-11"></a>                                jmle.person.fit<span class="op">$</span>infitPerson_t)</span>
+<span id="cb77-12"><a href="viewdifficulty.html#cb77-12"></a>                                </span>
+<span id="cb77-13"><a href="viewdifficulty.html#cb77-13"></a><span class="kw">names</span>(jmle.Table3) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Person ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Person Location&quot;</span>,<span class="st">&quot;Person SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)</span>
+<span id="cb77-14"><a href="viewdifficulty.html#cb77-14"></a></span>
+<span id="cb77-15"><a href="viewdifficulty.html#cb77-15"></a><span class="co"># Round the numeric values (all columns except the first one) for presentation in a table:</span></span>
+<span id="cb77-16"><a href="viewdifficulty.html#cb77-16"></a>jmle.Table3[, <span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(jmle.Table3[, <span class="dv">-1</span>], <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div id="compare-the-estimated-parameters-between-jmle-and-mmle-methods" class="section level3">
+<h3><span class="header-section-number">3.10.1</span> Compare the estimated parameters between JMLE and MMLE methods</h3>
+<p>As a final step in our analysis, we will compare the item and location estimates between the JMLE and MMLE methods using a scatterplot and Pearson product-moment correlation.</p>
+</div>
+</div>
+<div id="compare-item-estimates" class="section level2">
+<h2><span class="header-section-number">3.11</span> Compare item estimates:</h2>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="viewdifficulty.html#cb78-1"></a><span class="kw">plot</span>(difficulty<span class="op">$</span>xsi, jmle.difficulty,</span>
+<span id="cb78-2"><a href="viewdifficulty.html#cb78-2"></a>     <span class="dt">pch=</span><span class="dv">16</span>,</span>
+<span id="cb78-3"><a href="viewdifficulty.html#cb78-3"></a>     <span class="dt">xlab=</span> <span class="st">&quot;MMLE Estimate&quot;</span>,</span>
+<span id="cb78-4"><a href="viewdifficulty.html#cb78-4"></a>     <span class="dt">ylab=</span> <span class="st">&quot;JMLE Estimate&quot;</span>,</span>
+<span id="cb78-5"><a href="viewdifficulty.html#cb78-5"></a>     <span class="dt">main=</span><span class="st">&quot;Item Parameter Estimate Comparison&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="viewdifficulty.html#cb79-1"></a><span class="kw">cor</span>(difficulty<span class="op">$</span>xsi, jmle.difficulty)</span></code></pre></div>
+<pre><code>## [1] 0.9998954</code></pre>
+<p>From this analysis, we can see that there is a nearly perfect linear correlation (r = 0.9998954) between the two sets of item estimates.</p>
+</div>
+<div id="compare-person-estimates" class="section level2">
+<h2><span class="header-section-number">3.12</span> Compare person estimates:</h2>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="viewdifficulty.html#cb81-1"></a><span class="kw">plot</span>(achievement<span class="op">$</span>theta, jmle.person.estimates<span class="op">$</span>Theta,</span>
+<span id="cb81-2"><a href="viewdifficulty.html#cb81-2"></a>     <span class="dt">pch=</span><span class="dv">16</span>,</span>
+<span id="cb81-3"><a href="viewdifficulty.html#cb81-3"></a>     <span class="dt">xlab=</span> <span class="st">&quot;MMLE Estimate&quot;</span>,</span>
+<span id="cb81-4"><a href="viewdifficulty.html#cb81-4"></a>     <span class="dt">ylab=</span> <span class="st">&quot;JMLE Estimate&quot;</span>,</span>
+<span id="cb81-5"><a href="viewdifficulty.html#cb81-5"></a>     <span class="dt">main=</span><span class="st">&quot;Person Parameter Estimate Comparison&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="viewdifficulty.html#cb82-1"></a><span class="kw">cor</span>(achievement<span class="op">$</span>theta, jmle.person.estimates<span class="op">$</span>Theta)</span></code></pre></div>
+<pre><code>## [1] 0.9990405</code></pre>
+<p>From this analysis, we can see that there is a nearly perfect linear correlation (r = 0.9990405) between the two sets of person estimates.</p>
+</div>
+<div id="example-apa-style-results-section-based-on-the-mmle-results" class="section level2">
+<h2><span class="header-section-number">3.13</span> Example APA-Style Results Section based on the MMLE results:</h2>
+<p>Table 1 presents a summary of the results from the analysis of the transitive reasoning data <a href="https://methods.sagepub.com/book/introduction-to-nonparametric-item-response-theory">Sijtsma and Molenaar,2002</a> using the dichotomous Rasch model (<a href="https://eric.ed.gov/?id=ED419814">Rasch, 1960</a>). Specifically, the calibration of students (<em>N</em> = 425) and tasks (<em>N</em> = 10) are summarized using average logit-scale calibrations, standard errors, and model-data fit statistics. Examination of the results indicates that, on average, the students were located higher on the logit scale (<em>M</em> = -0.06,<em>SD</em> = 1.28), compared to tasks (<em>M</em> = -1.94, <em>SD</em> = 1.28). This finding suggests that the items were relatively easy for the sample of students who participated in this transitive reasoning test. However, average values of the Standard Error (<em>SE</em>) were slightly larger for students (<em>M</em> = 1.02) compared to Tasks (<em>M</em> = 0.17), indicating that there may be some issues related to targeting for some of the students who participated in the assessment. Average values of model-data fit statistics indicate overall adequate fit to the model, with average Infit and Outfit mean square statistics around 1.00, and average standardized Infit and Outfit statistics near the expected value of 0.00 when data fit the model. This finding of overall adequate fit to the model supports the interpretation of item and person calibrations on the logit scale as indicators of their locations on the latent variable measured by the test.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="viewdifficulty.html#cb84-1"></a><span class="co"># Print Table 1:</span></span>
+<span id="cb84-2"><a href="viewdifficulty.html#cb84-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb84-3"><a href="viewdifficulty.html#cb84-3"></a>  Table1, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb84-4"><a href="viewdifficulty.html#cb84-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Model Summary Table&#39;</span></span>
+<span id="cb84-5"><a href="viewdifficulty.html#cb84-5"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-42">Table 3.1: </span>Model Summary Table</caption>
+<thead>
+<tr class="header">
+<th align="left">Statistic</th>
+<th align="right">Items</th>
+<th align="right">Persons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Logit Scale Location Mean</td>
+<td align="right">-1.94</td>
+<td align="right">-0.06</td>
+</tr>
+<tr class="even">
+<td align="left">Logit Scale Location SD</td>
+<td align="right">1.57</td>
+<td align="right">1.28</td>
+</tr>
+<tr class="odd">
+<td align="left">Standard Error Mean</td>
+<td align="right">0.17</td>
+<td align="right">1.02</td>
+</tr>
+<tr class="even">
+<td align="left">Standard Error SD</td>
+<td align="right">0.07</td>
+<td align="right">0.30</td>
+</tr>
+<tr class="odd">
+<td align="left">Outfit MSE Mean</td>
+<td align="right">0.90</td>
+<td align="right">0.61</td>
+</tr>
+<tr class="even">
+<td align="left">Outfit MSE SD</td>
+<td align="right">0.26</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="odd">
+<td align="left">Infit MSE Mean</td>
+<td align="right">0.99</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="even">
+<td align="left">Infit MSE SD</td>
+<td align="right">0.08</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="odd">
+<td align="left">Std. Outfit Mean</td>
+<td align="right">-0.22</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="even">
+<td align="left">Std. Outfit SD</td>
+<td align="right">1.95</td>
+<td align="right">0.65</td>
+</tr>
+<tr class="odd">
+<td align="left">Std. Infit Mean</td>
+<td align="right">0.16</td>
+<td align="right">-0.30</td>
+</tr>
+<tr class="even">
+<td align="left">Std. Infit SD</td>
+<td align="right">0.80</td>
+<td align="right">0.92</td>
+</tr>
+<tr class="odd">
+<td align="left">Reliability of Separation</td>
+<td align="right">0.50</td>
+<td align="right">0.31</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2 includes detailed results for the 10 tasks included in the Transitive Reasoning test. For each item, the proportion of correct responses is presented, followed by the logit-scale location (<em>δ</em>), SE, and model-data fit statistics. Examination of these results indicates that Task 9 was the most difficult (<em>Proportion Correct</em> = 0.30; <em>δ</em> = 1.00 ; <em>SE</em> = 0.11), followed by Task 10 (Proportion Correct = 0.52; <em>δ</em> = -0.09; <em>SE</em> = 0.11). The easiest item was Task 6 (<em>Proportion Correct</em> = 0.97; <em>δ</em> = -4.07; <em>SE</em> = 0.31).</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="viewdifficulty.html#cb85-1"></a><span class="co"># Print Table 2:</span></span>
+<span id="cb85-2"><a href="viewdifficulty.html#cb85-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb85-3"><a href="viewdifficulty.html#cb85-3"></a>  Table2, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb85-4"><a href="viewdifficulty.html#cb85-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Item Calibration&#39;</span></span>
+<span id="cb85-5"><a href="viewdifficulty.html#cb85-5"></a>)</span></code></pre></div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-43">Table 3.2: </span>Item Calibration</caption>
+<colgroup>
+<col width="7%" />
+<col width="7%" />
+<col width="18%" />
+<col width="13%" />
+<col width="7%" />
+<col width="10%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Task ID</th>
+<th align="right">Proportion Correct</th>
+<th align="right">Item Location</th>
+<th align="right">Item SE</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">task_09</td>
+<td align="left">task_09</td>
+<td align="right">0.30</td>
+<td align="right">1.00</td>
+<td align="right">0.11</td>
+<td align="right">1.06</td>
+<td align="right">1.10</td>
+<td align="right">1.01</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="even">
+<td align="left">task_10</td>
+<td align="left">task_10</td>
+<td align="right">0.52</td>
+<td align="right">-0.09</td>
+<td align="right">0.11</td>
+<td align="right">1.00</td>
+<td align="right">-0.04</td>
+<td align="right">1.00</td>
+<td align="right">0.11</td>
+</tr>
+<tr class="odd">
+<td align="left">task_04</td>
+<td align="left">task_04</td>
+<td align="right">0.78</td>
+<td align="right">-1.52</td>
+<td align="right">0.13</td>
+<td align="right">1.24</td>
+<td align="right">3.20</td>
+<td align="right">1.12</td>
+<td align="right">1.73</td>
+</tr>
+<tr class="even">
+<td align="left">task_05</td>
+<td align="left">task_05</td>
+<td align="right">0.80</td>
+<td align="right">-1.65</td>
+<td align="right">0.13</td>
+<td align="right">1.04</td>
+<td align="right">0.56</td>
+<td align="right">1.03</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="odd">
+<td align="left">task_02</td>
+<td align="left">task_02</td>
+<td align="right">0.81</td>
+<td align="right">-1.70</td>
+<td align="right">0.13</td>
+<td align="right">1.17</td>
+<td align="right">2.11</td>
+<td align="right">1.10</td>
+<td align="right">1.23</td>
+</tr>
+<tr class="even">
+<td align="left">task_07</td>
+<td align="left">task_07</td>
+<td align="right">0.84</td>
+<td align="right">-1.98</td>
+<td align="right">0.14</td>
+<td align="right">0.87</td>
+<td align="right">-1.51</td>
+<td align="right">0.94</td>
+<td align="right">-0.61</td>
+</tr>
+<tr class="odd">
+<td align="left">task_03</td>
+<td align="left">task_03</td>
+<td align="right">0.88</td>
+<td align="right">-2.37</td>
+<td align="right">0.16</td>
+<td align="right">0.81</td>
+<td align="right">-1.88</td>
+<td align="right">0.92</td>
+<td align="right">-0.73</td>
+</tr>
+<tr class="even">
+<td align="left">task_01</td>
+<td align="left">task_01</td>
+<td align="right">0.94</td>
+<td align="right">-3.17</td>
+<td align="right">0.21</td>
+<td align="right">0.83</td>
+<td align="right">-1.00</td>
+<td align="right">0.94</td>
+<td align="right">-0.31</td>
+</tr>
+<tr class="odd">
+<td align="left">task_08</td>
+<td align="left">task_08</td>
+<td align="right">0.97</td>
+<td align="right">-3.81</td>
+<td align="right">0.28</td>
+<td align="right">0.59</td>
+<td align="right">-2.01</td>
+<td align="right">0.92</td>
+<td align="right">-0.26</td>
+</tr>
+<tr class="even">
+<td align="left">task_06</td>
+<td align="left">task_06</td>
+<td align="right">0.97</td>
+<td align="right">-4.07</td>
+<td align="right">0.31</td>
+<td align="right">0.40</td>
+<td align="right">-2.76</td>
+<td align="right">0.90</td>
+<td align="right">-0.28</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3 includes detailed results for first 10 students who participated in the Transitive Reasoning Test. For each student, the proportion of correct responses is presented, followed by their logit-scale location estimate (<em>θ</em>), <em>SE</em>, and model-data fit statistics. Examination of these results indicates that around 51 students had the highest score (<em>Proportion Correct</em> = 1.00; <em>θ</em> = 2.35; <em>SE</em> = 1.76). The student with the lowest score was <em>ID.148</em> (<em>Proportion Correct</em> = 0.10; <em>θ</em> = -4.52; <em>SE</em> = 1.03).</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="viewdifficulty.html#cb86-1"></a><span class="co"># Print Table 3 in a neat way:</span></span>
+<span id="cb86-2"><a href="viewdifficulty.html#cb86-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb86-3"><a href="viewdifficulty.html#cb86-3"></a>  <span class="kw">head</span>(Table3,<span class="dv">10</span>), <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb86-4"><a href="viewdifficulty.html#cb86-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;Person Calibration&#39;</span></span>
+<span id="cb86-5"><a href="viewdifficulty.html#cb86-5"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-44">Table 3.3: </span>Person Calibration</caption>
+<colgroup>
+<col width="10%" />
+<col width="19%" />
+<col width="16%" />
+<col width="10%" />
+<col width="11%" />
+<col width="12%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Person ID</th>
+<th align="right">Proportion Correct</th>
+<th align="right">Person Location</th>
+<th align="right">Person SE</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.8</td>
+<td align="right">-0.16</td>
+<td align="right">0.92</td>
+<td align="right">0.23</td>
+<td align="right">-0.67</td>
+<td align="right">0.36</td>
+<td align="right">-1.39</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.6</td>
+<td align="right">-1.47</td>
+<td align="right">0.77</td>
+<td align="right">1.07</td>
+<td align="right">0.31</td>
+<td align="right">1.12</td>
+<td align="right">0.45</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.4</td>
+<td align="right">-2.54</td>
+<td align="right">0.76</td>
+<td align="right">4.22</td>
+<td align="right">2.84</td>
+<td align="right">2.08</td>
+<td align="right">2.58</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">1.0</td>
+<td align="right">2.35</td>
+<td align="right">1.76</td>
+<td align="right">0.04</td>
+<td align="right">0.89</td>
+<td align="right">0.16</td>
+<td align="right">-0.58</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">0.7</td>
+<td align="right">-0.88</td>
+<td align="right">0.82</td>
+<td align="right">0.55</td>
+<td align="right">-0.46</td>
+<td align="right">0.70</td>
+<td align="right">-0.65</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">0.9</td>
+<td align="right">0.79</td>
+<td align="right">1.11</td>
+<td align="right">0.16</td>
+<td align="right">-0.12</td>
+<td align="right">0.38</td>
+<td align="right">-0.97</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">1.0</td>
+<td align="right">2.35</td>
+<td align="right">1.76</td>
+<td align="right">0.04</td>
+<td align="right">0.89</td>
+<td align="right">0.16</td>
+<td align="right">-0.58</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">0.7</td>
+<td align="right">-0.88</td>
+<td align="right">0.82</td>
+<td align="right">0.70</td>
+<td align="right">-0.18</td>
+<td align="right">0.78</td>
+<td align="right">-0.40</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">0.9</td>
+<td align="right">0.79</td>
+<td align="right">1.11</td>
+<td align="right">0.16</td>
+<td align="right">-0.12</td>
+<td align="right">0.38</td>
+<td align="right">-0.97</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.7</td>
+<td align="right">-0.88</td>
+<td align="right">0.82</td>
+<td align="right">0.42</td>
+<td align="right">-0.74</td>
+<td align="right">0.57</td>
+<td align="right">-1.06</td>
+</tr>
+</tbody>
+</table>
+<p>Figure 1 illustrates the calibrations of the Participants and Items on the logit scale that represents the latent variable. The calibrations shown in this figure correspond to the results presented in Table 2 and Table 3 for tasks and students, respectively. The right-most column in the figure (“Logits”) shows the logit scale. Higher numbers correspond to higher levels of achievement (for students) and higher levels of difficulty (for tasks), and lower numbers correspond to lower achievement and less difficulty, respectively, for students and tasks. Next, student locations on the latent variable are illustrated using a histogram. Examination of the histogram indicates a wide spread of achievement levels, with most students grouped near the middle of the logit scale (<em>θ</em> = 0.00). Next, task locations on the logit scale are plotted in the middle panel of the figure. Examination of the task locations indicates a similar overall spread as the student locations. However, the tasks appear somewhat clustered at the lower half of the logit scale, without many items appearing above <em>θ</em> &gt;= 0.00. This lack of moderate-difficulty items may have contributed to the relatively large SE values for students with middle-range calibrations.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="viewdifficulty.html#cb87-1"></a><span class="co"># Plot the variable-Map</span></span>
+<span id="cb87-2"><a href="viewdifficulty.html#cb87-2"></a><span class="kw">IRT.WrightMap</span>(dichot.transreas,<span class="dt">show.thr.lab=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+</div>
+<div id="exericise" class="section level2">
+<h2><span class="header-section-number">3.14</span> Exericise</h2>
+<p>Please use the TAM package to estimate item and person locations with the dichotomous Rasch model for the Exercise 1 data.</p>
+</div>
+<div id="references" class="section level2">
+<h2><span class="header-section-number">3.15</span> References</h2>
+<p>[Cheng, please add these :)]</p>
+</div>
+<div id="supplementary-learning-materials" class="section level2">
+<h2><span class="header-section-number">3.16</span> Supplementary Learning Materials</h2>
+<p><a href="https://www.rasch.org/moulton.xls">Rasch Estimation Demonstration Spreadsheet</a></p>
+<p><a href="https://link.springer.com/content/pdf/10.3758/BF03192809.pdf">Li, Y. Using the open-source statistical language R to analyze the dichotomous Rasch model. Behavior Research Methods 38, 532–541 (2006). https://doi.org/10.3758/BF03192809</a></p>
+<p><a href="https://eric.ed.gov/?id=ED419814">Rasch, G. (1960/1980). Probabilistic models for some intelligence and attainment tests.(Copenhagen, Danish Institute for Educational Research), expanded edition (1980) with foreword and afterword by B.D. Wright. Chicago: The University of Chicago Press.</a></p>
+<p><a href="https://pdfs.semanticscholar.org/8083/5035228bc338840ed6c67e879b4bcef11e07.pdf?_ga=2.216101590.1797749273.1596845271-1703835138.1596845271">Wright, B. D., &amp; Masters, G. N. (1982). Rating Scale Analysis: Rasch Measurement. Chicago, IL: MESA Press.</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Dich-Rasch-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="MD-fit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/02-DichotomousRaschModel.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

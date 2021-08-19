@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Running the Rasch Rating Scale Model in R | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Running the Rasch Rating Scale Model in R | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Running the Rasch Rating Scale Model in R | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packagesand interpretthe results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurementtheory." />
+  
+
+<meta name="author" content="Stefanie Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-02-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="RS-model.html"/>
+<link rel="next" href="plot-a-wright-map-to-visualize-item-and-person-locations.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction-to-the-book"><i class="fa fa-check"></i><b>1.1</b> Introduction to the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.2</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.3</b> Online Resources</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>1.4</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.1</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-equation"><i class="fa fa-check"></i><b>2.1.1</b> Model Equation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-requirements"><i class="fa fa-check"></i><b>2.1.2</b> Model Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>2.2</b> Example Data: Transitive Reasoning</a></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>2.3</b> Prepare for the Analyses: Install and Load Packages</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>2.3.1</b> Getting Started</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary"><i class="fa fa-check"></i><b>2.4</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#plot-a-wright-map-to-visualize-item-and-person-locations"><i class="fa fa-check"></i><b>2.5</b> Plot a Wright Map to visualize item and person locations:</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters"><i class="fa fa-check"></i><b>2.6</b> Examine Item Parameters:</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#descriptive-statistics-for-item-locations"><i class="fa fa-check"></i><b>2.6.1</b> Descriptive Statistics for Item Locations</a></li>
+<li class="chapter" data-level="2.6.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#plot-item-response-functions"><i class="fa fa-check"></i><b>2.6.2</b> Plot item response functions</a></li>
+<li class="chapter" data-level="2.6.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#note-about-item-fit"><i class="fa fa-check"></i><b>2.6.3</b> Note about item fit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit-statistics"><i class="fa fa-check"></i><b>2.7</b> Item Fit Statistics</a></li>
+<li class="chapter" data-level="2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-person-fit-statistics"><i class="fa fa-check"></i><b>2.8</b> Examine person fit statistics</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>2.8.1</b> Summarize the results in tables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-summary-table"><i class="fa fa-check"></i><b>2.9</b> Model summary table:</a></li>
+<li class="chapter" data-level="2.10" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-calibration-table"><i class="fa fa-check"></i><b>2.10</b> Item calibration table:</a></li>
+<li class="chapter" data-level="2.11" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-calibration-table"><i class="fa fa-check"></i><b>2.11</b> Person calibration table:</a></li>
+<li class="chapter" data-level="2.12" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#install-and-load-the-package"><i class="fa fa-check"></i><b>2.12</b> Install and load the package:</a></li>
+<li class="chapter" data-level="2.13" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>2.13</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="2.14" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.14</b> Run the dichotomous Rasch model:</a><ul>
+<li class="chapter" data-level="2.14.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-1"><i class="fa fa-check"></i><b>2.14.1</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.14.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#plot-a-wright-map-to-visualize-item-and-person-locations-1"><i class="fa fa-check"></i><b>2.14.2</b> Plot a Wright Map to visualize item and person locations:</a></li>
+<li class="chapter" data-level="2.14.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters-1"><i class="fa fa-check"></i><b>2.14.3</b> Examine Item Parameters:</a></li>
+</ul></li>
+<li class="chapter" data-level="2.15" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#descriptive-statistics-for-item-locations-1"><i class="fa fa-check"></i><b>2.15</b> Descriptive Statistics for Item Locations</a></li>
+<li class="chapter" data-level="2.16" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit-statistics-1"><i class="fa fa-check"></i><b>2.16</b> Item Fit Statistics</a></li>
+<li class="chapter" data-level="2.17" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters"><i class="fa fa-check"></i><b>2.17</b> Person Parameters</a></li>
+<li class="chapter" data-level="2.18" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#descriptive-statistics-for-person-locations"><i class="fa fa-check"></i><b>2.18</b> Descriptive Statistics for Person Locations</a></li>
+<li class="chapter" data-level="2.19" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit-statistics"><i class="fa fa-check"></i><b>2.19</b> Person Fit Statistics</a></li>
+<li class="chapter" data-level="2.20" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#estimate-the-dichotomous-rasch-model-using-jmle"><i class="fa fa-check"></i><b>2.20</b> Estimate the Dichotomous Rasch Model using JMLE</a><ul>
+<li class="chapter" data-level="2.20.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-2"><i class="fa fa-check"></i><b>2.20.1</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.20.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-wright-map"><i class="fa fa-check"></i><b>2.20.2</b> JMLE Wright Map</a></li>
+<li class="chapter" data-level="2.20.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-item-parameters"><i class="fa fa-check"></i><b>2.20.3</b> JMLE Item Parameters:</a></li>
+<li class="chapter" data-level="2.20.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-person-parameters"><i class="fa fa-check"></i><b>2.20.4</b> JMLE Person Parameters:</a></li>
+<li class="chapter" data-level="2.20.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-fit-statistics"><i class="fa fa-check"></i><b>2.20.5</b> JMLE Fit Statistics</a></li>
+<li class="chapter" data-level="2.20.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-item-fit-statistics"><i class="fa fa-check"></i><b>2.20.6</b> JMLE Item Fit Statistics:</a></li>
+<li class="chapter" data-level="2.20.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#jmle-person-fit-statistics"><i class="fa fa-check"></i><b>2.20.7</b> JMLE Person Fit Statistics:</a></li>
+</ul></li>
+<li class="chapter" data-level="2.21" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exericise"><i class="fa fa-check"></i><b>2.21</b> Exericise</a></li>
+<li class="chapter" data-level="2.22" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>2.22</b> Bibliography</a></li>
+<li class="chapter" data-level="2.23" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.23</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a><ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="MD-fit.html"><a href="MD-fit.html#rasch-measurement-theory-perspective-on-model-data-fit"><i class="fa fa-check"></i><b>3.2</b> Rasch Measurement Theory Perspective on Model-Data Fit</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#residual-based-fit-analyses"><i class="fa fa-check"></i><b>3.3</b> Residual-Based Fit Analyses</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>3.3.1</b> Example Data: Transitive Reasoning</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>3.3.2</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>3.3.3</b> Getting Started</a></li>
+<li class="chapter" data-level="3.3.4" data-path="MD-fit.html"><a href="MD-fit.html#analyze-the-data-using-a-rasch-model"><i class="fa fa-check"></i><b>3.3.4</b> Analyze the data using a Rasch model</a></li>
+<li class="chapter" data-level="3.3.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>3.3.5</b> Run the Dichotomous Rasch Model</a></li>
+<li class="chapter" data-level="3.3.6" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality"><i class="fa fa-check"></i><b>3.3.6</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="3.3.7" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>3.3.7</b> Principal components analysis of standardized residual correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#conduct-a-pca-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>3.4</b> Conduct a PCA of Standardized Residual Correlations:</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#summaries-of-residuals-infit-outfit"><i class="fa fa-check"></i><b>3.4.1</b> Summaries of Residuals: Infit &amp; Outfit</a></li>
+<li class="chapter" data-level="3.4.2" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4.2</b> Graphical Displays for Evaluating Model-Data Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#plots-of-standardized-residuals"><i class="fa fa-check"></i><b>3.5</b> Plots of Standardized Residuals</a></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#empirical-item-response-functions"><i class="fa fa-check"></i><b>3.6</b> Empirical item response functions</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="MD-fit.html"><a href="MD-fit.html#Reliability"><i class="fa fa-check"></i><b>3.6.1</b> Reliability Indices in Rasch Measurement</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#conduct-model-data-fit-analyses-using-the-tam-package-with-joint-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.7</b> Conduct Model-Data Fit Analyses using the TAM Package with Joint Maximum Likelihood Estimation</a></li>
+<li class="chapter" data-level="3.8" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>3.8</b> Bibliography</a></li>
+<li class="chapter" data-level="3.9" data-path="MD-fit.html"><a href="MD-fit.html#supplmentary-learning-materials"><i class="fa fa-check"></i><b>3.9</b> Supplmentary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#rasch-rating-scale-model"><i class="fa fa-check"></i><b>4.1</b> Rasch Rating Scale Model</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-requirements"><i class="fa fa-check"></i><b>4.1.1</b> Model Requirements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="running-the-rasch-rating-scale-model-in-r.html"><a href="running-the-rasch-rating-scale-model-in-r.html"><i class="fa fa-check"></i><b>5</b> Running the Rasch Rating Scale Model in R</a><ul>
+<li class="chapter" data-level="5.1" data-path="running-the-rasch-rating-scale-model-in-r.html"><a href="running-the-rasch-rating-scale-model-in-r.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>5.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="5.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>5.2</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="5.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>5.3</b> Getting Started</a></li>
+<li class="chapter" data-level="5.4" data-path="running-the-rasch-rating-scale-model-in-r.html"><a href="running-the-rasch-rating-scale-model-in-r.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>5.4</b> Run the Rating Scale Model</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#plot-a-wright-map-to-visualize-item-and-person-locations"><i class="fa fa-check"></i><b>6</b> Plot a Wright Map to visualize item and person locations:</a><ul>
+<li class="chapter" data-level="6.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters"><i class="fa fa-check"></i><b>6.1</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html"><i class="fa fa-check"></i><b>6.1.1</b> Plot item response functions (rating scale category probability plots)</a></li>
+<li class="chapter" data-level="6.1.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-parameters"><i class="fa fa-check"></i><b>6.1.2</b> Examine person parameters</a></li>
+<li class="chapter" data-level="6.1.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-fit-statistics"><i class="fa fa-check"></i><b>6.1.3</b> Examine item fit statistics</a></li>
+<li class="chapter" data-level="6.1.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-person-fit-statistics"><i class="fa fa-check"></i><b>6.1.4</b> Examine person fit statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>6.2</b> Summarize the results in tables</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-summary-table"><i class="fa fa-check"></i><b>6.2.1</b> Model summary table:</a></li>
+<li class="chapter" data-level="6.2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-calibration-table"><i class="fa fa-check"></i><b>6.2.2</b> Item calibration table:</a></li>
+<li class="chapter" data-level="6.2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-calibration-table"><i class="fa fa-check"></i><b>6.2.3</b> Person calibration table:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>7</b> RSM Application with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="7.1" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#getting-started-1"><i class="fa fa-check"></i><b>7.1</b> Getting Started</a></li>
+<li class="chapter" data-level="7.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>7.2</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#run-the-rating-scale-model-1"><i class="fa fa-check"></i><b>7.3</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="7.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters-1"><i class="fa fa-check"></i><b>7.4</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>7.4.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit"><i class="fa fa-check"></i><b>7.5</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="7.6" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-1"><i class="fa fa-check"></i><b>7.6</b> Examine person parameters</a></li>
+<li class="chapter" data-level="7.7" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit"><i class="fa fa-check"></i><b>7.7</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="7.8" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map"><i class="fa fa-check"></i><b>7.8</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>8</b> RSM Application with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="8.1" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#getting-started-2"><i class="fa fa-check"></i><b>8.1</b> Getting Started</a></li>
+<li class="chapter" data-level="8.2" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#run-the-rating-scale-model-2"><i class="fa fa-check"></i><b>8.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="8.3" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-2"><i class="fa fa-check"></i><b>8.3</b> Examine item parameters</a></li>
+<li class="chapter" data-level="8.4" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>8.4</b> Examine item response functions (rating scale category probability plots)</a></li>
+<li class="chapter" data-level="8.5" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit-1"><i class="fa fa-check"></i><b>8.5</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="8.6" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-2"><i class="fa fa-check"></i><b>8.6</b> Examine person parameters</a></li>
+<li class="chapter" data-level="8.7" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit-1"><i class="fa fa-check"></i><b>8.7</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="8.8" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map-1"><i class="fa fa-check"></i><b>8.8</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="example-results-section-based-on-the-erm-cmle-results.html"><a href="example-results-section-based-on-the-erm-cmle-results.html"><i class="fa fa-check"></i><b>9</b> Example results section based on the eRm CMLE results:</a><ul>
+<li class="chapter" data-level="9.1" data-path="example-results-section-based-on-the-erm-cmle-results.html"><a href="example-results-section-based-on-the-erm-cmle-results.html#exercise"><i class="fa fa-check"></i><b>9.1</b> Exercise</a></li>
+<li class="chapter" data-level="9.2" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>9.2</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>10</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="10.1" data-path="PC-model.html"><a href="PC-model.html#partial-credit-model"><i class="fa fa-check"></i><b>10.1</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-requirements"><i class="fa fa-check"></i><b>10.1.1</b> Model Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="running-the-rasch-rating-scale-model-in-r.html"><a href="running-the-rasch-rating-scale-model-in-r.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>10.2</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="10.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>10.3</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="10.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#getting-started"><i class="fa fa-check"></i><b>10.4</b> Getting Started</a></li>
+<li class="chapter" data-level="10.5" data-path="PC-model.html"><a href="PC-model.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>10.5</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="10.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters"><i class="fa fa-check"></i><b>10.6</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#plot-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>10.6.1</b> Plot item response functions (rating scale category probability plots)</a></li>
+<li class="chapter" data-level="10.6.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-parameters"><i class="fa fa-check"></i><b>10.6.2</b> Examine person parameters</a></li>
+<li class="chapter" data-level="10.6.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-fit-statistics"><i class="fa fa-check"></i><b>10.6.3</b> Examine item fit statistics</a></li>
+<li class="chapter" data-level="10.6.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-person-fit-statistics"><i class="fa fa-check"></i><b>10.6.4</b> Examine person fit statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>10.7</b> Summarize the results in tables</a><ul>
+<li class="chapter" data-level="10.7.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#model-summary-table"><i class="fa fa-check"></i><b>10.7.1</b> Model summary table:</a></li>
+<li class="chapter" data-level="10.7.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-calibration-table"><i class="fa fa-check"></i><b>10.7.2</b> Item calibration table:</a></li>
+<li class="chapter" data-level="10.7.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-calibration-table"><i class="fa fa-check"></i><b>10.7.3</b> Person calibration table:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#getting-started-1"><i class="fa fa-check"></i><b>10.8</b> Getting Started</a></li>
+<li class="chapter" data-level="10.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>10.9</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="10.10" data-path="PC-model.html"><a href="PC-model.html#run-the-partial-credit-model-1"><i class="fa fa-check"></i><b>10.10</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="10.11" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#examine-item-parameters-1"><i class="fa fa-check"></i><b>10.11</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="10.11.1" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>10.11.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit"><i class="fa fa-check"></i><b>10.12</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="10.13" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-1"><i class="fa fa-check"></i><b>10.13</b> Examine person parameters</a></li>
+<li class="chapter" data-level="10.14" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit"><i class="fa fa-check"></i><b>10.14</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="10.15" data-path="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map"><i class="fa fa-check"></i><b>10.15</b> Plot the Wright Map:</a></li>
+<li class="chapter" data-level="10.16" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#getting-started-2"><i class="fa fa-check"></i><b>10.16</b> Getting Started</a></li>
+<li class="chapter" data-level="10.17" data-path="running-the-rasch-rating-scale-model-in-r.html"><a href="running-the-rasch-rating-scale-model-in-r.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>10.17</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="10.18" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-2"><i class="fa fa-check"></i><b>10.18</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="10.18.1" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>10.18.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.19" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit-1"><i class="fa fa-check"></i><b>10.19</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="10.20" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-2"><i class="fa fa-check"></i><b>10.20</b> Examine person parameters</a></li>
+<li class="chapter" data-level="10.21" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit-1"><i class="fa fa-check"></i><b>10.21</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="10.22" data-path="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="rsm-application-with-joint-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map-1"><i class="fa fa-check"></i><b>10.22</b> Plot the Wright Map:</a></li>
+<li class="chapter" data-level="10.23" data-path="example-results-section-based-on-the-erm-cmle-results.html"><a href="example-results-section-based-on-the-erm-cmle-results.html#exercise"><i class="fa fa-check"></i><b>10.23</b> Exercise</a></li>
+<li class="chapter" data-level="10.24" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>10.24</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html"><i class="fa fa-check"></i><b>11</b> Many Facet Rasch Model</a><ul>
+<li class="chapter" data-level="11.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#motivation"><i class="fa fa-check"></i><b>11.1</b> Motivation</a></li>
+<li class="chapter" data-level="11.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#introduction-to-many-facet-rasch-mfr-model"><i class="fa fa-check"></i><b>11.2</b> Introduction to Many-Facet Rasch (MFR) Model</a></li>
+<li class="chapter" data-level="11.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#why-use-the-mfr-model"><i class="fa fa-check"></i><b>11.3</b> Why use the MFR model?</a></li>
+<li class="chapter" data-level="11.4" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#mfr-calibrations"><i class="fa fa-check"></i><b>11.4</b> MFR Calibrations</a></li>
+<li class="chapter" data-level="11.5" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#r-lab-runing-the-rasch-many-facet-model-in-r"><i class="fa fa-check"></i><b>11.5</b> R-Lab: Runing the Rasch Many-Facet Model in R</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#prepare-the-dataset"><i class="fa fa-check"></i><b>11.5.1</b> Prepare the Dataset</a></li>
+<li class="chapter" data-level="11.5.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#run-the-mfr-model-using-the-tam-package"><i class="fa fa-check"></i><b>11.5.2</b> Run the MFR model using the TAM package</a></li>
+<li class="chapter" data-level="11.5.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#test-taker-estimates"><i class="fa fa-check"></i><b>11.5.3</b> Test-taker Estimates</a></li>
+<li class="chapter" data-level="11.5.4" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#items-estimates"><i class="fa fa-check"></i><b>11.5.4</b> Item’s Estimates</a></li>
+<li class="chapter" data-level="11.5.5" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#plots"><i class="fa fa-check"></i><b>11.5.5</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#reference"><i class="fa fa-check"></i><b>11.6</b> Reference</a></li>
+<li class="chapter" data-level="11.7" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#example-2"><i class="fa fa-check"></i><b>11.7</b> Example 2:</a><ul>
+<li class="chapter" data-level="11.7.1" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#student-estimates"><i class="fa fa-check"></i><b>11.7.1</b> Student Estimates</a></li>
+<li class="chapter" data-level="11.7.2" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#domainrater-fit"><i class="fa fa-check"></i><b>11.7.2</b> Domain/Rater Fit:</a></li>
+<li class="chapter" data-level="11.7.3" data-path="many-facet-rasch-model.html"><a href="many-facet-rasch-model.html#plots-1"><i class="fa fa-check"></i><b>11.7.3</b> Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>12</b> Basics of Differential Item Functioning</a><ul>
+<li class="chapter" data-level="12.1" data-path="DIF.html"><a href="DIF.html#purpose"><i class="fa fa-check"></i><b>12.1</b> Purpose</a></li>
+<li class="chapter" data-level="12.2" data-path="DIF.html"><a href="DIF.html#r-lab-1-dif-analysis-with-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2</b> R-lab 1: DIF Analysis with the Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="DIF.html"><a href="DIF.html#prepare-the-r-package-and-data-set"><i class="fa fa-check"></i><b>12.2.1</b> Prepare the R-package and data set</a></li>
+<li class="chapter" data-level="12.2.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data"><i class="fa fa-check"></i><b>12.2.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.2.3" data-path="DIF.html"><a href="DIF.html#run-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.3</b> Run dichotomous Rasch model</a></li>
+<li class="chapter" data-level="12.2.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.4</b> Analyze the data using the dichotomous Rasch model:</a></li>
+<li class="chapter" data-level="12.2.5" data-path="DIF.html"><a href="DIF.html#identify-subgroups"><i class="fa fa-check"></i><b>12.2.5</b> Identify subgroups</a></li>
+<li class="chapter" data-level="12.2.6" data-path="DIF.html"><a href="DIF.html#visualize-the-test-statistics-for-the-item-comparison"><i class="fa fa-check"></i><b>12.2.6</b> Visualize the test statistics for the item comparison</a></li>
+<li class="chapter" data-level="12.2.7" data-path="DIF.html"><a href="DIF.html#export-the-item-comparison-results-for-later-use-using-the-following-code."><i class="fa fa-check"></i><b>12.2.7</b> Export the item comparison results for later use using the following code.</a></li>
+<li class="chapter" data-level="12.2.8" data-path="DIF.html"><a href="DIF.html#plot-the-item-difference"><i class="fa fa-check"></i><b>12.2.8</b> Plot the item difference</a></li>
+<li class="chapter" data-level="12.2.9" data-path="DIF.html"><a href="DIF.html#dif-scatterplots"><i class="fa fa-check"></i><b>12.2.9</b> DIF Scatterplots:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands"><i class="fa fa-check"></i><b>12.3</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.4" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot"><i class="fa fa-check"></i><b>12.4</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.4.1</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="DIF.html"><a href="DIF.html#r-lab-2-dif-analysis-with-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5</b> R-lab 2: DIF Analysis with the Partial Credit Model</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="DIF.html"><a href="DIF.html#load-the-data-into-your-working-environment-and-generate-a-summary-of-responses"><i class="fa fa-check"></i><b>12.5.1</b> Load the data into your working environment and generate a summary of responses</a></li>
+<li class="chapter" data-level="12.5.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data-1"><i class="fa fa-check"></i><b>12.5.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.5.3" data-path="PC-model.html"><a href="PC-model.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="12.5.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.4</b> Analyze the data using the Partial Credit model:</a></li>
+<li class="chapter" data-level="12.5.5" data-path="DIF.html"><a href="DIF.html#conduct-dif-analyses"><i class="fa fa-check"></i><b>12.5.5</b> Conduct DIF analyses</a></li>
+<li class="chapter" data-level="12.5.6" data-path="DIF.html"><a href="DIF.html#dif-analysis"><i class="fa fa-check"></i><b>12.5.6</b> DIF analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="DIF.html"><a href="DIF.html#compare-thresholds-between-groups"><i class="fa fa-check"></i><b>12.6</b> Compare thresholds between groups:</a></li>
+<li class="chapter" data-level="12.7" data-path="DIF.html"><a href="DIF.html#get-overall-item-se-values"><i class="fa fa-check"></i><b>12.7</b> Get overall item SE values:</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="DIF.html"><a href="DIF.html#make-a-scatterplot"><i class="fa fa-check"></i><b>12.7.1</b> Make a scatterplot</a></li>
+<li class="chapter" data-level="12.7.2" data-path="DIF.html"><a href="DIF.html#create-scatterplot-of-item-measures"><i class="fa fa-check"></i><b>12.7.2</b> Create scatterplot of item measures</a></li>
+<li class="chapter" data-level="12.7.3" data-path="DIF.html"><a href="DIF.html#dif-scatterplot"><i class="fa fa-check"></i><b>12.7.3</b> DIF Scatterplot:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands-1"><i class="fa fa-check"></i><b>12.8</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.9" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot-1"><i class="fa fa-check"></i><b>12.9</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.9.1" data-path="DIF.html"><a href="DIF.html#create-bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.9.1</b> Create bar plot of item differences</a></li>
+<li class="chapter" data-level="12.9.2" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences-1"><i class="fa fa-check"></i><b>12.9.2</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.10" data-path="DIF.html"><a href="DIF.html#example-apa-format-results-section-for-basic-dif-analysis"><i class="fa fa-check"></i><b>12.10</b> Example APA-format results section for basic DIF analysis</a></li>
+<li class="chapter" data-level="12.11" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>12.11</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>13</b> Rating Scale Evaluation</a><ul>
+<li class="chapter" data-level="13.1" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-purpose"><i class="fa fa-check"></i><b>13.1</b> R-lab purpose</a></li>
+<li class="chapter" data-level="13.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>13.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>13.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="13.2.2" data-path="PC-model.html"><a href="PC-model.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>13.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>13.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="13.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>13.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>13.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="13.4" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>13.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>14</b> Reference &amp; Other Good Stuff</a><ul>
+<li class="chapter" data-level="14.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>14.1</b> Rasch Glossary</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>14.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>14.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="14.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>14.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="14.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>14.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>14.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="14.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>14.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="14.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>14.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="running-the-rasch-rating-scale-model-in-r" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Running the Rasch Rating Scale Model in R</h1>
+<p>In the next section, we provide a step-by-step demonstration of a RSM analysis using R. We encourage readers to use the example data set that is provided in the online supplement to conduct the analysis along with us.</p>
+<div id="example-data-liking-for-science" class="section level2">
+<h2><span class="header-section-number">5.1</span> Example Data: Liking for Science</h2>
+<p>The example data for this chapter is a group of 75 children’s responses to the 25-item <em>Liking for Science</em> questionnaire, which was designed to measure their attitudes toward science activities. The data were published in Wright and Masters (1982). Each item stem included a science activity, and three response options: 0 = <em>Dislike</em>, 1 = <em>Not Sure/Don’t Care</em>, and 2 = <em>Like</em>, such that responses in higher categories indicated more-favorable attitudes toward science activities.</p>
+</div>
+<div id="prepare-for-the-analyses-install-and-load-packages" class="section level2">
+<h2><span class="header-section-number">5.2</span> Prepare for the Analyses: Install and Load Packages</h2>
+<p>We will use the <em>Extended Rasch Modeling</em>, or <em>eRm</em> package (Mair et al. 2020) as the first package with which we demonstrate RSM analyses in this chapter. We selected eRm for the first illustrations in the current chapter because it includes functions for applying the RSM that are relatively straightforward to use and interpret. Please note that the “eRm” package uses the Conditional Maximum Likelihood Estimation (CMLE) method to estimate Rasch model parameters. As a result, estimates from the eRm package are not directly comparable to estimates obtained using other estimation methods. At the end of this chapter, we have included an illustration of RSM analyses with the <em>Test Analysis Modules</em> or TAM package (Robitzsch et al. 2020) with Marginal Maximum Likelihood Estimation (MMLE). We also provide an illustration with TAM using Joint Maximum Likelihood Estimation (JMLE), which produces comparable estimates to some popular standalone Rasch software programs, such as Winsteps (Linacre 2020a) and Facets (Linace 2020b).</p>
+<p>To get started with the eRm package, view the citation information, and then install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb1-1"></a><span class="kw">citation</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## To cite package &#39;eRm&#39; in publications use:
+## 
+## ###############################################################################
+## The current Package Version:
+## 
+##   Mair, P., Hatzinger, R., &amp; Maier M. J. (2020). eRm: Extended Rasch
+##   Modeling. 1.0-1. https://cran.r-project.org/package=eRm
+## 
+## ###############################################################################
+## The original JSS Article:
+## 
+##   Mair, P., &amp; Hatzinger, R. (2007). Extended Rasch modeling: The eRm
+##   package for the application of IRT models in R. Journal of
+##   Statistical Software, 20(9), 1-20. http://www.jstatsoft.org/v20/i09
+## 
+## ###############################################################################
+## Article about CML Estimation in eRm:
+## 
+##   Mair, P., &amp; Hatzinger, R. (2007). CML based estimation of extended
+##   Rasch models with the eRm package in R. Psychology Science, 49(1),
+##   26-43.
+## 
+## ###############################################################################
+## Article about LLRAs in eRm:
+## 
+##   Hatzinger, R., &amp; Rusch, T. (2009). IRT models with relaxed
+##   assumptions in eRm: A manual-like instruction. Psychology Science
+##   Quarterly, 51(1), 87-120.
+## 
+## ###############################################################################
+## Book Chapter about LLRAs:
+## 
+##   Rusch T., Maier M. J., &amp; Hatzinger R. (2013). Linear logistic models
+##   with relaxed assumptions in R. In: B. Lausen, D. van den Poel, &amp; A.
+##   Ultsch (Eds.) Algorithms from and for Nature and Life.New York:
+##   Springer. 337-347. http://dx.doi.org/10.1007/978-3-319-00035-0_34
+## 
+## ###############################################################################
+## Article about the performance of Quasi-Exact Tests in eRm:
+## 
+##   Koller, I., Maier, M. J., &amp; Hatzinger, R. (2015). An Empirical Power
+##   Analysis of Quasi-Exact Tests for the Rasch Model: Measurement
+##   Invariance in Small Samples. Methodology, 11(2), 45-54.
+##   http://dx.doi.org/10.1027/1614-2241/a000090
+## 
+## ###############################################################################
+## Article about the Performance of the nonparametric Q3 Tests in eRm:
+## 
+##   Debelak, R., &amp; Koller, I. (2019). Testing the Local Independence
+##   Assumption of the Rasch Model With Q3-Based Nonparametric Model
+##   Tests. Applied Psychological Measurement
+##   https://doi.org/10.1177/0146621619835501
+## 
+## To see these entries in BibTeX format, use &#39;print(&lt;citation&gt;,
+## bibtex=TRUE)&#39;, &#39;toBibtex(.)&#39;, or set
+## &#39;options(citation.bibtex.max=999)&#39;.</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb3-1"></a><span class="co"># install.packages(&quot;eRm&quot;)</span></span>
+<span id="cb3-2"><a href="running-the-rasch-rating-scale-model-in-r.html#cb3-2"></a><span class="kw">library</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+</div>
+<div id="getting-started" class="section level2">
+<h2><span class="header-section-number">5.3</span> Getting Started</h2>
+<p>Now that we have installed and loaded the packages to our R session, we are ready to import the data. We will use the function <em>read.csv()</em> to import the comma-separated values (.csv) file that contains the Liking for Science survey data. We encourage readers to use their preferred method for importing data files into R or R Studio.</p>
+<p>Please note that if you use <em>read.csv()</em> you will need to specify the file path to the location at which the data file is stored on your computer or set your working directory to the folder in which you have saved the data.</p>
+<p>First, we will import the data using <em>read.csv()</em> and store it in an object called <em>science</em>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb4-1"></a>science &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;liking_for_science.csv&quot;</span>)</span></code></pre></div>
+<p>Next, we will explore the data using descriptive statistics using the <em>summary()</em> function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb5-1"></a><span class="kw">summary</span>(science)</span></code></pre></div>
+<pre><code>##     student           i1              i2              i3       
+##  Min.   : 1.0   Min.   :0.000   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:19.5   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :38.0   Median :1.000   Median :2.000   Median :1.000  
+##  Mean   :38.0   Mean   :1.453   Mean   :1.547   Mean   :1.173  
+##  3rd Qu.:56.5   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :75.0   Max.   :2.000   Max.   :2.000   Max.   :2.000  
+##        i4               i5               i6              i7      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.000   Min.   :0.00  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:1.000   1st Qu.:0.00  
+##  Median :1.0000   Median :0.0000   Median :1.000   Median :1.00  
+##  Mean   :0.6933   Mean   :0.4933   Mean   :1.213   Mean   :0.92  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:2.000   3rd Qu.:1.50  
+##  Max.   :2.0000   Max.   :2.0000   Max.   :2.000   Max.   :2.00  
+##        i8             i9             i10             i11             i12       
+##  Min.   :0.00   Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :1.000  
+##  1st Qu.:0.00   1st Qu.:0.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:2.000  
+##  Median :1.00   Median :1.000   Median :2.000   Median :2.000   Median :2.000  
+##  Mean   :0.72   Mean   :1.067   Mean   :1.733   Mean   :1.613   Mean   :1.827  
+##  3rd Qu.:1.00   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :2.00   Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.000  
+##       i13             i14             i15            i16             i17       
+##  Min.   :0.000   Min.   :0.000   Min.   :0.00   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.00   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :2.000   Median :1.000   Median :2.00   Median :1.000   Median :1.000  
+##  Mean   :1.693   Mean   :1.173   Mean   :1.48   Mean   :1.107   Mean   :1.267  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.00   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :2.000   Max.   :2.000   Max.   :2.00   Max.   :2.000   Max.   :2.000  
+##       i18             i19            i20              i21       
+##  Min.   :0.000   Min.   :0.00   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.:2.000   1st Qu.:2.00   1st Qu.:0.0000   1st Qu.:1.000  
+##  Median :2.000   Median :2.00   Median :1.0000   Median :2.000  
+##  Mean   :1.933   Mean   :1.88   Mean   :0.6667   Mean   :1.587  
+##  3rd Qu.:2.000   3rd Qu.:2.00   3rd Qu.:1.0000   3rd Qu.:2.000  
+##  Max.   :2.000   Max.   :2.00   Max.   :2.0000   Max.   :2.000  
+##       i22             i23            i24             i25       
+##  Min.   :0.000   Min.   :0.00   Min.   :0.000   Min.   :0.000  
+##  1st Qu.:1.000   1st Qu.:0.00   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :1.000   Median :0.00   Median :2.000   Median :1.000  
+##  Mean   :1.293   Mean   :0.56   Mean   :1.427   Mean   :1.133  
+##  3rd Qu.:2.000   3rd Qu.:1.00   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :2.000   Max.   :2.00   Max.   :2.000   Max.   :2.000</code></pre>
+<p>From the summary of <em>science</em>, we can see there are no missing data. We can also get a general sense of the scales, range, and distribution of each variable in the data set.</p>
+<p>We can see that Student ID numbers range from 1 to 75, and that the maximum rating on the items was <em>x</em> = 2. Importantly, we can see that for item 12, the minimum rating was <em>x</em> = 1, and no ratings in the first category (<em>x</em> = 0) were observed in our sample. To use the RSM with these data, we will need to omit item 12 from our analysis. We will revisit these data in Chapter XXX, where we include item 12 in a Partial Credit Model analysis. For now, we will create a new object called <em>science_drop_i12</em> that includes the Liking for Science data without item 12:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb7-1"></a>science_drop_i12 &lt;-<span class="st"> </span><span class="kw">subset</span>(science, <span class="dt">select =</span> <span class="op">-</span>i12)</span></code></pre></div>
+</div>
+<div id="run-the-rating-scale-model" class="section level2">
+<h2><span class="header-section-number">5.4</span> Run the Rating Scale Model</h2>
+<p>Next we need to isolate the item response matrix from the descriptive variables in the data (in this case, student IDs). To do this, we will create an object made up of only the item responses by removing the first variable (<em>student</em>) from the data:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb8-1"></a><span class="co"># Remove the Student ID variable:</span></span>
+<span id="cb8-2"><a href="running-the-rasch-rating-scale-model-in-r.html#cb8-2"></a>science.responses &lt;-<span class="st"> </span><span class="kw">subset</span>(science_drop_i12, <span class="dt">select =</span> <span class="op">-</span>student)</span></code></pre></div>
+<p>We will use <em>summary()</em> to calculate descriptive statistics for the <em>science.responses</em> object to check our work and ensure that the responses are ready for analysis:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb9-1"></a><span class="co"># Check descriptive statistics:</span></span>
+<span id="cb9-2"><a href="running-the-rasch-rating-scale-model-in-r.html#cb9-2"></a><span class="kw">summary</span>(science.responses)</span></code></pre></div>
+<pre><code>##        i1              i2              i3              i4        
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:0.0000  
+##  Median :1.000   Median :2.000   Median :1.000   Median :1.0000  
+##  Mean   :1.453   Mean   :1.547   Mean   :1.173   Mean   :0.6933  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:1.0000  
+##  Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.0000  
+##        i5               i6              i7             i8             i9       
+##  Min.   :0.0000   Min.   :0.000   Min.   :0.00   Min.   :0.00   Min.   :0.000  
+##  1st Qu.:0.0000   1st Qu.:1.000   1st Qu.:0.00   1st Qu.:0.00   1st Qu.:0.000  
+##  Median :0.0000   Median :1.000   Median :1.00   Median :1.00   Median :1.000  
+##  Mean   :0.4933   Mean   :1.213   Mean   :0.92   Mean   :0.72   Mean   :1.067  
+##  3rd Qu.:1.0000   3rd Qu.:2.000   3rd Qu.:1.50   3rd Qu.:1.00   3rd Qu.:2.000  
+##  Max.   :2.0000   Max.   :2.000   Max.   :2.00   Max.   :2.00   Max.   :2.000  
+##       i10             i11             i13             i14             i15      
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.00  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.00  
+##  Median :2.000   Median :2.000   Median :2.000   Median :1.000   Median :2.00  
+##  Mean   :1.733   Mean   :1.613   Mean   :1.693   Mean   :1.173   Mean   :1.48  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.00  
+##  Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.00  
+##       i16             i17             i18             i19      
+##  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.00  
+##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:2.00  
+##  Median :1.000   Median :1.000   Median :2.000   Median :2.00  
+##  Mean   :1.107   Mean   :1.267   Mean   :1.933   Mean   :1.88  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.00  
+##  Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.00  
+##       i20              i21             i22             i23      
+##  Min.   :0.0000   Min.   :0.000   Min.   :0.000   Min.   :0.00  
+##  1st Qu.:0.0000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:0.00  
+##  Median :1.0000   Median :2.000   Median :1.000   Median :0.00  
+##  Mean   :0.6667   Mean   :1.587   Mean   :1.293   Mean   :0.56  
+##  3rd Qu.:1.0000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:1.00  
+##  Max.   :2.0000   Max.   :2.000   Max.   :2.000   Max.   :2.00  
+##       i24             i25       
+##  Min.   :0.000   Min.   :0.000  
+##  1st Qu.:1.000   1st Qu.:1.000  
+##  Median :2.000   Median :1.000  
+##  Mean   :1.427   Mean   :1.133  
+##  3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :2.000   Max.   :2.000</code></pre>
+<p>Now, we are ready to run the RSM on the Liking for Science response data. We will use the <em>RSM()</em> function to run the model and store the results in an object called <em>RSM.science</em>. Then, we will request a summary of the model results using the <em>summary()</em> function:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="running-the-rasch-rating-scale-model-in-r.html#cb11-1"></a>RSM.science &lt;-<span class="st"> </span><span class="kw">RSM</span>(science.responses, <span class="dt">se =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb11-2"><a href="running-the-rasch-rating-scale-model-in-r.html#cb11-2"></a><span class="kw">summary</span>(RSM.science)</span></code></pre></div>
+<pre><code>## 
+## Results of RSM estimation: 
+## 
+## Call:  RSM(X = science.responses, se = TRUE) 
+## 
+## Conditional log-likelihood: -1162.281 
+## Number of iterations: 22 
+## Number of parameters: 24 
+## 
+## Item (Category) Difficulty Parameters (eta): with 0.95 CI:
+##       Estimate Std. Error lower CI upper CI
+## i2      -0.748      0.210   -1.159   -0.337
+## i3       0.319      0.184   -0.041    0.679
+## i4       1.578      0.199    1.188    1.968
+## i5       2.210      0.223    1.772    2.648
+## i6       0.215      0.185   -0.147    0.577
+## i7       0.966      0.186    0.601    1.330
+## i8       1.502      0.197    1.116    1.888
+## i9       0.591      0.183    0.232    0.950
+## i10     -1.491      0.253   -1.986   -0.996
+## i11     -0.983      0.221   -1.416   -0.551
+## i13     -1.306      0.240   -1.776   -0.836
+## i14      0.319      0.184   -0.041    0.679
+## i15     -0.533      0.201   -0.927   -0.138
+## i16      0.489      0.183    0.131    0.848
+## i17      0.075      0.186   -0.291    0.440
+## i18     -3.104      0.452   -3.990   -2.217
+## i19     -2.455      0.349   -3.139   -1.771
+## i20      1.656      0.201    1.261    2.050
+## i21     -0.886      0.216   -1.309   -0.463
+## i22      0.003      0.187   -0.364    0.371
+## i23      1.984      0.213    1.566    2.402
+## i24     -0.371      0.196   -0.756    0.013
+## i25      0.421      0.183    0.062    0.780
+## Cat 2    1.566      0.133    1.304    1.828
+## 
+## Item Easiness Parameters (beta) with 0.95 CI:
+##             Estimate Std. Error lower CI upper CI
+## beta i1.c1     0.451      0.199    0.062    0.840
+## beta i1.c2    -0.664      0.409   -1.466    0.137
+## beta i2.c1     0.748      0.210    0.337    1.159
+## beta i2.c2    -0.071      0.426   -0.905    0.764
+## beta i3.c1    -0.319      0.184   -0.679    0.041
+## beta i3.c2    -2.203      0.396   -2.979   -1.428
+## beta i4.c1    -1.578      0.199   -1.968   -1.188
+## beta i4.c2    -4.722      0.447   -5.597   -3.847
+## beta i5.c1    -2.210      0.223   -2.648   -1.772
+## beta i5.c2    -5.986      0.499   -6.963   -5.009
+## beta i6.c1    -0.215      0.185   -0.577    0.147
+## beta i6.c2    -1.996      0.395   -2.771   -1.221
+## beta i7.c1    -0.966      0.186   -1.330   -0.601
+## beta i7.c2    -3.498      0.412   -4.306   -2.689
+## beta i8.c1    -1.502      0.197   -1.888   -1.116
+## beta i8.c2    -4.570      0.441   -5.436   -3.705
+## beta i9.c1    -0.591      0.183   -0.950   -0.232
+## beta i9.c2    -2.749      0.400   -3.533   -1.964
+## beta i10.c1    1.491      0.253    0.996    1.986
+## beta i10.c2    1.416      0.501    0.433    2.398
+## beta i11.c1    0.983      0.221    0.551    1.416
+## beta i11.c2    0.401      0.444   -0.470    1.271
+## beta i13.c1    1.306      0.240    0.836    1.776
+## beta i13.c2    1.046      0.478    0.110    1.982
+## beta i14.c1   -0.319      0.184   -0.679    0.041
+## beta i14.c2   -2.203      0.396   -2.979   -1.428
+## beta i15.c1    0.533      0.201    0.138    0.927
+## beta i15.c2   -0.501      0.413   -1.310    0.308
+## beta i16.c1   -0.489      0.183   -0.848   -0.131
+## beta i16.c2   -2.545      0.398   -3.325   -1.765
+## beta i17.c1   -0.075      0.186   -0.440    0.291
+## beta i17.c2   -1.715      0.396   -2.491   -0.940
+## beta i18.c1    3.104      0.452    2.217    3.990
+## beta i18.c2    4.641      0.896    2.885    6.397
+## beta i19.c1    2.455      0.349    1.771    3.139
+## beta i19.c2    3.344      0.690    1.992    4.695
+## beta i20.c1   -1.656      0.201   -2.050   -1.261
+## beta i20.c2   -4.877      0.452   -5.763   -3.991
+## beta i21.c1    0.886      0.216    0.463    1.309
+## beta i21.c2    0.206      0.436   -0.648    1.061
+## beta i22.c1   -0.003      0.187   -0.371    0.364
+## beta i22.c2   -1.573      0.396   -2.349   -0.796
+## beta i23.c1   -1.984      0.213   -2.402   -1.566
+## beta i23.c2   -5.535      0.478   -6.472   -4.598
+## beta i24.c1    0.371      0.196   -0.013    0.756
+## beta i24.c2   -0.824      0.406   -1.619   -0.029
+## beta i25.c1   -0.421      0.183   -0.780   -0.062
+## beta i25.c2   -2.409      0.397   -3.187   -1.631</code></pre>
+<p>The summary of the RSM output includes the Conditional Log-likelihood statistic, details about the number of iterations and model parameters, and a table with item parameters, their standard errors, and confidence intervals. It is important to note that the item parameters included in this preliminary output are <em>item easiness</em> parameters–<em>not</em> item difficulty parameters. We will examine item difficulty parameters in detail later in our analysis.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="RS-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plot-a-wright-map-to-visualize-item-and-person-locations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/04-RS_model.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

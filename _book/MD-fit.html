@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Evaluating the Quality of Measures | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Evaluating the Quality of Measures | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Evaluating the Quality of Measures | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+<meta name="author" content="Stefanie A. Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-08-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Dich-Rasch-model.html"/>
+<link rel="next" href="RS-model.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.1</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.2</b> Online Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>2.1</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>2.2</b> Dichotomous Rasch Model Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>2.3</b> Dichotomous Rasch Model Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>2.4</b> Dichotomous Rasch Model Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section"><i class="fa fa-check"></i><b>2.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exercise"><i class="fa fa-check"></i><b>2.6</b> Exercise</a></li>
+<li class="chapter" data-level="2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.7</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="MD-fit.html"><a href="MD-fit.html#example-data-transitive-reasoning-test-1"><i class="fa fa-check"></i><b>3.2</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>3.3</b> Rasch Model Fit Analysis with CMLE in <em>eRm</em></a></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4</b> Graphical Displays for Evaluating Model-Data Fit</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#reliability"><i class="fa fa-check"></i><b>3.4.1</b> Reliability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>3.5</b> Rasch Model Fit Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>3.6</b> Rasch Model Fit Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#exercise-1"><i class="fa fa-check"></i><b>3.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>4.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="4.2" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>4.2</b> RSM Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="4.3" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>4.3</b> RSM Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="4.4" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>4.4</b> RSM Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="4.5" data-path="RS-model.html"><a href="RS-model.html#example-results-section-1"><i class="fa fa-check"></i><b>4.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="4.6" data-path="RS-model.html"><a href="RS-model.html#exercise-2"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="RS-model.html"><a href="RS-model.html#bibliography"><i class="fa fa-check"></i><b>4.7</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>5</b> Partial Credit Model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="PC-model.html"><a href="PC-model.html#example-data-liking-for-science-1"><i class="fa fa-check"></i><b>5.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="5.2" data-path="PC-model.html"><a href="PC-model.html#pcm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>5.2</b> PCM Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="5.3" data-path="PC-model.html"><a href="PC-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>5.3</b> Summarize the Results in Tables</a></li>
+<li class="chapter" data-level="5.4" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-mmle-in-tam"><i class="fa fa-check"></i><b>5.4</b> PCM Application with MMLE in TAM</a></li>
+<li class="chapter" data-level="5.5" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-jmle-in-tam"><i class="fa fa-check"></i><b>5.5</b> PCM Application with JMLE in TAM</a></li>
+<li class="chapter" data-level="5.6" data-path="PC-model.html"><a href="PC-model.html#example-results-section-2"><i class="fa fa-check"></i><b>5.6</b> Example results section</a></li>
+<li class="chapter" data-level="5.7" data-path="PC-model.html"><a href="PC-model.html#exercise-3"><i class="fa fa-check"></i><b>5.7</b> Exercise</a></li>
+<li class="chapter" data-level="5.8" data-path="PC-model.html"><a href="PC-model.html#bibliography-1"><i class="fa fa-check"></i><b>5.8</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="MFR-model.html"><a href="MFR-model.html"><i class="fa fa-check"></i><b>6</b> Many Facet Rasch Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="MFR-model.html"><a href="MFR-model.html#running-the-mfrm-with-wide-format-data-in-tam-package"><i class="fa fa-check"></i><b>6.1</b> Running the MFRM with Wide-Format Data in TAM Package</a></li>
+<li class="chapter" data-level="6.2" data-path="MFR-model.html"><a href="MFR-model.html#example-2-running-pc-mfrm-with-long-format-data-using-the-tam-package"><i class="fa fa-check"></i><b>6.2</b> Example 2: Running PC-MFRM with Long-Format Data using the TAM Package</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-pc-mfrm"><i class="fa fa-check"></i><b>6.2.1</b> Specify the PC-MFRM:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="MFR-model.html"><a href="MFR-model.html#notes-on-formulations-for-many-facet-rasch-models"><i class="fa fa-check"></i><b>6.3</b> Notes on Formulations for Many-Facet Rasch Models</a></li>
+<li class="chapter" data-level="6.4" data-path="MFR-model.html"><a href="MFR-model.html#example-results-section-3"><i class="fa fa-check"></i><b>6.4</b> Example Results Section</a></li>
+<li class="chapter" data-level="6.5" data-path="MFR-model.html"><a href="MFR-model.html#exercise-4"><i class="fa fa-check"></i><b>6.5</b> Exercise</a></li>
+<li class="chapter" data-level="6.6" data-path="MFR-model.html"><a href="MFR-model.html#bibliography-2"><i class="fa fa-check"></i><b>6.6</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>7</b> Basics of Differential Item Functioning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-dichotomous-items"><i class="fa fa-check"></i><b>7.1</b> Detecting Differential Item Functioning in R for Dichotomous Items</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="DIF.html"><a href="DIF.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>7.1.1</b> Example Data: Transitive Reasoning</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-polytomous-items"><i class="fa fa-check"></i><b>7.2</b> Detecting Differential Item Functioning in R for Polytomous Items</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="DIF.html"><a href="DIF.html#example-data-style-ratings"><i class="fa fa-check"></i><b>7.2.1</b> Example Data: Style Ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="DIF.html"><a href="DIF.html#exercise-5"><i class="fa fa-check"></i><b>7.3</b> Exercise</a></li>
+<li class="chapter" data-level="7.4" data-path="DIF.html"><a href="DIF.html#references-these-need-to-be-updated"><i class="fa fa-check"></i><b>7.4</b> References [these need to be updated!]</a></li>
+<li class="chapter" data-level="7.5" data-path="DIF.html"><a href="DIF.html#resources-for-further-study"><i class="fa fa-check"></i><b>7.5</b> Resources for Further Study</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>8</b> Rating Scale Evaluation</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="RS-Eval.html"><a href="RS-Eval.html#what-is-rating-scale-evaluation"><i class="fa fa-check"></i><b>8.1</b> What is Rating Scale Evaluation?</a></li>
+<li class="chapter" data-level="8.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>8.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>8.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="8.2.2" data-path="RS-Eval.html"><a href="RS-Eval.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>8.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>8.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="8.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>8.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>8.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="8.4" data-path="RS-Eval.html"><a href="RS-Eval.html#references"><i class="fa fa-check"></i><b>8.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>9</b> References &amp; Other Good Stuff</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>9.1</b> Rasch Glossary</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>9.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>9.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>9.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>9.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>9.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="9.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>9.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="9.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>9.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="MD_fit" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Evaluating the Quality of Measures</h1>
+<p>This chapter provides an overview of several popular analyses that researchers can use to evaluate the quality of Rasch model results. Within the framework of Rasch measurement theory <span class="citation">(<a href="#ref-Rasch_ori" role="doc-biblioref">Rasch 1960</a>)</span>, evaluating the quality of measures primarily involves exploring the degree to which the observed data (e.g., item responses) reflect fundamental measurement properties, as expressed in Rasch model requirements.</p>
+<p>Procedures for evaluating measurement quality from a Rasch measurement perspective mostly include techniques for evaluating <em>model-data fit</em>. Accordingly, this chapter begins with a brief overview of model-data fit analysis from the perspective of Rasch measurement theory <span class="citation">(<a href="#ref-Rasch_ori" role="doc-biblioref">Rasch 1960</a>)</span>. Then, we demonstrate tools that analysts can use to evaluate model-data fit for Rasch models using R. As we did in Chapter 2, we use data from a transitive reasoning assessment <span class="citation">(<a href="#ref-Intro_nonparametric" role="doc-biblioref">Sijtsma and Molenaar 2002</a>)</span> to illustrate the application and interpretation of numeric and graphical model-data fit indicators The chapter concludes with a challenge exercise and resources for further study.</p>
+<p>We encourage readers to note that model-data fit analysis in modern measurement theory in general, as well as in the context of Rasch models in particular, is nuanced. The interpretation and use of model-data fit indices varies along with the individual purpose and consequences of each assessment. As a result, it is critical that analysts consider the unique context in which they are evaluating model-data fit when they interpret the results from model-data fit analyses, rather than relying on previously published critical values or “rules-of-thumb” to interpret the results. In this chapter, we demonstrate techniques that analysts can use to evaluate model-data fit within the Rasch measurement theory framework. Our presentation is not exhaustive and there are many other methods that can be used to supplement those that we demonstrate here. We encourage interested readers to consult the resources listed throughout the chapter, as well as the resource list at the end of this chapter, to learn more about evaluating model-data fit within the context of Rasch measurement theory.</p>
+<div id="evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</h2>
+<p>When researchers evaluate model-data fit for Rasch models, they do so for the purpose of evaluating the psychometric quality of assessment procedures. In addition, such analyses often include analyses related to issues of reliability, validity, and fairness. At the end of this chapter, we demonstrate techniques for calculating reliability indices using a Rasch approach. For additional discussions about these topics and demonstrations of how Rasch measurement indicators align with these foundational areas for evaluating psychometric procedures, we refer readers to the following resources:</p>
+<p><span class="citation">(<a href="#ref-Invar_measurement" role="doc-biblioref">Engelhard and Wind 2018</a>)</span></p>
+<ul>
+<li>Engelhard, George. and Wind, Stefanie A. <em>Invariant measurement with raters and rating scales: Rasch models for rater-mediated assessments.</em> Taylor &amp; Francis, 2018.</li>
+</ul>
+<p><span class="citation">(<a href="#ref-Instru_dev1" role="doc-biblioref">Edward W. Wolfe and Smith Jr 2007a</a>)</span></p>
+<ul>
+<li>Wolfe, Edward W. and Everrett V. Smith Jr. “Instrument development tools and activities for measure validation using Rasch models: Part I - instrument development tools.” <em>Journal of Applied Measurement</em>, 8(1), 2007a, 97–123.</li>
+</ul>
+<p><span class="citation">(<a href="#ref-Instru_dev2" role="doc-biblioref">Edward W. Wolfe and Smith Jr 2007b</a>)</span></p>
+<ul>
+<li>Wolfe,Edward W. and Everrett V. Smith Jr. “Instrument development tools and activities for measure validation using Rasch models: Part II–validation activities.” <em>Journal of Applied Measurement</em>, 8(2), 2007b, 204–234.</li>
+</ul>
+<p>In the context of Rasch measurement theory <span class="citation">(<a href="#ref-Rasch_ori" role="doc-biblioref">Rasch 1960</a>)</span>, model-data fit analyses focus on evaluating the item response patterns associated with individual items, persons, and other elements of an assessment context (e.g., raters) for evidence of adherence to model requirements. This approach to model-data fit analysis helps researchers identify individual elements whose responses deviate from what would be expected given adherence to the Rasch model. Wright and Masters <span class="citation">(<a href="#ref-RS_analysis" role="doc-biblioref">Wright and Masters 1982</a>)</span> summarized this perspective as follows:</p>
+<p>“The model is constructed to <em>govern our use of data</em> according to the characteristics we require of a measure and to show us, <em>through the exposure of discrepancies between intention and experience</em>, where our efforts to measure are threatened.” (p. 90, emphasis added)</p>
+<p>Deviations from model expectations can alert researchers to individual elements of an assessment context that warrant additional investigation (e.g., in using qualitative analyses), revision (e.g., revisions to item text, revision of scoring materials in performance assessments), that can inform their theory about the construct, and that can help them identify areas for future research. This individual-element-focused approach to evaluating model-data fit in which model requirements are used as a framework against which to <em>evaluate</em> response patterns for the purpose of improving measurement procedures stands in contrast to model-data fit approaches whose goal is typically to <em>match</em> response patterns to a model whose parameters reflect them. This approach guides the analyses that we demonstrate in this book.</p>
+<p><strong><em>Residual-Based Fit Analyses</em></strong></p>
+<p>We focus on residual-based model-data fit indicators that are theoretically aligned with the Rasch measurement framework. Specifically, we demonstrate how analysts can calculate numeric and graphical summaries of <em>residuals</em>, or discrepancies between observed item responses and responses that would be expected given model estimates. In the framework of Rasch measurement theory, researchers typically examine residuals as they relate to individual items, persons, or other elements of the assessment context. These residual analyses provide insight into the degree to which the responses associated with elements of interest reflect model expectations.</p>
+<p>Residuals (<span class="math inline">\(Y_{ni}\)</span>) are calculated as follows:</p>
+<p><span class="math display">\[\begin{equation}\tag{3.1} Y_{ni} = X{ni} - E{ni} \end{equation}\]</span></p>
+<p>where <span class="math inline">\(X{ni}\)</span> is the observed response from person n on item i, and <span class="math inline">\(E{ni}\)</span> is the model-expected value of the response for person n on item i.</p>
+<p>To evaluate the magnitude of residuals, it is often useful to transform them to standardized residuals (<span class="math inline">\(Z{ni}\)</span>) as follows:</p>
+<p><span class="math display">\[\begin{equation}\tag{3.2} Z{ni} = Y{ni}/\sqrt{W{ni}} \end{equation}\]</span></p>
+<p>where <span class="math inline">\(W{ni}\)</span> is the variance of the observed response.</p>
+<p>For example, residual analyses could help a researcher identify an item in an attitude survey for which there were many unexpected responses. Further investigation of these responses using residuals could reveal that the unexpected responses occurred when participants who had otherwise generally negative attitudes, as reflected in low locations on the construct, gave higher-than-expected (i.e., more positive) responses to the item than would be expected given their location estimates. This information could reveal a potential issue related to the item content, which might be interpreted differently among participants with low locations on the construct. Alternatively, this information might provide insight into the nature of the construct and highlight a new direction for future research. Likewise, analysis of residuals associated with individual participants could help researchers identify participants who gave frequent or substantially unexpected responses to subsets of items.</p>
+<p>We do not focus on global fit statistics that are typically reported in IRT analyses based on non-Rasch models for the purpose of comparing models (e.g., log-likelihood statistics), although these statistics are available in many of the R packages that include Rasch model analyses. Global fit and other overall model-data fit evaluation statistics are useful when the purpose of an analysis is to compare the fit of Rasch models to that of other candidate models; such analyses are beyond the scope of this book.</p>
+</div>
+<div id="example-data-transitive-reasoning-test-1" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Example Data: Transitive Reasoning Test</h2>
+<p>We are going to practice evaluating model-data fit using the Transitive Reasoning assessment data that we explored in Chapter 2; these data were originally presented by <span class="citation">(<a href="#ref-Intro_nonparametric" role="doc-biblioref">Sijtsma and Molenaar 2002</a>)</span>. Please see Chapter 2 for a detailed description of the data.</p>
+</div>
+<div id="rasch-model-fit-analysis-with-cmle-in-erm" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Rasch Model Fit Analysis with CMLE in <em>eRm</em></h2>
+<p>We will use the <em>eRm</em> package <span class="citation">(<a href="#ref-eRm" role="doc-biblioref">Mair, Hatzinger, and Maier 2021</a>)</span> as the first package with which we demonstrate model-data fit analyses for Rasch models. We selected <em>eRm</em> as the primary package for the analyses in the current chapter because it includes functions for evaluating model-data fit that are relatively straightforward to apply and interpret. Please note that the <em>eRm</em> package uses the Conditional Maximum Likelihood Estimation (CMLE) method to estimate Rasch model parameters. As a result, estimates from the <em>eRm</em> package are not directly comparable to estimates obtained using other estimation methods.</p>
+<p><strong><em>Prepare for the Analyses</em></strong></p>
+<p>To get started with the <em>eRm</em> package, view the citation information, and then install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="MD-fit.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;eRm&quot;</span>)</span>
+<span id="cb1-2"><a href="MD-fit.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;eRm&quot;)</span></span>
+<span id="cb1-3"><a href="MD-fit.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+<p>We will also use the “psych” package <span class="citation">(<a href="#ref-psych" role="doc-biblioref">Revelle 2021</a>)</span> to perform a principal components analysis (PCA) of Rasch model standardized residual correlations. To get started with the psych package, view the citation information, and then install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="MD-fit.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;psych&quot;</span>)</span>
+<span id="cb2-2"><a href="MD-fit.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;psych&quot;)</span></span>
+<span id="cb2-3"><a href="MD-fit.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;psych&quot;</span>)</span></code></pre></div>
+<p>Now that we have installed and loaded the packages to our R session, we are ready to import the data. We will use the function <code>read.csv()</code> to import the comma-separated values (.csv) file that contains the transitive reasoning response data. We encourage readers to use their preferred method for importing data files into R or R Studio.</p>
+<p>Please note that if you use <code>read.csv()</code> you will need to specify the file path to the location at which the data file is stored on your computer or set your working directory to the folder in which you have saved the data.</p>
+<p>First, we will import the data using <code>read.csv()</code> and store it in an object called <code>transreas</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="MD-fit.html#cb3-1" aria-hidden="true" tabindex="-1"></a>transreas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;transreas.csv&quot;</span>)</span></code></pre></div>
+<p>In Chapter 2, we provided code to calculate descriptive statistics for the transitive reasoning data. We encourage readers to briefly explore their data using descriptive statistics before examining model-data fit.</p>
+<p><strong><em>Rasch Model Analysis</em></strong></p>
+<p>Because model-data fit analyses within the Rasch framework are based on residuals, the first step in the model-data fit analysis is to analyze the data with a Rasch model. These estimates are needed in order to calculate residuals.</p>
+<p>The transitive reasoning data in our example are scored responses in two categories (x = 0 or x = 1), and there are two major facets in the assessment system: students and items. Accordingly, we will use the dichotomous Rasch model <span class="citation">(<a href="#ref-Rasch_ori" role="doc-biblioref">Rasch 1960</a>)</span> to the data to estimate student and item locations on the latent variable. Please refer to Chapter 2 of this book for more details about the dichotomous Rasch model.</p>
+<p>First, we need to isolate the item response matrix from the other variables in the data (student IDs and grade level) so that we can analyze the responses using the dichotomous Rasch model. To do this, we will create an object made up of only the item responses. We will remove the first two variables (<code>Student</code> and <code>Grade</code>) from the <code>transreas</code> dataframe object using the <code>subset()</code> function with the <code>select=</code> option. We will save the resulting response matrix in a new dataframe object called <code>transreas.responses</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="MD-fit.html#cb4-1" aria-hidden="true" tabindex="-1"></a>transreas.responses <span class="ot">&lt;-</span> <span class="fu">subset</span>(transreas, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(Student, Grade))</span></code></pre></div>
+<p>Next, we will use <code>summary()</code> to calculate descriptive statistics for the <code>transreas.responses</code> object to check our work and ensure that the responses are ready for analysis.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="MD-fit.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(transreas.responses)</span></code></pre></div>
+<pre><code>##     task_01          task_02          task_03          task_04      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :1.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.9412   Mean   :0.8094   Mean   :0.8847   Mean   :0.7835  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##     task_05          task_06          task_07          task_08      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :1.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.8024   Mean   :0.9741   Mean   :0.8447   Mean   :0.9671  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##     task_09          task_10    
+##  Min.   :0.0000   Min.   :0.00  
+##  1st Qu.:0.0000   1st Qu.:0.00  
+##  Median :0.0000   Median :1.00  
+##  Mean   :0.3012   Mean   :0.52  
+##  3rd Qu.:1.0000   3rd Qu.:1.00  
+##  Max.   :1.0000   Max.   :1.00</code></pre>
+<p>Now, we are ready to run the dichotomous Rasch model on the transitive reasoning response data We will use the <code>RM()</code> function from <em>eRm</em> to run the model using CMLE and store the results in an object called <code>dichot.transreas</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="MD-fit.html#cb7-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas <span class="ot">&lt;-</span> <span class="fu">RM</span>(transreas.responses)</span></code></pre></div>
+<p>We will request a summary of the model results using the <code>summary()</code> function.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="MD-fit.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dichot.transreas)</span></code></pre></div>
+<pre><code>## 
+## Results of RM estimation: 
+## 
+## Call:  RM(X = transreas.responses) 
+## 
+## Conditional log-likelihood: -921.3465 
+## Number of iterations: 18 
+## Number of parameters: 9 
+## 
+## Item (Category) Difficulty Parameters (eta): with 0.95 CI:
+##         Estimate Std. Error lower CI upper CI
+## task_02    0.258      0.133   -0.003    0.518
+## task_03   -0.416      0.157   -0.723   -0.109
+## task_04    0.441      0.128    0.190    0.692
+## task_05    0.309      0.131    0.052    0.567
+## task_06   -2.175      0.292   -2.747   -1.604
+## task_07   -0.025      0.141   -0.302    0.252
+## task_08   -1.909      0.262   -2.423   -1.395
+## task_09    2.923      0.130    2.668    3.179
+## task_10    1.836      0.115    1.610    2.062
+## 
+## Item Easiness Parameters (beta) with 0.95 CI:
+##              Estimate Std. Error lower CI upper CI
+## beta task_01    1.243      0.204    0.842    1.643
+## beta task_02   -0.258      0.133   -0.518    0.003
+## beta task_03    0.416      0.157    0.109    0.723
+## beta task_04   -0.441      0.128   -0.692   -0.190
+## beta task_05   -0.309      0.131   -0.567   -0.052
+## beta task_06    2.175      0.292    1.604    2.747
+## beta task_07    0.025      0.141   -0.252    0.302
+## beta task_08    1.909      0.262    1.395    2.423
+## beta task_09   -2.923      0.130   -3.179   -2.668
+## beta task_10   -1.836      0.115   -2.062   -1.610</code></pre>
+<p>The summary of the model results includes information about global model-data fit using a conditional log-likelihood statistic, the number of iterations used in the analysis, and the number of parameters. The summary also includes item <code>easiness</code> parameter estimates, which can be interpreted as the inverse of item difficulty parameters. The higher the value of this parameter, the easier the item is compared to the other items. This value can be multiplied by -1 to calculate item <code>difficulty</code> parameter estimates. Standard errors and 95% confidence intervals are also provided for the item location estimates.</p>
+<p>At this point in the analysis, we will not explore the item and student calibrations in great detail. Instead, we will focus on evaluating model-data fit. After we confirm adequate adherence to the Rasch model requirements, we can proceed to examine item and student estimates with confidence.</p>
+<p><strong><em>Evaluate Unidimensionality</em></strong></p>
+<p>As a first step in our analysis of the degree to which the transitive reasoning data adhere to the dichotomous Rasch model requirements, we will examine evidence of adherence to the Rasch model requirement of <em>unidimensionality</em>, or the degree to which there is evidence that one latent variable is sufficient to explain most of the variation in the responses.</p>
+<p>The typical procedures for evaluating unidimensionality within the context of Rasch measurement theory are different from other dimensionality assessment methods that researchers frequently use in psychometric analyses based on Classical Test Theory or non-Rasch IRT models (e.g., exploratory or confirmatory factor analyses). Specifically, the Rasch approach to exploring dimensionality begins with the requirement of unidimensionality as a prerequisite requirement for measurement. With this requirement in mind, the Rasch model is calculated in order to obtain estimates of item and person locations on a unidimensional scale. Then, model results are examined for evidence that one primary latent variable is sufficient to explain the variation in item responses.</p>
+<p>First, we will calculate the proportion of variance in responses that can be attributed to item and person locations on the primary latent variable, as estimated using the Rasch model. To do this, we need to find the variance associated with the responses and the variance associated with residuals so that we can compare these values. We will start by calculating person parameters using the <code>person.parameter()</code> function on the model results object.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="MD-fit.html#cb10-1" aria-hidden="true" tabindex="-1"></a>student.locations <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(dichot.transreas)</span></code></pre></div>
+<p>Then, we can apply the <code>pmat()</code> function to the student locations object to calculate the model-predicted probabilities for a correct response for each student on each of the transitive reasoning tasks.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="MD-fit.html#cb11-1" aria-hidden="true" tabindex="-1"></a>model.prob <span class="ot">&lt;-</span> <span class="fu">pmat</span>(student.locations)</span></code></pre></div>
+<p>Because the <em>eRm</em> package uses CMLE to estimate student achievement parameters, the matrix of response probabilities excludes those students whose scored responses were extreme (in this case, all correct or all incorrect responses). As a result, we need to calculate residuals using a modified response matrix that does not include the students with extreme scores. This modified response matrix is stored in the <code>student.locations</code> object as <code>X.ex</code>. We will extract the response matrix from <code>student.locations</code> with the <code>$</code> operator and store the result in a matrix called <code>responses.without.extremes</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="MD-fit.html#cb12-1" aria-hidden="true" tabindex="-1"></a>responses.without.extremes <span class="ot">&lt;-</span> student.locations<span class="sc">$</span>X.ex</span></code></pre></div>
+<p>Now we can calculate residuals as the difference between the observed responses and model-predictions.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="MD-fit.html#cb13-1" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">&lt;-</span> responses.without.extremes <span class="sc">-</span> model.prob</span></code></pre></div>
+<p>Following <span class="citation"><a href="#ref-Data_variance" role="doc-biblioref">Linacre</a> (<a href="#ref-Data_variance" role="doc-biblioref">2003</a>)</span>, we can calculate the proportion of variance in the responses associated with the Rasch model estimates using the following values:</p>
+<ul>
+<li>Variance of the observations: <span class="math inline">\(V_O\)</span></li>
+<li>Variance of the residuals: <span class="math inline">\(V_R\)</span></li>
+<li>Raw variance explained by Rasch measures: <span class="math inline">\((V_O - V_R)/V_O\)</span></li>
+</ul>
+<p>This procedure reveals the approximate proportion of variance in item responses that can be explained by the Rasch model estimates on the logit scale that represents the construct. This value is an approximation. Many researchers use a critical value of about 20% of variance explained by Rasch measures as evidence of adequate adherence to unidimensionality to support the interpretation of Rasch model results for many practical purposes <span class="citation">(<a href="#ref-Unifactor" role="doc-biblioref">Reckase 1979</a>)</span>. We encourage readers to interpret this result as a continuous variable in the context of each unique assessment context. For more details and considerations on this topic, please see <span class="citation"><a href="#ref-Data_variance" role="doc-biblioref">Linacre</a> (<a href="#ref-Data_variance" role="doc-biblioref">2003</a>)</span>. The following code calculates these values.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="MD-fit.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Variance of the observations: VO</span></span>
+<span id="cb14-2"><a href="MD-fit.html#cb14-2" aria-hidden="true" tabindex="-1"></a>observations.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(responses.without.extremes)</span>
+<span id="cb14-3"><a href="MD-fit.html#cb14-3" aria-hidden="true" tabindex="-1"></a>VO <span class="ot">&lt;-</span> <span class="fu">var</span>(observations.vector)</span>
+<span id="cb14-4"><a href="MD-fit.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="MD-fit.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Variance of the residuals: VR</span></span>
+<span id="cb14-6"><a href="MD-fit.html#cb14-6" aria-hidden="true" tabindex="-1"></a>residuals.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(resids)</span>
+<span id="cb14-7"><a href="MD-fit.html#cb14-7" aria-hidden="true" tabindex="-1"></a>VR <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals.vector)</span>
+<span id="cb14-8"><a href="MD-fit.html#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="MD-fit.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Raw variance explained by Rasch measures: (VO - VR)/VO</span></span>
+<span id="cb14-10"><a href="MD-fit.html#cb14-10" aria-hidden="true" tabindex="-1"></a>(VO <span class="sc">-</span> VR)<span class="sc">/</span>VO</span></code></pre></div>
+<pre><code>## [1] 0.4115578</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="MD-fit.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Express the result as a percent:</span></span>
+<span id="cb16-2"><a href="MD-fit.html#cb16-2" aria-hidden="true" tabindex="-1"></a>((VO <span class="sc">-</span> VR)<span class="sc">/</span>VO) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 41.15578</code></pre>
+<p>Our analysis indicates that approximately 41.16% of the variance in student responses to the transitive reasoning tasks can be explained by the Rasch model estimates of student and item locations on the logit scale that represents the latent variable.</p>
+<p><strong><em>Principal Components Analysis of Standardized Residual Correlations</em></strong></p>
+<p>It is also somewhat common in Rasch analysis to examine correlations among standardized residuals for evidence of potentially meaningful additional dimensions (i.e., factors, constructs, latent variables) beyond the primary latent variable that may be contributing to variance in responses <span class="citation">(<a href="#ref-Structure_in_Rasch" role="doc-biblioref">Michael.Linacre 1998</a>)</span>. When researchers use Rasch measurement theory to guide their analyses, they use these exploratory techniques as a tool for <em>evaluating</em> the degree to which the construct of interest can be represented as a unidimensional latent variable <span class="citation">(<a href="#ref-Why_psych" role="doc-biblioref">Borsboom and Mellenbergh 2004</a>; <a href="#ref-Ask_expert" role="doc-biblioref">Maul 2020</a>; <a href="#ref-Measurement_psy" role="doc-biblioref">Michell 1999</a>)</span>. Deviations from unidimensionality provide information that is valuable for a variety of purposes. For example, deviations from unidimensionality might indicate that the guiding theory about the construct needs to be reconsidered or revised, that revisions are needed to ensure that the measurement procedure reflects the intended construct as a quantitative unidimensional variable, or both. In other cases, researchers might use dimensionality assessment tools as a method for evaluating a theory that there are multiple distinct constructs related to a particular domain, as reflected in responses to an assessment procedure.</p>
+<p>Some researchers evaluate adherence to the Rasch model requirement of unidimensionality using a principal components analysis (PCA) of the correlations among standardized residuals from Rasch model analyses. The basic idea behind this analysis is that if the responses adequately meet the Rasch model requirement of unidimensionality, then there should be no meaningful patterns in the residuals (i.e., the error or unexplained variance). The PCA of residual correlations is a post-hoc analysis conducted after the Rasch model has already been used to estimate person and item locations on the primary latent variable. As a result, the interpretation of the PCA of residual correlations within the framework of Rasch measurement theory is different from a typical interpretation of PCA in statistical analyses. Specifically, the Rasch model residual PCA is conducted for the purpose of <em>evaluating model requirements</em>; it is not used as a standalone statistical procedure.</p>
+<p>PCA of residuals is essentially evaluating the degree to which additional latent variables beyond the primary latent variable may have contributed to item responses. For this reason, researchers who use PCA of residuals in the context of Rasch analyses typically describe the eigenvalues from the PCA as <em>contrasts</em>, because they reflect <em>contrasting patterns</em> of responses to the primary latent variable. Relatively low values of contrasts provide evidence that the unidimensionality requirement is sufficiently satisfied.</p>
+<p>Several researchers have conducted simulation and real data studies related to techniques for interpreting the values of contrasts from the standardized residual PCA, including methods that involve identifying empirical critical values using simulation. We refer readers to the following resources to learn more about this method and best practices for interpreting the results:</p>
+<p><span class="citation">(<a href="#ref-Check_Dim" role="doc-biblioref">Chou and Wang 2010</a>)</span></p>
+<ul>
+<li>Chou, Yeh-Tai, and Wen-Chung Wang. “Checking Dimensionality in Item Response Models With Principal Component Analysis on Standardized Residuals.” <em>Educational and Psychological Measurement</em>, 70(5),2010, 717–731. <a href="https://doi.org/10.1177/0013164410379322" class="uri">https://doi.org/10.1177/0013164410379322</a></li>
+</ul>
+<p><span class="citation">(<a href="#ref-Critical_eigen" role="doc-biblioref">Rasch 2005</a>)</span></p>
+<ul>
+<li>Rasch, Georg. “Critical eigenvalue sizes in standardized residual principal components analysis.” <em>Rasch Measurement Transactions</em> 19, 2005, 1012.</li>
+</ul>
+<p><span class="citation">(<a href="#ref-Det_Eva" role="doc-biblioref">Smith Jr 2020</a>)</span></p>
+<ul>
+<li>Smith Jr., Everett V. “Detecting and evaluating the impact of multidimensionality using item fit statistics and principal component analysis of residuals.” <em>Journal of Applied Measurement</em>, 3(2),2002, 205–231.</li>
+</ul>
+<p><span class="citation">(<a href="#ref-Compar_dim" role="doc-biblioref">Smith 1996</a>)</span></p>
+<ul>
+<li>Smith, Richard M. “A comparison of methods for determining dimensionality in Rasch measurement.” <em>Structural Equation Modeling</em>, 3(1),1996, 25–40.</li>
+</ul>
+<p>In this chapter, we provide some basic guidance for conducting a PCA of standardized residual correlations and interpreting the results. In the manual for the Winsteps software program, which includes this residual PCA procedure, <span class="citation">(<a href="#ref-PCA_procedure" role="doc-biblioref">Linacre 2016</a>)</span> provides the following general guidance for interpreting the contrasts:</p>
+<p>“We are trying to falsify the hypothesis that the residuals are random noise by finding the component that explains the largest possible amount of variance in the residuals. This is the ‘first contrast’ (or first PCA component in the correlation matrix of the residuals). If the eigenvalue of the first contrast is small (usually less than 2.0) then the first contrast is at the noise level and the hypothesis of random noise is not falsified in a general way. If not, the loadings on the first contrast indicate that there are contrasting patterns in the residuals.”</p>
+<p>We recommend interpreting the value of the contrasts using Linacre’s recommendations as a starting point. When possible, we encourage analysts to use simulation methods to identify critical values for interpreting the results. Regardless of the method for identifying and interpreting contrasts relative to critical values, it is essential to note that real data will never perfectly adhere to the unidimensionality requirement or any Rasch model requirement. Instead of treating the results as categorical (e.g., “unidimensional” or “multidimensional”), we urge readers to consider the degree to which the results from these analyses provide useful information about potential deviations from the guiding measurement theory that may be useful for improving the measurement procedure, the theory about the construct, or both.</p>
+<p>First, we need to obtain a matrix with the standardized residuals from the model. The <em>eRm</em> package provides the standardized residuals as part of the result from the <code>itemfit()</code> function. We need to apply <code>itemfit()</code> to the <code>student.locations</code> object, and then extract the standardized residuals. In the following code, we store the standardized residuals in an object called <code>std.resids</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="MD-fit.html#cb18-1" aria-hidden="true" tabindex="-1"></a>item.fit <span class="ot">&lt;-</span> <span class="fu">itemfit</span>(student.locations)</span>
+<span id="cb18-2"><a href="MD-fit.html#cb18-2" aria-hidden="true" tabindex="-1"></a>std.resids <span class="ot">&lt;-</span> item.fit<span class="sc">$</span>st.res</span></code></pre></div>
+<p>Now we will use the <code>pca()</code> function from the <em>psych</em> package <span class="citation">(<a href="#ref-psych" role="doc-biblioref">Revelle 2021</a>)</span> to conduct the PCA on the standardized residuals object. We will save the first five contrasts in a vector called <code>contrasts</code> and plot the values using a simple graphical display.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="MD-fit.html#cb19-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">pca</span>(std.resids, <span class="at">nfactors =</span> <span class="fu">ncol</span>(transreas.responses), <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb19-2"><a href="MD-fit.html#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="MD-fit.html#cb19-3" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> <span class="fu">c</span>(pca<span class="sc">$</span>values[<span class="dv">1</span>], pca<span class="sc">$</span>values[<span class="dv">2</span>], pca<span class="sc">$</span>values[<span class="dv">3</span>], pca<span class="sc">$</span>values[<span class="dv">4</span>], pca<span class="sc">$</span>values[<span class="dv">5</span>])</span>
+<span id="cb19-4"><a href="MD-fit.html#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="MD-fit.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(contrasts, <span class="at">ylab =</span> <span class="st">&quot;Eigenvalues for Contrasts&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Contrast Number&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Contrasts from PCA of Standardized Residual Correlations&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>In this example, all of the contrasts have eigenvalues that are smaller than <span class="citation"><a href="#ref-PCA_procedure" role="doc-biblioref">Linacre</a> (<a href="#ref-PCA_procedure" role="doc-biblioref">2016</a>)</span> critical value of 2.00. This result suggests that the correlations among the model residuals primarily reflect randomness (i.e., noise)–thus providing evidence that the responses adhere to the Rasch model requirement of unidimensionality.</p>
+<p><strong><em>Summaries of Residuals: Infit &amp; Outfit Statistics</em></strong></p>
+<p>As a next step in evaluating the quality of our measurement procedure, we will calculate numeric fit statistics for the individual elements in the assessment procedure: items and persons. The most popular Rasch fit statistics for practical purposes are based on sums of squared residuals. There are two major categories of residual summary statistics: Unweighted (Outfit) and Weighted (Infit) mean square error (MSE) statistics. Unstandardized (<span class="math inline">\(χ^2\)</span>) &amp; standardized versions (Z) are available in most Rasch software programs. In this analysis, we will focus on the Unstandardized (<span class="math inline">\(χ^2\)</span>) versions of these statistics.</p>
+<p><strong><em>Outfit Mean Square Error</em></strong></p>
+<p>Outfit MSE statistics are “unweighted fit” statistics. For items, outfit MSE is the sum of squared residuals for an item divided by the number of persons who responded to the item. For persons, outfit MSE is sum of squared residuals for a person divided by the number of items encountered by the person.</p>
+<p>Because it is an unweighted mean, the outfit statistic is sensitive to extreme departures from model expectations. For example, an extreme departure from model expectations would occur when an otherwise high-achieving student provided an incorrect response to a very easy item, or when an otherwise low-achieving student provided a correct response to a very difficult item.</p>
+<p><strong><em>Infit Mean Square Error</em></strong></p>
+<p>Infit stands for “information-weighted fit,” where “information” means <em>variance</em>, such as larger variance for well-targeted observations, or smaller variance for extreme observations. For items, infit MSE statistics are calculated as the sum of squared standardized <em>item residuals</em>, weighted by variance, divided by the number of persons who responded to the item. For persons, infit MSE is the sum of squared standardized <em>person residuals</em>, weighted by variance, divided by the number of items the person encountered.</p>
+<p>Infit MSE is sensitive to less-extreme unexpected responses compared to outfit MSE. Examples of less-extreme unexpected responses include a student providing an incorrect response to an item that is just below their achievement level, or a student providing a correct response to an item that is just above their achievement level.</p>
+<p><strong><em>Expected Values for MSE Fit Statistics</em></strong></p>
+<p>There is considerable disagreement among measurement scholars about how to classify an infit or outfit MSE statistic as evidence of “misfit” or “fit.” Nonetheless, readers may find it useful to be aware of commonly agreed-upon principles for interpreting these statistics:</p>
+<ul>
+<li><p>The expected value is about 1.00 when data fit the model</p></li>
+<li><p>Less than 1.00: Responses are more predictable than the model expects; they resemble a Guttman-like (deterministic) pattern (“muted”)</p></li>
+<li><p>Greater than 1.00: Responses are more haphazard (“noisy”) than the model expects; there is too much variation to interpret that the estimate as a good representation of the response pattern</p></li>
+<li><p>Some variation is expected, but noisy responses are usually considered more cause for concern than muted responses</p></li>
+</ul>
+<p><strong><em>Item Fit Statistics</em></strong></p>
+<p>In practice, researchers usually begin individual Rasch fit analyses by examining fit statistics for items, rather than persons. There are two main reasons for this order. First, there is usually more data available with which to evaluate each item compared to each person, so the interpretation of fit statistics is less likely to be influenced by random fluctuations (i.e., noise). Second, it is usually easier to manage item misfit during a routine analysis compared to person misfit. For example, content validity concerns notwithstanding, in the case of severe item misfit, it may be possible to remove an item from an analysis and re-estimate parameters; removing persons from an analysis may warrant relatively more consideration. Alternatively, evidence of item misfit could signal data quality issues such as scoring or coding errors that could be resolved prior to additional analysis.</p>
+<p>The <em>eRm</em> package includes the <code>itemfit()</code> function, which calculates Rasch model infit MSE and outfit MSE statistics for items. This function is applied to the object that includes person parameters. Earlier in this chapter, we applied <code>itemfit()</code> to the <code>student.locations</code> object and we stored the results in an object called <code>item.fit</code>. We will examine the <code>item.fit</code> object in detail now by printing the results to our console:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="MD-fit.html#cb20-1" aria-hidden="true" tabindex="-1"></a>item.fit</span></code></pre></div>
+<pre><code>## 
+## Itemfit Statistics: 
+##           Chisq  df p-value Outfit MSQ Infit MSQ Outfit t Infit t Discrim
+## task_01 245.550 373   1.000      0.657     0.761   -1.327  -1.622   0.455
+## task_02 421.904 373   0.041      1.128     1.087    1.071   1.187   0.054
+## task_03 218.155 373   1.000      0.583     0.745   -2.742  -2.688   0.583
+## task_04 478.894 373   0.000      1.280     1.158    2.442   2.268  -0.014
+## task_05 346.015 373   0.839      0.925     0.991   -0.625  -0.109   0.184
+## task_06  65.613 373   1.000      0.175     0.611   -2.789  -1.781   0.620
+## task_07 244.494 373   1.000      0.654     0.804   -2.768  -2.475   0.493
+## task_08 125.478 373   1.000      0.336     0.687   -2.205  -1.569   0.563
+## task_09 394.207 373   0.216      1.054     0.904    0.462  -1.727   0.022
+## task_10 326.534 373   0.960      0.873     0.898   -1.822  -2.408   0.226</code></pre>
+<p>The resulting table includes infit MSE and outfit MSE statistics for each item (labeled as “MSQ” statistics in the <em>eRm</em> package). The table also includes standardized versions of infit and outfit in the form of <em>t</em> statistics, along with an estimate of item discrimination (i.e., item slope). Item discrimination is not a parameter in the Rasch model, but it is calculated here as an additional indicator of fit to the Rasch model for individual items.</p>
+<p><strong><em>Person Fit Statistics</em></strong></p>
+<p>Next we will calculate numeric person fit statistics in the form of infit MSE and outfit MSE. In the <em>eRm</em> package, <code>personfit()</code> can be applied to the object with person parameter estimates to calculate these statistics. In our example, we will apply <code>personfit()</code> to the <code>student.locations</code> object and save the results in an object called <code>person.fit</code>. Because we have a relatively large sample, we will use the <code>summary()</code> function to explore the infit and outfit statistics rather than printing the results to the console like we did for the item fit statistics.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="MD-fit.html#cb22-1" aria-hidden="true" tabindex="-1"></a>person.fit <span class="ot">&lt;-</span> <span class="fu">personfit</span>(student.locations)</span>
+<span id="cb22-2"><a href="MD-fit.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit<span class="sc">$</span>p.infitMSQ)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.4060  0.4910  0.7487  0.9102  1.1740  2.2483</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="MD-fit.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit<span class="sc">$</span>p.outfitMSQ)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1723  0.2399  0.5468  0.7665  0.9592  7.3060</code></pre>
+<p>From these results, we can see that there is some variability in person fit, with infit MSE statistics ranging from 0.41 to 2.25, and outfit MSE statistics ranging from 0.17 to 7.30.</p>
+<p>For discussions on interpreting person fit statistics in the context of Rasch measurement theory, we refer readers to the following resources:</p>
+<p><span class="citation">(<a href="#ref-per_fit" role="doc-biblioref">Smith 1986</a>)</span></p>
+<ul>
+<li>Smith, Richard. M. (1986). “Person Fit in the Rasch Model.” <em>Educational and Psychological Measurement</em>, 46(2), 359–372. <a href="https://doi.org/10.1177/001316448604600210" class="uri">https://doi.org/10.1177/001316448604600210</a></li>
+</ul>
+<p><span class="citation">(<a href="#ref-use_per_res" role="doc-biblioref">Walker, Jennings, and Engelhard 2018</a>)</span></p>
+<ul>
+<li>Walker A., Adrienne, Jeremy Kyle Jennings and George Engelhard. “Using person response functions to investigate areas of person misfit related to item characteristics.” <em>Educational Assessment</em>, 23(1), 2018, 47–68. <a href="https://doi.org/10.1080/10627197.2017.1415143" class="uri">https://doi.org/10.1080/10627197.2017.1415143</a></li>
+</ul>
+<p><span class="citation">(<a href="#ref-bootstrap_rasch" role="doc-biblioref">Edward W. Wolfe 2013</a>)</span></p>
+<ul>
+<li>Wolfe W., Edward. “A bootstrap approach to evaluating person and item fit to the Rasch model.” <em>Journal of Applied Measurement</em>, 14(1),2013, 1–9.</li>
+</ul>
+</div>
+<div id="graphical-displays-for-evaluating-model-data-fit" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Graphical Displays for Evaluating Model-Data Fit</h2>
+<p>Next, we will use some graphical displays to examine model-data fit in more detail. In this chapter, we focus on graphical displays for evaluating model-data fit specific to individual items. However, it is possible to create similar plots for persons as well as for other facets in an assessment context, such as raters.</p>
+<p>Graphical displays are useful for exploring deviations from model expectations in more detail than is possible using the summary-level numeric fit statistics. In practice, many researchers use numeric fit statistics to identify individual items, persons, or other elements with notable misfit, and then use graphical displays to explore the nature of the misfit in more detail.</p>
+<p><strong><em>Plots of Standardized Residuals</em></strong></p>
+<p>First, we will create plots that show the standardized residuals for the responses associated with individual items across persons. These plots can demonstrate patterns in unexpected and expected responses that can be useful for understanding responses and interpreting results specific to individual items and persons.</p>
+<p>Earlier in this chapter, we stored the standardized residuals in an object called <code>std.resids</code>. We will use this object to create plots for each of the individual items in the transitive reasoning assessment via a for-loop. For brevity, we have only included plots for the first three items in this book. The specific items to be plotted can be controlled by changing the items included in the <code>items.to.plot</code> object.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="MD-fit.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before constructing the plots, find the maximum and minimum values of the standardized residuals to set limits for the axes:</span></span>
+<span id="cb26-2"><a href="MD-fit.html#cb26-2" aria-hidden="true" tabindex="-1"></a>max.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(std.resids))</span>
+<span id="cb26-3"><a href="MD-fit.html#cb26-3" aria-hidden="true" tabindex="-1"></a>min.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">min</span>(std.resids))</span>
+<span id="cb26-4"><a href="MD-fit.html#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="MD-fit.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The code below will produce plots of standardized residuals for selected items as listed in items.to.plot:</span></span>
+<span id="cb26-6"><a href="MD-fit.html#cb26-6" aria-hidden="true" tabindex="-1"></a>items.to.plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb26-7"><a href="MD-fit.html#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="MD-fit.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> items.to.plot){</span>
+<span id="cb26-9"><a href="MD-fit.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(std.resids[, item.number], <span class="at">ylim =</span> <span class="fu">c</span>(min.resid, max.resid),</span>
+<span id="cb26-10"><a href="MD-fit.html#cb26-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Standardized Residuals for Item &quot;</span>, item.number, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb26-11"><a href="MD-fit.html#cb26-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">&quot;Standardized Residual&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Person Index&quot;</span>)</span>
+<span id="cb26-12"><a href="MD-fit.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb26-13"><a href="MD-fit.html#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb26-14"><a href="MD-fit.html#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb26-15"><a href="MD-fit.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-16"><a href="MD-fit.html#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Std. Residual&quot;</span>, <span class="st">&quot;Observed = Expected&quot;</span>, <span class="st">&quot;+/- 2 SD&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), </span>
+<span id="cb26-17"><a href="MD-fit.html#cb26-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb26-18"><a href="MD-fit.html#cb26-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">cex =</span> .<span class="dv">8</span>)</span>
+<span id="cb26-19"><a href="MD-fit.html#cb26-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-17-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-17-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-17-3.png" width="672" /></p>
+<p>A separate plot is produced for each item. In each plot, the y-axis shows values of the standardized residuals, and the x-axis shows the persons (in this case, students), ordered by their relative position in the data set. Open-circle plotting symbols show the standardized residual associated with each person’s response to the item of interest.</p>
+<p>Horizontal lines are used to assist in the interpretation of the values of the standardized residuals. First, a solid line is plotted at a value of 0; standardized residuals equal to zero indicate that the observed response was equal to the model-expected response given person and item locations. Standardized residuals that are greater than zero indicate unexpected positive responses, and standardized residuals that are less than zero indicate unexpected negative responses. Dashed lines are plotted at values of +2 and -2 to indicate standardized residuals that are two standard deviations above or below model expectations, respectively. Researchers often interpret standardized residuals that exceed +/- 2 as indicating statistically significant unexpected responses.</p>
+<p><strong><em>Empirical Item Response Functions</em></strong></p>
+<p>A second useful graphical display for evaluating model-data fit is a plot of model-expected item response functions (IRFs) overlaid with empirical (observed) IRFs. IRFs are sometimes called item characteristic curves (ICCs); these plots illustrate the relationship between the latent variable and the probability for a certain response (e.g., a correct response). Plotting the model-expected IRFs in the same display as the empirical IRFs provides insight into the frequency, magnitude, direction, and logit-scale location of expected an unexpected responses associated with individual items. To create these plots, we will apply the <code>plotICC()</code> function from the <em>eRm</em> package in a for-loop so that we can create plots for multiple items. For brevity, we have only included plots for the first three items in this book. The specific items to be plotted can be controlled by changing the items included in the <code>items.to.plot</code> object.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="MD-fit.html#cb27-1" aria-hidden="true" tabindex="-1"></a>items.to.plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb27-2"><a href="MD-fit.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> items.to.plot){</span>
+<span id="cb27-3"><a href="MD-fit.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plotICC</span>(dichot.transreas, <span class="at">item.subset =</span> item.number, <span class="at">empICC =</span> <span class="fu">list</span>(<span class="st">&quot;raw&quot;</span>), <span class="at">empCI =</span> <span class="fu">list</span>())</span>
+<span id="cb27-4"><a href="MD-fit.html#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-18-3.png" width="672" /></p>
+<p>A separate plot is produced for each item. In each plot, the y-axis shows model-predicted probability for a correct or positive response (labeled “Probability to Solve” by default in the <em>eRm</em> package), and the x-axis shows the latent variable (labeled “Latent Dimension” by default in the <em>eRm</em> package).The solid line shows the model-expected IRF. Open-circle plotting symbols show the observed probability for a correct response at various locations on the latent variable. Dashed vertical lines show a 95% confidence interval around the observed probabilities. Alignment between the model-expected IRF and the observed probabilities (i.e., circles that are close to the model-expected IRF) provide evidence of good model-data fit.</p>
+<p>Examination of these plots for the transitive reasoning items reveals unexpected responses that vary in frequency, direction, magnitude, and latent-variable location for each item. These results can be used to understand the nature of misfit in detail for each item.</p>
+<div id="reliability" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Reliability</h3>
+<p>As a final step in the analyses, we demonstrate how it is possible to evaluate reliability using Rasch model estimates. From a Rasch measurement perspective, the focus for reliability analyses is on <em>ordering</em> and <em>separation</em> of individual elements within each facet (e.g., items and persons) on the logit scale. Specifically, the Rasch <em>reliability of separation statistic</em> can be calculated for each facet in the model (e.g., items and persons), and it is an estimate of <em>how well we can differentiate</em> individual items, persons, or other elements on the latent variable. We discussed the interpretation of this statistic in Chapter 2, and noted that the interpretation and use of this statistic depends on evidence of acceptable model-data fit.</p>
+<p>Our transitive reasoning data include two facets: items and persons. Accordingly, we will calculate reliability of separation statistics for each facet.</p>
+<p><strong><em>Reliability of Item Separation</em></strong>
+The reliability of item separation statistic is calculated using a ratio of true (adjusted) variance to observed variance for items:</p>
+<p><span class="math display">\[\begin{equation}\tag{3.3} Rel_{I}=\left(SA_{I}^{2}\right) /\left(SD_{I}^{2}\right) \end{equation}\]</span></p>
+<p>Where:
+<em>SA<sup>2</sup><sub>I</sub></em> : Adjusted item variability;
+Calculated by subtracting error variance for Item from total Item variance: <span class="math display">\[\begin{equation}\tag{3.4} SA_{I}^{2} = SD_{I}^{2} - SE_{I}^{2} \end{equation}\]</span>
+<em>SD<sup>2</sup><sub>I</sub></em> : Total Item variance</p>
+<p><strong><em>Reliability of Person Separation</em></strong></p>
+<p>The reliability of person separation statistic is calculated using a ratio of true (adjusted) variance to observed variance for persons:</p>
+<p><span class="math display">\[\begin{equation}\tag{3.5} Rel_{p}=\left(SA_{P}^{2}\right) /\left(SD_{P}^{2}\right) \end{equation}\]</span>
+Where:
+<em>SA<sup>2</sup><sub>P</sub></em> : Adjusted person variability;
+Calculated by subtracting error variance for persons from total person variance: <span class="math display">\[\begin{equation}\tag{3.6} SA_{P}^{2} = SD_{P}^{2} - SE_{P}^{2} \end{equation}\]</span>
+<em>SD<sup>2</sup><sub>P</sub></em> : Total person variance</p>
+<p>The <em>eRm</em> package includes the function <code>SepRel()</code> to calculate the person separation reliability statistic. This function is applied to the person parameter object. We apply the <code>SepRel()</code> function to our <code>student.locations</code> object:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="MD-fit.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">SepRel</span>(student.locations))</span></code></pre></div>
+<pre><code>##        Separation Reliability: 0.2061
+## 
+##             Observed Variance: 1.1784 (Squared Standard Deviation)
+## Mean Square Measurement Error: 0.9355 (Model Error Variance)</code></pre>
+</div>
+</div>
+<div id="rasch-model-fit-analysis-with-mmle-in-tam" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Rasch Model Fit Analysis with MMLE in TAM</h2>
+<p>Next, we demonstrate model-data fit analyses using the TAM package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span> with Marginal Maximum Likelihood Estimation (MMLE). The procedures for evaluating model-data fit with TAM are quite similar to those that we presented earlier in this chapter with <em>eRm</em>. As a result, we do not provide detailed annotations or discussions of the results from these analyses.</p>
+<p><strong><em>Prepare for the Analyses</em></strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="MD-fit.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;TAM&quot;</span>)</span>
+<span id="cb30-2"><a href="MD-fit.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;TAM&quot;)</span></span>
+<span id="cb30-3"><a href="MD-fit.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TAM&quot;</span>)</span></code></pre></div>
+<p><strong><em>Run the Rasch Model</em></strong></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="MD-fit.html#cb31-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.mml</span>(transreas.responses, <span class="at">constraint =</span> <span class="st">&quot;items&quot;</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><strong><em>Evaluate Unidimensionality</em></strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="MD-fit.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Isolate the response matrix used in estimation:</span></span>
+<span id="cb32-2"><a href="MD-fit.html#cb32-2" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> dichot.transreas_MMLE<span class="sc">$</span>resp</span>
+<span id="cb32-3"><a href="MD-fit.html#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="MD-fit.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the expected response probabilities based on the model:</span></span>
+<span id="cb32-5"><a href="MD-fit.html#cb32-5" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">&lt;-</span> <span class="fu">IRT.residuals</span>(dichot.transreas_MMLE)</span>
+<span id="cb32-6"><a href="MD-fit.html#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="MD-fit.html#cb32-7" aria-hidden="true" tabindex="-1"></a>exp <span class="ot">&lt;-</span> resids<span class="sc">$</span>X_exp</span>
+<span id="cb32-8"><a href="MD-fit.html#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="MD-fit.html#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate raw (unstandardized) residuals:</span></span>
+<span id="cb32-10"><a href="MD-fit.html#cb32-10" aria-hidden="true" tabindex="-1"></a>resids.raw <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(resp <span class="sc">-</span> exp)</span>
+<span id="cb32-11"><a href="MD-fit.html#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="MD-fit.html#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate the variance in observations due to Rasch-model-estimated locations:</span></span>
+<span id="cb32-13"><a href="MD-fit.html#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="MD-fit.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance of the observations: VO</span></span>
+<span id="cb32-15"><a href="MD-fit.html#cb32-15" aria-hidden="true" tabindex="-1"></a>observations.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">as.matrix</span>(resp))</span>
+<span id="cb32-16"><a href="MD-fit.html#cb32-16" aria-hidden="true" tabindex="-1"></a>VO <span class="ot">&lt;-</span> <span class="fu">var</span>(observations.vector)</span>
+<span id="cb32-17"><a href="MD-fit.html#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="MD-fit.html#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance of the residuals: VR</span></span>
+<span id="cb32-19"><a href="MD-fit.html#cb32-19" aria-hidden="true" tabindex="-1"></a>residuals.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(resids.raw)</span>
+<span id="cb32-20"><a href="MD-fit.html#cb32-20" aria-hidden="true" tabindex="-1"></a>VR <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals.vector)</span>
+<span id="cb32-21"><a href="MD-fit.html#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="MD-fit.html#cb32-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw variance explained by Rasch measures: (VO - VR)/VO</span></span>
+<span id="cb32-23"><a href="MD-fit.html#cb32-23" aria-hidden="true" tabindex="-1"></a>(VO <span class="sc">-</span> VR)<span class="sc">/</span>VO</span>
+<span id="cb32-24"><a href="MD-fit.html#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-25"><a href="MD-fit.html#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Express the result as a percent:</span></span>
+<span id="cb32-26"><a href="MD-fit.html#cb32-26" aria-hidden="true" tabindex="-1"></a>((VO <span class="sc">-</span> VR)<span class="sc">/</span>VO) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<p><strong><em>Principal Components Analysis of Standardized Residual Correlations</em></strong></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="MD-fit.html#cb33-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">pca</span>(resids<span class="sc">$</span>stand_residuals, <span class="at">nfactors =</span> <span class="fu">ncol</span>(transreas.responses), <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb33-2"><a href="MD-fit.html#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="MD-fit.html#cb33-3" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> <span class="fu">c</span>(pca<span class="sc">$</span>values[<span class="dv">1</span>], pca<span class="sc">$</span>values[<span class="dv">2</span>], pca<span class="sc">$</span>values[<span class="dv">3</span>], pca<span class="sc">$</span>values[<span class="dv">4</span>], pca<span class="sc">$</span>values[<span class="dv">5</span>])</span>
+<span id="cb33-4"><a href="MD-fit.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(contrasts, <span class="at">ylab =</span> <span class="st">&quot;Eigenvalues for Contrasts&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Contrast Number&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Contrasts from PCA of Standardized Residual Correlations&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><strong><em>Numeric Fit Statistics</em></strong></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="MD-fit.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate numeric item fit statistics:</span></span>
+<span id="cb34-2"><a href="MD-fit.html#cb34-2" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.fit</span>(dichot.transreas_MMLE) </span></code></pre></div>
+<pre><code>## Item fit calculation based on 40 simulations
+## |**********|
+## |---------|</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="MD-fit.html#cb36-1" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(item.fit_MMLE<span class="sc">$</span>itemfit)</span>
+<span id="cb36-2"><a href="MD-fit.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(item.fit_MMLE)</span></code></pre></div>
+<pre><code>##   parameter             Outfit          Outfit_t          Outfit_p        
+##  Length:9           Min.   :0.8355   Min.   :-5.6185   Min.   :0.0000000  
+##  Class :character   1st Qu.:0.9019   1st Qu.:-2.3653   1st Qu.:0.0002431  
+##  Mode  :character   Median :0.9757   Median :-0.5345   Median :0.0180141  
+##                     Mean   :0.9924   Mean   :-0.3127   Mean   :0.2719552  
+##                     3rd Qu.:0.9914   3rd Qu.:-0.2249   3rd Qu.:0.5929851  
+##                     Max.   :1.2724   Max.   : 6.9657   Max.   :0.8220521  
+##   Outfit_pholm          Infit           Infit_t           Infit_p         
+##  Min.   :0.000000   Min.   :0.8298   Min.   :-5.8217   Min.   :0.0000000  
+##  1st Qu.:0.001702   1st Qu.:0.9024   1st Qu.:-2.3489   1st Qu.:0.0001326  
+##  Median :0.090070   Median :0.9783   Median :-0.4736   Median :0.0188267  
+##  Mean   :0.455267   Mean   :0.9941   Mean   :-0.2727   Mean   :0.2815887  
+##  3rd Qu.:1.000000   3rd Qu.:0.9925   3rd Qu.:-0.1939   3rd Qu.:0.6357611  
+##  Max.   :1.000000   Max.   :1.2747   Max.   : 7.0226   Max.   :0.8462228  
+##   Infit_pholm       
+##  Min.   :0.0000000  
+##  1st Qu.:0.0009284  
+##  Median :0.0941335  
+##  Mean   :0.4562857  
+##  3rd Qu.:1.0000000  
+##  Max.   :1.0000000</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="MD-fit.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate numeric person fit statistics:</span></span>
+<span id="cb38-2"><a href="MD-fit.html#cb38-2" aria-hidden="true" tabindex="-1"></a>person.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.personfit</span>(dichot.transreas_MMLE) </span>
+<span id="cb38-3"><a href="MD-fit.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit_MMLE)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t      infitPerson     infitPerson_t    
+##  Min.   :0.04345   Min.   :-0.95709   Min.   :0.1569   Min.   :-1.5008  
+##  1st Qu.:0.16335   1st Qu.:-0.63496   1st Qu.:0.3613   1st Qu.:-0.9720  
+##  Median :0.46295   Median :-0.06839   Median :0.6428   Median :-0.5789  
+##  Mean   :0.61001   Mean   : 0.05723   Mean   :0.7734   Mean   :-0.2966  
+##  3rd Qu.:0.84557   3rd Qu.: 0.68920   3rd Qu.:1.0647   3rd Qu.: 0.2983  
+##  Max.   :4.21347   Max.   : 2.84202   Max.   :2.2003   Max.   : 2.5764</code></pre>
+<p><strong><em>Graphical Fit Analysis</em></strong></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="MD-fit.html#cb40-1" aria-hidden="true" tabindex="-1"></a>std.resids <span class="ot">&lt;-</span> resids<span class="sc">$</span>stand_residuals</span>
+<span id="cb40-2"><a href="MD-fit.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="MD-fit.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Before constructing the plots, find the maximum and minimum values of the standardized residuals to set limits for the axes:</span></span>
+<span id="cb40-4"><a href="MD-fit.html#cb40-4" aria-hidden="true" tabindex="-1"></a>max.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(std.resids))</span>
+<span id="cb40-5"><a href="MD-fit.html#cb40-5" aria-hidden="true" tabindex="-1"></a>min.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">min</span>(std.resids))</span>
+<span id="cb40-6"><a href="MD-fit.html#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="MD-fit.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The code below will produce standardized residual plots for each of selected items:</span></span>
+<span id="cb40-8"><a href="MD-fit.html#cb40-8" aria-hidden="true" tabindex="-1"></a>items.to.plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb40-9"><a href="MD-fit.html#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> items.to.plot){</span>
+<span id="cb40-10"><a href="MD-fit.html#cb40-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-11"><a href="MD-fit.html#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(std.resids[, item.number], <span class="at">ylim =</span> <span class="fu">c</span>(min.resid, max.resid),</span>
+<span id="cb40-12"><a href="MD-fit.html#cb40-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Standardized Residuals for Item &quot;</span>, item.number, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb40-13"><a href="MD-fit.html#cb40-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">&quot;Standardized Residual&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Person Index&quot;</span>)</span>
+<span id="cb40-14"><a href="MD-fit.html#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb40-15"><a href="MD-fit.html#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb40-16"><a href="MD-fit.html#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb40-17"><a href="MD-fit.html#cb40-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-18"><a href="MD-fit.html#cb40-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Std. Residual&quot;</span>, <span class="st">&quot;Observed = Expected&quot;</span>, <span class="st">&quot;+/- 2 SD&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), </span>
+<span id="cb40-19"><a href="MD-fit.html#cb40-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb40-20"><a href="MD-fit.html#cb40-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">cex =</span> .<span class="dv">8</span>)</span>
+<span id="cb40-21"><a href="MD-fit.html#cb40-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-25-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-25-3.png" width="672" /></p>
+<p><strong><em>Reliability of Separation</em></strong></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="MD-fit.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Person separation reliability:</span></span>
+<span id="cb41-2"><a href="MD-fit.html#cb41-2" aria-hidden="true" tabindex="-1"></a>dichot.transreas_MMLE<span class="sc">$</span>WLEreliability</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="MD-fit.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Item separation reliability:</span></span>
+<span id="cb43-2"><a href="MD-fit.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item scores</span></span>
+<span id="cb43-3"><a href="MD-fit.html#cb43-3" aria-hidden="true" tabindex="-1"></a>ItemScores <span class="ot">&lt;-</span> <span class="fu">colSums</span>(transreas.responses)</span>
+<span id="cb43-4"><a href="MD-fit.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="MD-fit.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item SD</span></span>
+<span id="cb43-6"><a href="MD-fit.html#cb43-6" aria-hidden="true" tabindex="-1"></a>ItemSD <span class="ot">&lt;-</span> <span class="fu">apply</span>(transreas.responses,<span class="dv">2</span>,sd)</span>
+<span id="cb43-7"><a href="MD-fit.html#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="MD-fit.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the se of the Item</span></span>
+<span id="cb43-9"><a href="MD-fit.html#cb43-9" aria-hidden="true" tabindex="-1"></a>ItemSE <span class="ot">&lt;-</span> ItemSD<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(ItemSD))</span>
+<span id="cb43-10"><a href="MD-fit.html#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="MD-fit.html#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Observed Variance (also known as Total Person Variability or Squared Standard Deviation)</span></span>
+<span id="cb43-12"><a href="MD-fit.html#cb43-12" aria-hidden="true" tabindex="-1"></a>SSD.ItemScores <span class="ot">&lt;-</span> <span class="fu">var</span>(ItemScores)</span>
+<span id="cb43-13"><a href="MD-fit.html#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="MD-fit.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Mean Square Measurement error (also known as Model Error variance)</span></span>
+<span id="cb43-15"><a href="MD-fit.html#cb43-15" aria-hidden="true" tabindex="-1"></a>Item.MSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((ItemSE)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(ItemSE)</span>
+<span id="cb43-16"><a href="MD-fit.html#cb43-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-17"><a href="MD-fit.html#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Item Separation Reliability</span></span>
+<span id="cb43-18"><a href="MD-fit.html#cb43-18" aria-hidden="true" tabindex="-1"></a>item.separation.reliability <span class="ot">&lt;-</span> (SSD.ItemScores<span class="sc">-</span>Item.MSE) <span class="sc">/</span> SSD.ItemScores</span>
+<span id="cb43-19"><a href="MD-fit.html#cb43-19" aria-hidden="true" tabindex="-1"></a>item.separation.reliability</span></code></pre></div>
+<pre><code>## [1] 0.9999984</code></pre>
+</div>
+<div id="rasch-model-fit-analysis-with-jmle-in-tam" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Rasch Model Fit Analysis with JMLE in TAM</h2>
+<p>Finally, we demonstrate model-data fit analyses using the TAM package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span> with Joint Maximum Likelihood Estimation (JMLE). As in the previous section, we do not provide detailed annotations or discussions of the results from these analyses because they are quite similar to those that we have already presented in this chapter.</p>
+<p><strong><em>Run the Rasch Model</em></strong></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="MD-fit.html#cb45-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas_JMLE <span class="ot">&lt;-</span> <span class="fu">tam.jml</span>(transreas.responses, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><strong><em>Evaluate Unidimensionality</em></strong></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="MD-fit.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Isolate the response matrix used in estimation:</span></span>
+<span id="cb46-2"><a href="MD-fit.html#cb46-2" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> dichot.transreas_JMLE<span class="sc">$</span>resp</span>
+<span id="cb46-3"><a href="MD-fit.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="MD-fit.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the expected response probabilities based on the model:</span></span>
+<span id="cb46-5"><a href="MD-fit.html#cb46-5" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">&lt;-</span> <span class="fu">IRT.residuals</span>(dichot.transreas_JMLE)</span>
+<span id="cb46-6"><a href="MD-fit.html#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="MD-fit.html#cb46-7" aria-hidden="true" tabindex="-1"></a>exp <span class="ot">&lt;-</span> resids<span class="sc">$</span>X_exp</span>
+<span id="cb46-8"><a href="MD-fit.html#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="MD-fit.html#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate raw (unstandardized) residuals:</span></span>
+<span id="cb46-10"><a href="MD-fit.html#cb46-10" aria-hidden="true" tabindex="-1"></a>resids.raw <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(resp <span class="sc">-</span> exp)</span>
+<span id="cb46-11"><a href="MD-fit.html#cb46-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="MD-fit.html#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate the variance in observations due to Rasch-model-estimated locations:</span></span>
+<span id="cb46-13"><a href="MD-fit.html#cb46-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-14"><a href="MD-fit.html#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance of the observations: VO</span></span>
+<span id="cb46-15"><a href="MD-fit.html#cb46-15" aria-hidden="true" tabindex="-1"></a>observations.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">as.matrix</span>(resp))</span>
+<span id="cb46-16"><a href="MD-fit.html#cb46-16" aria-hidden="true" tabindex="-1"></a>VO <span class="ot">&lt;-</span> <span class="fu">var</span>(observations.vector)</span>
+<span id="cb46-17"><a href="MD-fit.html#cb46-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-18"><a href="MD-fit.html#cb46-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance of the residuals: VR</span></span>
+<span id="cb46-19"><a href="MD-fit.html#cb46-19" aria-hidden="true" tabindex="-1"></a>residuals.vector <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(resids.raw)</span>
+<span id="cb46-20"><a href="MD-fit.html#cb46-20" aria-hidden="true" tabindex="-1"></a>VR <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals.vector)</span>
+<span id="cb46-21"><a href="MD-fit.html#cb46-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-22"><a href="MD-fit.html#cb46-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw variance explained by Rasch measures: (VO - VR)/VO</span></span>
+<span id="cb46-23"><a href="MD-fit.html#cb46-23" aria-hidden="true" tabindex="-1"></a>(VO <span class="sc">-</span> VR)<span class="sc">/</span>VO</span>
+<span id="cb46-24"><a href="MD-fit.html#cb46-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-25"><a href="MD-fit.html#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Express the result as a percent:</span></span>
+<span id="cb46-26"><a href="MD-fit.html#cb46-26" aria-hidden="true" tabindex="-1"></a>((VO <span class="sc">-</span> VR)<span class="sc">/</span>VO) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<p><strong><em>Principal Components Analysis of Standardized Residual Correlations</em></strong></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="MD-fit.html#cb47-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">pca</span>(resids<span class="sc">$</span>stand_residuals, <span class="at">nfactors =</span> <span class="fu">ncol</span>(transreas.responses), <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb47-2"><a href="MD-fit.html#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="MD-fit.html#cb47-3" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> <span class="fu">c</span>(pca<span class="sc">$</span>values[<span class="dv">1</span>], pca<span class="sc">$</span>values[<span class="dv">2</span>], pca<span class="sc">$</span>values[<span class="dv">3</span>], pca<span class="sc">$</span>values[<span class="dv">4</span>], pca<span class="sc">$</span>values[<span class="dv">5</span>])</span>
+<span id="cb47-4"><a href="MD-fit.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(contrasts, <span class="at">ylab =</span> <span class="st">&quot;Eigenvalues for Contrasts&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Contrast Number&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Contrasts from PCA of Standardized Residual Correlations&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><strong><em>Item and Person Fit</em></strong></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="MD-fit.html#cb48-1" aria-hidden="true" tabindex="-1"></a>fit.results <span class="ot">&lt;-</span> <span class="fu">tam.fit</span>(dichot.transreas_JMLE)</span>
+<span id="cb48-2"><a href="MD-fit.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="MD-fit.html#cb48-3" aria-hidden="true" tabindex="-1"></a>item.fit <span class="ot">&lt;-</span> fit.results<span class="sc">$</span>fit.item</span>
+<span id="cb48-4"><a href="MD-fit.html#cb48-4" aria-hidden="true" tabindex="-1"></a>person.fit <span class="ot">&lt;-</span> fit.results<span class="sc">$</span>fit.person</span></code></pre></div>
+<p><strong><em>Standardized Residual Plots</em></strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="MD-fit.html#cb49-1" aria-hidden="true" tabindex="-1"></a>std.resids <span class="ot">&lt;-</span> resids<span class="sc">$</span>stand_residuals</span>
+<span id="cb49-2"><a href="MD-fit.html#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="MD-fit.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Before constructing the plots, find the maximum and minimum values of the standardized residuals to set limits for the axes:</span></span>
+<span id="cb49-4"><a href="MD-fit.html#cb49-4" aria-hidden="true" tabindex="-1"></a>max.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(std.resids))</span>
+<span id="cb49-5"><a href="MD-fit.html#cb49-5" aria-hidden="true" tabindex="-1"></a>min.resid <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">min</span>(std.resids))</span>
+<span id="cb49-6"><a href="MD-fit.html#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="MD-fit.html#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The code below will produce standardized residual plots for each of the selected items:</span></span>
+<span id="cb49-8"><a href="MD-fit.html#cb49-8" aria-hidden="true" tabindex="-1"></a>items.to.plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb49-9"><a href="MD-fit.html#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(item.number <span class="cf">in</span> items.to.plot){</span>
+<span id="cb49-10"><a href="MD-fit.html#cb49-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-11"><a href="MD-fit.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(std.resids[, item.number], <span class="at">ylim =</span> <span class="fu">c</span>(min.resid, max.resid),</span>
+<span id="cb49-12"><a href="MD-fit.html#cb49-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Standardized Residuals for Item &quot;</span>, item.number, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb49-13"><a href="MD-fit.html#cb49-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">&quot;Standardized Residual&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Person Index&quot;</span>)</span>
+<span id="cb49-14"><a href="MD-fit.html#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb49-15"><a href="MD-fit.html#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb49-16"><a href="MD-fit.html#cb49-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb49-17"><a href="MD-fit.html#cb49-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-18"><a href="MD-fit.html#cb49-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Std. Residual&quot;</span>, <span class="st">&quot;Observed = Expected&quot;</span>, <span class="st">&quot;+/- 2 SD&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), </span>
+<span id="cb49-19"><a href="MD-fit.html#cb49-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb49-20"><a href="MD-fit.html#cb49-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">cex =</span> .<span class="dv">8</span>)</span>
+<span id="cb49-21"><a href="MD-fit.html#cb49-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-22"><a href="MD-fit.html#cb49-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-31-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-31-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-31-3.png" width="672" /></p>
+<p><strong><em>Reliability of Separation</em></strong></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="MD-fit.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Person separation reliability:</span></span>
+<span id="cb50-2"><a href="MD-fit.html#cb50-2" aria-hidden="true" tabindex="-1"></a>dichot.transreas_JMLE<span class="sc">$</span>WLEreliability</span></code></pre></div>
+<pre><code>## [1] 0.3115775</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="MD-fit.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Item separation reliability:</span></span>
+<span id="cb52-2"><a href="MD-fit.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item scores</span></span>
+<span id="cb52-3"><a href="MD-fit.html#cb52-3" aria-hidden="true" tabindex="-1"></a>ItemScores <span class="ot">&lt;-</span> <span class="fu">colSums</span>(transreas.responses)</span>
+<span id="cb52-4"><a href="MD-fit.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="MD-fit.html#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item SD</span></span>
+<span id="cb52-6"><a href="MD-fit.html#cb52-6" aria-hidden="true" tabindex="-1"></a>ItemSD <span class="ot">&lt;-</span> <span class="fu">apply</span>(transreas.responses,<span class="dv">2</span>,sd)</span>
+<span id="cb52-7"><a href="MD-fit.html#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="MD-fit.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the se of the Item</span></span>
+<span id="cb52-9"><a href="MD-fit.html#cb52-9" aria-hidden="true" tabindex="-1"></a>ItemSE <span class="ot">&lt;-</span> ItemSD<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(ItemSD))</span>
+<span id="cb52-10"><a href="MD-fit.html#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-11"><a href="MD-fit.html#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Observed Variance (also known as Total Person Variability or Squared Standard Deviation)</span></span>
+<span id="cb52-12"><a href="MD-fit.html#cb52-12" aria-hidden="true" tabindex="-1"></a>SSD.ItemScores <span class="ot">&lt;-</span> <span class="fu">var</span>(ItemScores)</span>
+<span id="cb52-13"><a href="MD-fit.html#cb52-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-14"><a href="MD-fit.html#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Mean Square Measurement error (also known as Model Error variance)</span></span>
+<span id="cb52-15"><a href="MD-fit.html#cb52-15" aria-hidden="true" tabindex="-1"></a>Item.MSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((ItemSE)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(ItemSE)</span>
+<span id="cb52-16"><a href="MD-fit.html#cb52-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-17"><a href="MD-fit.html#cb52-17" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Item Separation Reliability</span></span>
+<span id="cb52-18"><a href="MD-fit.html#cb52-18" aria-hidden="true" tabindex="-1"></a>item.separation.reliability <span class="ot">&lt;-</span> (SSD.ItemScores<span class="sc">-</span>Item.MSE) <span class="sc">/</span> SSD.ItemScores</span>
+<span id="cb52-19"><a href="MD-fit.html#cb52-19" aria-hidden="true" tabindex="-1"></a>item.separation.reliability</span></code></pre></div>
+<pre><code>## [1] 0.9999984</code></pre>
+</div>
+<div id="exercise-1" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Exercise</h2>
+<p>Try to evaluate model-data fit for the Exercise 1 data using any of the estimation procedures used in this chapter.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Why_psych" class="csl-entry">
+Borsboom, Denny, and Gideon J. Mellenbergh. 2004. <span>“Why Psychometrics Is Not Pathological: A Comment on Michell.”</span> <em>Theory and Psychology</em> 14: 105–20.
+</div>
+<div id="ref-Check_Dim" class="csl-entry">
+Chou, Yeh-Tai, and Wen-Chung Wang. 2010. <span>“Checking Dimensionality in Item Response Models with Principal Component Analysis on Standardized Residuals.”</span> <em>Educational and Psychological Measurement</em> 70 (5): 717–31. https://doi.org/<a href="https://doi.org/10.1177/0013164410379322">https://doi.org/10.1177/0013164410379322</a>.
+</div>
+<div id="ref-Invar_measurement" class="csl-entry">
+Engelhard, George, and Stefanie A. Wind. 2018. <em>Invariant Measurement with Raters and Rating Scales: Rasch Models for Rater-Mediated Assessments</em>. Taylor &amp; Francis.
+</div>
+<div id="ref-Data_variance" class="csl-entry">
+Linacre, John Michael. 2003. <span>“Data Variance: Explained, Modeled and Empirical.”</span> <em>Rasch Measurement Transactions</em> 17 (3): 942–43.
+</div>
+<div id="ref-PCA_procedure" class="csl-entry">
+———. 2016. <span>“Principal-Components Analysis of Residuals.”</span>
+</div>
+<div id="ref-eRm" class="csl-entry">
+Mair, Patrick, Reinhold Hatzinger, and Marco Johannes Maier. 2021. <em><span class="nocase">eRm: Extended Rasch Modeling</span></em>. <a href="https://cran.r-project.org/package=eRm">https://cran.r-project.org/package=eRm</a>.
+</div>
+<div id="ref-Ask_expert" class="csl-entry">
+Maul, Andrew. 2020. <span>“Ask an Expert: Rasch and Dimensionality.”</span> <em>Rasch Measurement Transactions</em> 33 (1): 1753–54.
+</div>
+<div id="ref-Structure_in_Rasch" class="csl-entry">
+Michael.Linacre, John. 1998. <span>“Structure in Rasch Residuals: Why Principal Components Analysis (PCA)?”</span> <em>Rasch Measurement Transactions</em> 12 (2): 636.
+</div>
+<div id="ref-Measurement_psy" class="csl-entry">
+Michell, Joel. 1999. <em>Measurement in Psychology: A Critical History of a Methodological Concept</em>. Cambridge, England: Cambridge University Press.
+</div>
+<div id="ref-Rasch_ori" class="csl-entry">
+Rasch, Georg. 1960. <em>Probabilistic Models for Some Intelligence and Achievement Tests</em>. Expanded Edition, 1980. Vienna, Austria: University of Chicago Press.
+</div>
+<div id="ref-Critical_eigen" class="csl-entry">
+———. 2005. <span>“Critical Eigenvalue Sizes in Standardized Residual Principal Components Analysis.”</span> <em>Rasch Measurement Transactions</em> 19: 1012.
+</div>
+<div id="ref-Unifactor" class="csl-entry">
+Reckase, Mark D. 1979. <span>“Unifactor Latent Trait Models Applied to Multifactor Tests: Results and Implications.”</span> <em>Journal of Educational and Behavioral Statistics</em> 4 (3): 207–30. https://doi.org/<a href="https://doi.org/10.3102/10769986004003207">https://doi.org/10.3102/10769986004003207</a>.
+</div>
+<div id="ref-psych" class="csl-entry">
+Revelle, William. 2021. <em>Psych: Procedures for Psychological, Psychometric, and Personality Research</em>. Evanston, Illinois: Northwestern University. <a href="https://CRAN.R-project.org/package=psych">https://CRAN.R-project.org/package=psych</a>.
+</div>
+<div id="ref-TAM" class="csl-entry">
+Robitzsch, Alexander, Thomas Kiefer, and Margaret Wu. 2021. <em>TAM: Test Analysis Modules</em>. <a href="https://CRAN.R-project.org/package=TAM">https://CRAN.R-project.org/package=TAM</a>.
+</div>
+<div id="ref-Intro_nonparametric" class="csl-entry">
+Sijtsma, Klaas, and Ivo W Molenaar. 2002. <em>Introduction to Nonparametric Item Response Modeling</em>. Thousand Oaks. https://doi.org/<a href="https://dx.doi.org/10.4135/9781412984676">https://dx.doi.org/10.4135/9781412984676</a>.
+</div>
+<div id="ref-Det_Eva" class="csl-entry">
+Smith Jr, Everett. 2020. <span>“Detecting and Evaluating the Impact of Multidimensionality Using Item Fit Statistics and Principal Component Analysis of Residuals.”</span> <em>Journal of Applied Measurement</em> 3 (2): 205–31.
+</div>
+<div id="ref-per_fit" class="csl-entry">
+Smith, Richard M. 1986. <span>“Person Fit in the Rasch Model.”</span> <em>Educational and Psychological Measurement</em> 46 (2): 359–72. https://doi.org/<a href="https://doi.org/10.1177/001316448604600210">https://doi.org/10.1177/001316448604600210</a>.
+</div>
+<div id="ref-Compar_dim" class="csl-entry">
+———. 1996. <span>“A Comparison of Methods for Determining Dimensionality in Rasch Measurement.”</span> <em>Structural Equation Modeling</em> 3 (1): 25–40.
+</div>
+<div id="ref-use_per_res" class="csl-entry">
+Walker, A. Adrienne, Jeremy Kyle Jennings, and George Engelhard. 2018. <span>“Using Person Response Functions to Investigate Areas of Person Misfit Related to Item Characteristics.”</span> <em>Educational Assessment</em> 23 (1): 47–68. https://doi.org/<a href="https://psycnet.apa.org/doi/10.1080/10627197.2017.1415143">https://psycnet.apa.org/doi/10.1080/10627197.2017.1415143</a>.
+</div>
+<div id="ref-bootstrap_rasch" class="csl-entry">
+Wolfe, Edward W. 2013. <span>“A Bootstrap Approach to Evaluating Person and Item Fit to the Rasch Model.”</span> <em>Journal of Applied Measurement</em> 14 (1): 1–9.
+</div>
+<div id="ref-Instru_dev1" class="csl-entry">
+Wolfe, Edward W, and Everrett V. Smith Jr. 2007a. <span>“Instrument Development Tools and Activities for Measure Validation Using Rasch Models: Part i - Instrument Development Tools.”</span> <em>Journal of Applied Measurement</em> 8(1).
+</div>
+<div id="ref-Instru_dev2" class="csl-entry">
+———. 2007b. <span>“Instrument Development Tools and Activities for Measure Validation Using Rasch Models: Part II–Validation Activities.”</span> <em>Journal of Applied Measurement</em> 8(2).
+</div>
+<div id="ref-RS_analysis" class="csl-entry">
+Wright, Benjamin D., and Geofferey N. Masters. 1982. <em>Rating Scale Analysis</em>. MESA Press.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Dich-Rasch-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="RS-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/03-ModelDatafit.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

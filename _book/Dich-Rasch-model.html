@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Dichotomous Rasch Model | Dichotomous Rasch Model</title>
+  <meta name="description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Dichotomous Rasch Model | Dichotomous Rasch Model" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Dichotomous Rasch Model | Dichotomous Rasch Model" />
+  
+  <meta name="twitter:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+<meta name="author" content="Stefanie A. Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-07-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="MD-fit.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.1</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.2</b> Online Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>2.1</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>2.2</b> Dichotomous Rasch Model Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>2.3</b> Dichotomous Rasch Model Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>2.4</b> Dichotomous Rasch Model Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section"><i class="fa fa-check"></i><b>2.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exercise"><i class="fa fa-check"></i><b>2.6</b> Exercise</a></li>
+<li class="chapter" data-level="2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.7</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="MD-fit.html"><a href="MD-fit.html#example-data-transitive-reasoning-test-1"><i class="fa fa-check"></i><b>3.2</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>3.3</b> Rasch Model Fit Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4</b> Graphical Displays for Evaluating Model-Data Fit</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#reliability"><i class="fa fa-check"></i><b>3.4.1</b> Reliability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>3.5</b> Rasch Model Fit Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>3.6</b> Rasch Model Fit Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#exercise-1"><i class="fa fa-check"></i><b>3.7</b> Exercise</a></li>
+<li class="chapter" data-level="3.8" data-path="MD-fit.html"><a href="MD-fit.html#bibliography"><i class="fa fa-check"></i><b>3.8</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>4.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="4.2" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>4.2</b> RSM Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="4.3" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-mmle-in-tam"><i class="fa fa-check"></i><b>4.3</b> RSM Analysis with MMLE in TAM</a></li>
+<li class="chapter" data-level="4.4" data-path="RS-model.html"><a href="RS-model.html#rsm-analysis-with-jmle-in-tam"><i class="fa fa-check"></i><b>4.4</b> RSM Analysis with JMLE in TAM</a></li>
+<li class="chapter" data-level="4.5" data-path="RS-model.html"><a href="RS-model.html#example-results-section-1"><i class="fa fa-check"></i><b>4.5</b> Example Results Section</a></li>
+<li class="chapter" data-level="4.6" data-path="RS-model.html"><a href="RS-model.html#exercise-2"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="RS-model.html"><a href="RS-model.html#bibliography-1"><i class="fa fa-check"></i><b>4.7</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>5</b> Partial Credit Model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="PC-model.html"><a href="PC-model.html#example-data-liking-for-science-1"><i class="fa fa-check"></i><b>5.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="5.2" data-path="PC-model.html"><a href="PC-model.html#pcm-analysis-with-cmle-in-erm"><i class="fa fa-check"></i><b>5.2</b> PCM Analysis with CMLE in eRm</a></li>
+<li class="chapter" data-level="5.3" data-path="PC-model.html"><a href="PC-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>5.3</b> Summarize the Results in Tables</a></li>
+<li class="chapter" data-level="5.4" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-mmle-in-tam"><i class="fa fa-check"></i><b>5.4</b> PCM Application with MMLE in TAM</a></li>
+<li class="chapter" data-level="5.5" data-path="PC-model.html"><a href="PC-model.html#pcm-application-with-jmle-in-tam"><i class="fa fa-check"></i><b>5.5</b> PCM Application with JMLE in TAM</a></li>
+<li class="chapter" data-level="5.6" data-path="PC-model.html"><a href="PC-model.html#example-results-section-2"><i class="fa fa-check"></i><b>5.6</b> Example results section</a></li>
+<li class="chapter" data-level="5.7" data-path="PC-model.html"><a href="PC-model.html#exercise-3"><i class="fa fa-check"></i><b>5.7</b> Exercise</a></li>
+<li class="chapter" data-level="5.8" data-path="PC-model.html"><a href="PC-model.html#bibliography-2"><i class="fa fa-check"></i><b>5.8</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="MFR-model.html"><a href="MFR-model.html"><i class="fa fa-check"></i><b>6</b> Many Facet Rasch Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="MFR-model.html"><a href="MFR-model.html#running-the-mfrm-with-wide-format-data-in-tam-package"><i class="fa fa-check"></i><b>6.1</b> Running the MFRM with Wide-Format Data in TAM Package</a></li>
+<li class="chapter" data-level="6.2" data-path="MFR-model.html"><a href="MFR-model.html#example-2-running-pc-mfrm-with-long-format-data-using-the-tam-package"><i class="fa fa-check"></i><b>6.2</b> Example 2: Running PC-MFRM with Long-Format Data using the TAM Package</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-pc-mfrm"><i class="fa fa-check"></i><b>6.2.1</b> Specify the PC-MFRM:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="MFR-model.html"><a href="MFR-model.html#notes-on-formulations-for-many-facet-rasch-models"><i class="fa fa-check"></i><b>6.3</b> Notes on Formulations for Many-Facet Rasch Models</a></li>
+<li class="chapter" data-level="6.4" data-path="MFR-model.html"><a href="MFR-model.html#example-results-section-3"><i class="fa fa-check"></i><b>6.4</b> Example Results Section</a></li>
+<li class="chapter" data-level="6.5" data-path="MFR-model.html"><a href="MFR-model.html#exercise-4"><i class="fa fa-check"></i><b>6.5</b> Exercise</a></li>
+<li class="chapter" data-level="6.6" data-path="MFR-model.html"><a href="MFR-model.html#bibliography-3"><i class="fa fa-check"></i><b>6.6</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>7</b> Basics of Differential Item Functioning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-dichotomous-items"><i class="fa fa-check"></i><b>7.1</b> Detecting Differential Item Functioning in R for Dichotomous Items</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="DIF.html"><a href="DIF.html#example-data-transitive-reasoning"><i class="fa fa-check"></i><b>7.1.1</b> Example Data: Transitive Reasoning</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="DIF.html"><a href="DIF.html#detecting-differential-item-functioning-in-r-for-polytomous-items"><i class="fa fa-check"></i><b>7.2</b> Detecting Differential Item Functioning in R for Polytomous Items</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="DIF.html"><a href="DIF.html#example-data-style-ratings"><i class="fa fa-check"></i><b>7.2.1</b> Example Data: Style Ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="DIF.html"><a href="DIF.html#exercise-5"><i class="fa fa-check"></i><b>7.3</b> Exercise</a></li>
+<li class="chapter" data-level="7.4" data-path="DIF.html"><a href="DIF.html#references-these-need-to-be-updated"><i class="fa fa-check"></i><b>7.4</b> References [these need to be updated!]</a></li>
+<li class="chapter" data-level="7.5" data-path="DIF.html"><a href="DIF.html#resources-for-further-study"><i class="fa fa-check"></i><b>7.5</b> Resources for Further Study</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>8</b> Rating Scale Evaluation</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="RS-Eval.html"><a href="RS-Eval.html#what-is-rating-scale-evaluation"><i class="fa fa-check"></i><b>8.1</b> What is Rating Scale Evaluation?</a></li>
+<li class="chapter" data-level="8.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>8.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>8.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="8.2.2" data-path="RS-Eval.html"><a href="RS-Eval.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>8.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>8.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="8.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>8.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>8.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="8.4" data-path="RS-Eval.html"><a href="RS-Eval.html#references"><i class="fa fa-check"></i><b>8.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>9</b> References &amp; Other Good Stuff</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>9.1</b> Rasch Glossary</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>9.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>9.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>9.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>9.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>9.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="9.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>9.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="9.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>9.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Dichotomous Rasch Model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Dich_Rasch_model" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Dichotomous Rasch Model</h1>
+<p>This chapter provides a basic overview of the dichotomous Rasch model, along with guidance for analyzing data with the dichotomous Rasch model using R. We use data from a transitive reasoning assessment presented by <span class="citation">(<a href="#ref-Intro_nonparametric" role="doc-biblioref">Sijtsma and Molenaar 2002</a>)</span> to illustrate the analysis using Conditional Maximum Likelihood Estimation (CMLE) with the Extended Rasch Modeling “eRm” package <span class="citation">(<a href="#ref-eRm" role="doc-biblioref">Mair, Hatzinger, and Maier 2021</a>)</span>. Then, we illustrate the application of the dichotomous Rasch model using Marginal Maximum Likelihood Estimation (MMLE) and Joint Maximum Likelihood Estimation (JMLE) with the Test Analysis Modules (“TAM”) package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span>. After the analyses are complete, we present an example description of the results. The chapter concludes with a challenge exercise and resources for further study.</p>
+<p><strong><em>Overview of the Dichotomous Rasch Model</em></strong></p>
+<p>The <em>dichotomous Rasch model</em> <span class="citation">(<a href="#ref-Rasch_ori" role="doc-biblioref">Rasch 1960</a>)</span> is the simplest model in the Rasch family of models <span class="citation">(<a href="#ref-Overview_RM" role="doc-biblioref">Wright and Mok 2004</a>)</span>. It was designed for use with ordinal data that are scored in two categories (usually 0 or 1). The dichotomous Rasch model uses sum scores from these ordinal responses to calculate interval-level estimates that represent person locations (i.e., person ability or person achievement) and item locations (i.e., the difficulty to provide a correct or positive response) on a linear scale that represents the latent variable (the log-odds or “logit” scale). The difference between person and item locations can be used to calculate the probability for a correct or positive response (x = 1), rather than an incorrect or negative response (x = 0).</p>
+<p>The equation for the dichotomous Rasch model can be expressed in log-odds form as follows:</p>
+<p><span class="math display">\[\begin{equation}\tag{2.1}\ln_{}{}\left[\frac{\phi_{n i 1}}{\phi_{n i 0}}\right]=\theta_{n}-\delta_{i}\end{equation}\]</span></p>
+<p>The Rasch model predicts the probability of person <em>n</em> on item <em>i</em> providing a correct or positive (x = 1), rather than an incorrect or negative (x = 0) response, given person locations (i.e., ability, achievement, <em>θn</em>) and item locations (i.e., difficulty, <em>δi</em>), as expressed on the logit scale.</p>
+<p><strong><em>Rasch Model Requirements</em></strong></p>
+<p>Estimates that are calculated using the dichotomous Rasch model can only be meaningfully interpreted if there is evidence that the data approximate the requirements for the model. Key among dichotomous Rasch model requirements are the following:</p>
+<ul>
+<li><em>Unidimensionality</em>: A single latent variable is sufficient to explain most of the variation in item responses</li>
+<li><em>Local independence</em>: After controlling for the latent variable, there is no substantial association between the responses to individual items</li>
+<li><em>Person-invariant item estimates</em>: Item locations do not depend on (i.e., are independent from) the persons whose responses are used to estimate them</li>
+<li><em>Item-invariant person estimates</em>: Person locations do not depend on (i.e., are independent from) the items used to estimate them</li>
+</ul>
+<p>Evidence that data approximate these requirements provides support for the meaningful interpretation and use of item and person estimates on the logit scale as indicators of item and person locations on the latent variable. In practice, many analysts evaluate some or all of these requirements using various indicators of model-data fit for the facets in a Rasch model (in this case, items and persons). In the current chapter, we provide some basic code for calculating some popular residual-based fit indices for items and persons. We explore issues related to model requirements and evaluating model-data fit in more detail in <a href="MD-fit.html#MD_fit">Chapter 3</a>.</p>
+<div id="example-data-transitive-reasoning-test" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Example Data: Transitive Reasoning Test</h2>
+<p>In this chapter, we will be working with data from a transitive reasoning test, which was designed to measure students’ ability to reason about the relationships among physical objects. The transitive reasoning data were collected from a one-on-one interactive assessment in which an experimenter presented students with a set of objects, such as sticks, balls, cubes, and discs. The following description is given in <span class="citation"><a href="#ref-Intro_nonparametric" role="doc-biblioref">Sijtsma and Molenaar</a> (<a href="#ref-Intro_nonparametric" role="doc-biblioref">2002</a>)</span>, 31-32:</p>
+<blockquote>
+<p>The items for transitive reasoning had the following structure. A typical item used three sticks, here denoted A, B, and C, of different length, denoted Y, such that YA &lt; YB &lt; YC. The actual test taking had the form of a conversation between experimenter and child in which the sticks were identified by their colors rather than letters. First, sticks A and B were presented to a child, who was allowed to pick them up and compare their lengths, for example, by placing them next to each other on a table.</p>
+</blockquote>
+<blockquote>
+<p>Next, sticks B and C were presented and compared. Then all three sticks were displayed in a random order at large mutual distances so that their length differences were imperceptible, and the child was asked to infer the relation between sticks A and C from his or her knowledge of the relationship in the other two pairs.</p>
+</blockquote>
+<p>The transitive reasoning items varied in terms of the property students were asked to reason about (length, weight, area). The tasks also varied in terms of the number of physical objects that students were asked to reason about, and whether the comparison tasks involved equalities, inequalities, or a mixture of equalities and inequalities. The characteristics of the transitive reasoning data are summarized in the following table:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Task</th>
+<th align="left">Property</th>
+<th align="left">Format</th>
+<th align="left">Objects</th>
+<th align="left">Measures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Length</td>
+<td align="left">YA &gt; YB &gt; YC</td>
+<td align="left">Sticks</td>
+<td align="left">12, 11.5, 11 (cm)</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Length</td>
+<td align="left">YA = YB = YC = YD</td>
+<td align="left">Tubes</td>
+<td align="left">12 (cm)</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">Weight</td>
+<td align="left">YA &gt; YB &gt; YC</td>
+<td align="left">Tubes</td>
+<td align="left">45, 25, 18 (g)</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Weight</td>
+<td align="left">YA = YB = YC = YD</td>
+<td align="left">Cubes</td>
+<td align="left">65 (g)</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">Weight</td>
+<td align="left">YA &lt; YB &lt; YC</td>
+<td align="left">Balls</td>
+<td align="left">40, 50, 70 (g)</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">Area</td>
+<td align="left">YA &gt; YB&gt; YC</td>
+<td align="left">Discs</td>
+<td align="left">2.5, 7, 6.5 (diameter; cm)</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">Length</td>
+<td align="left">YA &gt; YB = YC</td>
+<td align="left">Sticks</td>
+<td align="left">28.5, 27.5, 27.5 (cm)</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">Weight</td>
+<td align="left">YA &gt;YB = YC</td>
+<td align="left">Balls</td>
+<td align="left">65, 40, 40 (g)</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">Length</td>
+<td align="left">YA = YB = YC = YD</td>
+<td align="left">Sticks</td>
+<td align="left">12.5, 12.5, 13, 13 (cm)</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">Weight</td>
+<td align="left">YA = YB &lt; YC = YD</td>
+<td align="left">Balls</td>
+<td align="left">60, 60, 100, 100 (g)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dichotomous-rasch-model-analysis-with-cmle-in-erm" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Dichotomous Rasch Model Analysis with CMLE in eRm</h2>
+<p>In the next section, we provide a step-by-step demonstration of a dichotomous Rasch model analysis using the <em>Extended Rasch Modeling</em>, or <em>eRm</em> package <span class="citation">(<a href="#ref-eRm" role="doc-biblioref">Mair, Hatzinger, and Maier 2021</a>)</span>, which uses Conditional Maximum Likelihood Estimation (CMLE). We encourage readers to use the example data set that is provided in the online supplement to conduct the analysis along with us.</p>
+<p><strong><em>Prepare for the Analyses</em></strong></p>
+<p>We selected eRm for the first illustration in the current chapter because it includes functions for applying the dichotomous Rasch model that are relatively straightforward to use and interpret. Please note that the “eRm” package uses the Conditional Maximum Likelihood Estimation (CMLE) method to estimate Rasch model parameters. As a result, estimates from the eRm package are not directly comparable to estimates obtained using other estimation methods. Later in this chapter, we have included illustrations of dichotomous Rasch model analyses with the <em>Test Analysis Modules</em> or TAM package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span> with Marginal Maximum Likelihood Estimation (MMLE). We also provide an illustration with TAM using Joint Maximum Likelihood Estimation (JMLE), which produces comparable estimates to some popular standalone Rasch software programs, such as Winsteps <span class="citation">(<a href="#ref-Winsteps" role="doc-biblioref">Linacre 2020a</a>)</span> and Facets <span class="citation">(<a href="#ref-Facets" role="doc-biblioref">Linacre 2020b</a>)</span>.</p>
+<p>To get started with the eRm package, view the citation information, and then install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Dich-Rasch-model.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## To cite package &#39;eRm&#39; in publications use:
+## 
+## ###############################################################################
+## The current Package Version:
+## 
+##   Mair, P., Hatzinger, R., &amp; Maier M. J. (2021). eRm: Extended Rasch
+##   Modeling. 1.0-2. https://cran.r-project.org/package=eRm
+## 
+## ###############################################################################
+## The original JSS Article:
+## 
+##   Mair, P., &amp; Hatzinger, R. (2007). Extended Rasch modeling: The eRm
+##   package for the application of IRT models in R. Journal of
+##   Statistical Software, 20(9), 1-20. https://www.jstatsoft.org/v20/i09
+## 
+## ###############################################################################
+## Article about CML Estimation in eRm:
+## 
+##   Mair, P., &amp; Hatzinger, R. (2007). CML based estimation of extended
+##   Rasch models with the eRm package in R. Psychology Science, 49(1),
+##   26-43.
+## 
+## ###############################################################################
+## Article about LLRAs in eRm:
+## 
+##   Hatzinger, R., &amp; Rusch, T. (2009). IRT models with relaxed
+##   assumptions in eRm: A manual-like instruction. Psychology Science
+##   Quarterly, 51(1), 87-120.
+## 
+## ###############################################################################
+## Book Chapter about LLRAs:
+## 
+##   Rusch T., Maier M. J., &amp; Hatzinger R. (2013). Linear logistic models
+##   with relaxed assumptions in R. In: B. Lausen, D. van den Poel, &amp; A.
+##   Ultsch (Eds.) Algorithms from and for Nature and Life.New York:
+##   Springer. 337-347. http://dx.doi.org/10.1007/978-3-319-00035-0_34
+## 
+## ###############################################################################
+## Article about the performance of Quasi-Exact Tests in eRm:
+## 
+##   Koller, I., Maier, M. J., &amp; Hatzinger, R. (2015). An Empirical Power
+##   Analysis of Quasi-Exact Tests for the Rasch Model: Measurement
+##   Invariance in Small Samples. Methodology, 11(2), 45-54.
+##   http://dx.doi.org/10.1027/1614-2241/a000090
+## 
+## ###############################################################################
+## Article about the Performance of the nonparametric Q3 Tests in eRm:
+## 
+##   Debelak, R., &amp; Koller, I. (2019). Testing the Local Independence
+##   Assumption of the Rasch Model With Q3-Based Nonparametric Model
+##   Tests. Applied Psychological Measurement
+##   https://doi.org/10.1177/0146621619835501
+## 
+## To see these entries in BibTeX format, use &#39;print(&lt;citation&gt;,
+## bibtex=TRUE)&#39;, &#39;toBibtex(.)&#39;, or set
+## &#39;options(citation.bibtex.max=999)&#39;.</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Dich-Rasch-model.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;eRm&quot;)</span></span>
+<span id="cb3-2"><a href="Dich-Rasch-model.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;eRm&quot;</span>)</span></code></pre></div>
+<p>Now that we have installed and loaded the package to our R session, we are ready to import the data.</p>
+<p>In this book, we use the function <code>read.csv()</code> to import data that are stored using comma separated values. We encourage readers to use their preferred method for importing data files into R or R Studio. Please note that if you use <code>read.csv()</code> you will need to specify the file path to the location at which the data file is stored on your computer or set your working directory to the folder in which you have saved the data.</p>
+<p>First, we will import the data using <code>read.csv()</code> and store it in an object called <code>transreas</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Dich-Rasch-model.html#cb4-1" aria-hidden="true" tabindex="-1"></a>transreas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;transreas.csv&quot;</span>)</span></code></pre></div>
+<p>Next, we will explore the data using descriptive statistics using the <code>summary()</code> function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Dich-Rasch-model.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(transreas)</span></code></pre></div>
+<pre><code>##     Student        Grade          task_01          task_02      
+##  Min.   :  1   Min.   :2.000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:107   1st Qu.:3.000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :213   Median :4.000   Median :1.0000   Median :1.0000  
+##  Mean   :213   Mean   :4.005   Mean   :0.9412   Mean   :0.8094  
+##  3rd Qu.:319   3rd Qu.:5.000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :425   Max.   :6.000   Max.   :1.0000   Max.   :1.0000  
+##     task_03          task_04          task_05          task_06      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :1.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.8847   Mean   :0.7835   Mean   :0.8024   Mean   :0.9741  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##     task_07          task_08          task_09          task_10    
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:0.0000   1st Qu.:0.00  
+##  Median :1.0000   Median :1.0000   Median :0.0000   Median :1.00  
+##  Mean   :0.8447   Mean   :0.9671   Mean   :0.3012   Mean   :0.52  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.00  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.00</code></pre>
+<p>From the summary of <code>transreas</code>, we can see there are no missing data. We can also get a general sense of the scales, range, and distribution of each variable in the dataset.</p>
+<p>Specifically, we can see that Student ID numbers range from 1 to 425, student grade levels range from 2 to 6, and that all tasks have scores in both of the dichotomous categories (0 and 1). We can also get a sense for the range of item difficulty by examining the mean for each task, which is the proportion-correct statistic (item difficulty estimate for Classical Test Theory).</p>
+<p><strong><em>Run the Dichotomous Rasch Model</em></strong></p>
+<p>To run the dichotomous Rasch Model using the eRm package, need to isolate the item response matrix from the other variables in the data (student IDs and grade level). To do this, we will create an object made up of only the item responses by removing the first two variables from the data. We will remove the descriptive variables using the <code>subset()</code> function with the <code>select=</code> option. We will save the response matrix in a new object called <code>transreas.responses</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Dich-Rasch-model.html#cb7-1" aria-hidden="true" tabindex="-1"></a>transreas.responses <span class="ot">&lt;-</span> <span class="fu">subset</span>(transreas, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(Student, Grade))</span></code></pre></div>
+<p>Next, we will use <code>summary()</code> to calculate descriptive statistics for the <code>transreas.responses</code> object to check our work and ensure that the responses are ready for analysis:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Dich-Rasch-model.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(transreas.responses)</span></code></pre></div>
+<pre><code>##     task_01          task_02          task_03          task_04      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :1.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.9412   Mean   :0.8094   Mean   :0.8847   Mean   :0.7835  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##     task_05          task_06          task_07          task_08      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+##  Median :1.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.8024   Mean   :0.9741   Mean   :0.8447   Mean   :0.9671  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##     task_09          task_10    
+##  Min.   :0.0000   Min.   :0.00  
+##  1st Qu.:0.0000   1st Qu.:0.00  
+##  Median :0.0000   Median :1.00  
+##  Mean   :0.3012   Mean   :0.52  
+##  3rd Qu.:1.0000   3rd Qu.:1.00  
+##  Max.   :1.0000   Max.   :1.00</code></pre>
+<p>Now, we are ready to run the dichotomous Rasch model on the transitive reasoning response data We will use the <code>RM()</code> function to run the model and store the results in an object called <code>dichot.transreas</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="Dich-Rasch-model.html#cb10-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas <span class="ot">&lt;-</span> <span class="fu">RM</span>(transreas.responses)</span></code></pre></div>
+<p><strong><em>Overall Model Summary</em></strong></p>
+<p>The next step is to request a summary of the model estimation results in order to begin to understand the results from the analysis. We can do so by applying the <code>summary()</code> function to the model object:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Dich-Rasch-model.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Request a summary of the model results</span></span>
+<span id="cb11-2"><a href="Dich-Rasch-model.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dichot.transreas)</span></code></pre></div>
+<pre><code>## 
+## Results of RM estimation: 
+## 
+## Call:  RM(X = transreas.responses) 
+## 
+## Conditional log-likelihood: -921.3465 
+## Number of iterations: 18 
+## Number of parameters: 9 
+## 
+## Item (Category) Difficulty Parameters (eta): with 0.95 CI:
+##         Estimate Std. Error lower CI upper CI
+## task_02    0.258      0.133   -0.003    0.518
+## task_03   -0.416      0.157   -0.723   -0.109
+## task_04    0.441      0.128    0.190    0.692
+## task_05    0.309      0.131    0.052    0.567
+## task_06   -2.175      0.292   -2.747   -1.604
+## task_07   -0.025      0.141   -0.302    0.252
+## task_08   -1.909      0.262   -2.423   -1.395
+## task_09    2.923      0.130    2.668    3.179
+## task_10    1.836      0.115    1.610    2.062
+## 
+## Item Easiness Parameters (beta) with 0.95 CI:
+##              Estimate Std. Error lower CI upper CI
+## beta task_01    1.243      0.204    0.842    1.643
+## beta task_02   -0.258      0.133   -0.518    0.003
+## beta task_03    0.416      0.157    0.109    0.723
+## beta task_04   -0.441      0.128   -0.692   -0.190
+## beta task_05   -0.309      0.131   -0.567   -0.052
+## beta task_06    2.175      0.292    1.604    2.747
+## beta task_07    0.025      0.141   -0.252    0.302
+## beta task_08    1.909      0.262    1.395    2.423
+## beta task_09   -2.923      0.130   -3.179   -2.668
+## beta task_10   -1.836      0.115   -2.062   -1.610</code></pre>
+<p>The summary of the dichotomous Rasch model output includes the Conditional Log-likelihood statistic, details about the number of iterations and model parameters, and a table with item parameters, their standard errors, and confidence intervals. It is important to note that the item parameters included in this preliminary output are <em>item easiness</em> parameters– <em>not</em> item difficulty parameters. We will examine item difficulty parameters in detail later in our analysis.</p>
+<p><strong><em>Wright Map</em></strong></p>
+<p>A useful feature of Rasch models is that when there is acceptable fit between the model and the data (discussed in detail in <a href="MD-fit.html#MD_fit">Chapter 3</a>), it is possible to visualize and compare item and person locations on a single linear continuum. Professor Bejamin D. Wright popularized an approach to displaying Rasch model results on a linear continuum, and this technique has been widely adopted by Rasch measurement researchers across disciplines. In his honor, these displays are often called <em>Wright Maps.</em> In the literature, researchers also refer to these displays as <em>Variable Maps</em>. Please see Wilson (2011) for a discussion of the term <em>Wright Map</em>.</p>
+<p>As the next step in our analysis, we will create a Wright Map from our model results. We will create the plot using the function <code>PlotPImap()</code> on the model object (<code>dichot.transreas</code>). We will set the option for displaying threshold labels as <code>FALSE</code>, because we are working with dichotomous data. We also used the <code>main.title=</code>option to customize the title of the plot.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="Dich-Rasch-model.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPImap</span>(dichot.transreas, <span class="at">main =</span> <span class="st">&quot;Transitive Reasoning Assessment Wright Map&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>In this <em>Wright Map</em> display, the results from the dichotomous Rasch model analysis of the Transitive Reasoning data are summarized graphically. The figure is organized as follows:</p>
+<p>Starting at the bottom of the figure, the horizontal axis (labeled <em>Latent Dimension</em>) is the logit scale that represents the latent variable. In the application of the Transitive Reasoning data, lower numbers indicate less transitive reasoning ability, and higher numbers indicate more transitive reasoning ability.</p>
+<p>The central panel of the figure shows item difficulty locations on the logit scale for the 10 transitive reasoning tasks that were included in the analysis; the y-axis for this panel shows the item labels. By default in eRm, the items are ordered according to their original order in the response matrix. The items can be ordered by difficulty by adding “sorted = TRUE” as an argument in the <code>plotPImap()</code> call. For each item, a solid circle plotting symbol shows the location estimate.</p>
+<p>The upper panel of the figure shows a histogram of person (in this case, student) location estimates on the logit scale. Small vertical lines on the x-axis of this histogram show the points on the logit scale at which information (variance) is maximized for the sample of persons and items in the analysis. These lines can be omitted by adding “irug = FALSE” as an argument in the <code>plotPImap()</code> call.</p>
+<p>Even though it is not appropriate to fully interpret item and person locations on the logit scale until there is evidence of acceptable model-data fit, we recommend examining the Wright Map during the preliminary stages of an item analysis to get a general sense of the model results and to identify any potential scoring or data entry errors.</p>
+<p>A quick glance at the Wright Map suggests that, on average, the persons (students) are located higher on the logit scale compared to the average item (task) locations. In addition, there appears to be a relatively wide spread of person and item locations on the logit scale, such that the transitive reasoning test appears to be a useful tool for identifying differences in person locations and item locations on the latent variable. We will return to this display for more exploration after checking for acceptable model-data fit, among other psychometric properties.</p>
+<p><strong><em>Item Parameters</em></strong></p>
+<p>As the next step in our analysis, we will examine the item parameters in detail. The eRm package provides several options with which analysts can find and examine item and item location parameters. For example, one way to obtain the overall item location parameters (<span class="math inline">\(\delta\)</span>) is to extract the <em>eta parameters</em> from the model object using the $ operator. We extract these parameters, print them to the console, and calculate summary statistics for them with the following code:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Dich-Rasch-model.html#cb14-1" aria-hidden="true" tabindex="-1"></a>difficulty <span class="ot">&lt;-</span> dichot.transreas<span class="sc">$</span>etapar</span>
+<span id="cb14-2"><a href="Dich-Rasch-model.html#cb14-2" aria-hidden="true" tabindex="-1"></a>difficulty</span></code></pre></div>
+<pre><code>##     task_02     task_03     task_04     task_05     task_06     task_07 
+##  0.25775001 -0.41581384  0.44093780  0.30941151 -2.17531698 -0.02481129 
+##     task_08     task_09     task_10 
+## -1.90884851  2.92343872  1.83581566</code></pre>
+<p>Because of the nature of the estimation process used in eRm, the item.locations object that we just created does not include the location estimate for the first item. One can calculate the location for item 1 by subtracting the sum of the item locations from zero. In the following code, we find the location for item 1, and then create a new object with all 10 item locations:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Dich-Rasch-model.html#cb16-1" aria-hidden="true" tabindex="-1"></a>n.items <span class="ot">&lt;-</span> <span class="fu">ncol</span>(transreas.responses)</span>
+<span id="cb16-2"><a href="Dich-Rasch-model.html#cb16-2" aria-hidden="true" tabindex="-1"></a>i1 <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">-</span> <span class="fu">sum</span>(difficulty[<span class="dv">1</span><span class="sc">:</span>(n.items <span class="sc">-</span> <span class="dv">1</span>)])</span>
+<span id="cb16-3"><a href="Dich-Rasch-model.html#cb16-3" aria-hidden="true" tabindex="-1"></a>difficulty.all <span class="ot">&lt;-</span> <span class="fu">c</span>(i1, difficulty[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(n.items <span class="sc">-</span> <span class="dv">1</span>))])</span>
+<span id="cb16-4"><a href="Dich-Rasch-model.html#cb16-4" aria-hidden="true" tabindex="-1"></a>difficulty.all</span></code></pre></div>
+<pre><code>##                 task_02     task_03     task_04     task_05     task_06 
+## -1.24256308  0.25775001 -0.41581384  0.44093780  0.30941151 -2.17531698 
+##     task_07     task_08     task_09     task_10 
+## -0.02481129 -1.90884851  2.92343872  1.83581566</code></pre>
+<p>Alternatively, we could find the item difficulty parameters by extracting the item <em>easiness</em> parameters from the model object (<em>beta parameters</em>) and multiplying them by -1 to find item difficulty:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Dich-Rasch-model.html#cb18-1" aria-hidden="true" tabindex="-1"></a>difficulty2 <span class="ot">&lt;-</span> dichot.transreas<span class="sc">$</span>betapar <span class="sc">*</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb18-2"><a href="Dich-Rasch-model.html#cb18-2" aria-hidden="true" tabindex="-1"></a>difficulty2</span></code></pre></div>
+<pre><code>## beta task_01 beta task_02 beta task_03 beta task_04 beta task_05 beta task_06 
+##  -1.24256308   0.25775001  -0.41581384   0.44093780   0.30941151  -2.17531698 
+## beta task_07 beta task_08 beta task_09 beta task_10 
+##  -0.02481129  -1.90884851   2.92343872   1.83581566</code></pre>
+<p>The item difficulty parameters (<code>xsi</code>) are the item location estimates on the logit scale that represents the latent variable. Assuming that the responses are scored such that lower scores (x = 0) indicate lower locations on the latent variable (e.g., incorrect, negative, or absent responses), then <em>lower</em> item estimates on the logit scale indicate items that are <em>more difficult</em> or require persons to have relatively <em>higher locations</em> on the construct to provide a correct response. On the other hand, <em>higher</em> item estimates on the logit scale indicate items that are <em>easier</em> or require persons to have relatively <em>lower locations</em> on the construct to provide a correct response. In our analysis, Task 9 is the most difficult item (<span class="math inline">\(\delta\)</span> = 2.92), whereas Task 6 is the easiest item (<span class="math inline">\(\delta\)</span> = -2.18).</p>
+<p>Next, we will examine item standard errors. The standard errors are reported for all of the items as part of the beta (item easiness) parameters:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="Dich-Rasch-model.html#cb20-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas<span class="sc">$</span>se.beta</span></code></pre></div>
+<pre><code>##  [1] 0.2043488 0.1327967 0.1566695 0.1282289 0.1314316 0.2916385 0.1413876
+##  [8] 0.2622114 0.1302767 0.1152173</code></pre>
+<p>The standard error for each item is an estimate of the precision of the item difficulty estimates, where larger standard errors indicate less-precise estimates. Standard errors are reported on the same logit scale as item locations. In our analysis, the standard errors range from 0.11 for Task 9 and Task 10, which were the items with the most precise estimates, to 0.31 for Task 6, which was the item with the least precise estimate. These differences largely reflect differences in item targeting to the person locations (see the Wright Map above).</p>
+<p>Next, let’s calculate descriptive statistics to better understand the distribution of the item locations and standard errors. We will do so using the <code>summary()</code> function and the <code>sd()</code> function:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Dich-Rasch-model.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(difficulty.all)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.1753 -1.0359  0.1165  0.0000  0.4081  2.9234</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="Dich-Rasch-model.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(difficulty.all)</span></code></pre></div>
+<pre><code>## [1] 1.576441</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="Dich-Rasch-model.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dichot.transreas<span class="sc">$</span>se.beta)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1152  0.1306  0.1371  0.1694  0.1924  0.2916</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="Dich-Rasch-model.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(dichot.transreas<span class="sc">$</span>se.beta)</span></code></pre></div>
+<pre><code>## [1] 0.06206381</code></pre>
+<p>We can also visualize the item difficulty estimates using a simple histogram by using the <code>hist()</code> function. In our plot, we specified a custom title using <code>main =</code> and a custom x-axis label using <code>xlab =</code>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="Dich-Rasch-model.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(difficulty.all, <span class="at">main =</span> <span class="st">&quot;Histogram of Item Difficulty Estimates for the Transitive Reasoning Data&quot;</span>,</span>
+<span id="cb30-2"><a href="Dich-Rasch-model.html#cb30-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Item Difficulty Estimates in Logits&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><strong><em>Item Response Functions</em></strong></p>
+<p>We will examine graphical displays of item difficulty using item response functions (IRFs). With the dichotomous Rasch model, the eRm package creates plots of the probability for a correct or positive response (x = 1), conditional on person locations on the latent variable. In the following code, we use <code>plotICC()</code> from eRm to create IRF plots for the items in our analysis. We included “ask = FALSE” in our function call in order to generate all of the plots at once. For brevity, we have only included plots for the first three items in this book. The specific items to be plotted can be controlled by changing the items included in the <code>items.to.plot</code> object.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="Dich-Rasch-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>items.to.plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb31-2"><a href="Dich-Rasch-model.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotICC</span>(dichot.transreas, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">item.subset =</span> items.to.plot)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>This code generates IRFs for the first three items in our analysis. In each item-specific plot, the x-axis is the logit scale that represents the latent variable; this scale represents transitive reasoning ability in our example. The y-axis is the probability for a correct or positive response, conditional on person locations on the latent variable.</p>
+<p><strong><em>Person Parameters and Item Fit</em></strong></p>
+<p>In the eRm package, it is necessary to calculate person parameters <em>before</em> item fit statistics can be calculated. Accordingly, we will proceed with a brief examination of person parameters before we conduct item fit analyses. In practice, we recommend examining item fit before examining and interpreting item locations in detail.</p>
+<p><strong><em>Person Parameters</em></strong></p>
+<p>In the following code, we use the <code>person.parameter()</code> function to estimate student locations and save the results in an object called <code>student.locations</code>. Then, we save the theta estimates (i.e., achievement estimates) in a data.frame object called <code>achievement</code>, and add student identification numbers for reference.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="Dich-Rasch-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a>student.locations <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(dichot.transreas)</span>
+<span id="cb32-2"><a href="Dich-Rasch-model.html#cb32-2" aria-hidden="true" tabindex="-1"></a>achievement <span class="ot">&lt;-</span> student.locations<span class="sc">$</span>theta.table</span>
+<span id="cb32-3"><a href="Dich-Rasch-model.html#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="Dich-Rasch-model.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add identification numbers to the person locations:</span></span>
+<span id="cb32-5"><a href="Dich-Rasch-model.html#cb32-5" aria-hidden="true" tabindex="-1"></a>achievement<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(achievement)</span></code></pre></div>
+<p>The estimation procedure in eRm does not directly produce parameter estimates for persons with extreme scores. In our example, 51 students earned extreme scores on the transitive reasoning assessment, so achievement estimates are reported for the 374 students with non-extreme scores. The achievement estimates for the 51 students with extreme scores are extrapolated, and standard errors are not calculated.</p>
+<p>We can add standard errors for the student achievement estimates to our <code>achievement</code> object as follows:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="Dich-Rasch-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(student.locations<span class="sc">$</span>se.theta<span class="sc">$</span>NAgroup1)</span>
+<span id="cb33-2"><a href="Dich-Rasch-model.html#cb33-2" aria-hidden="true" tabindex="-1"></a>se<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(se)</span>
+<span id="cb33-3"><a href="Dich-Rasch-model.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(se) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;person_se&quot;</span>, <span class="st">&quot;id&quot;</span>)</span>
+<span id="cb33-4"><a href="Dich-Rasch-model.html#cb33-4" aria-hidden="true" tabindex="-1"></a>achievement.with.se <span class="ot">&lt;-</span> <span class="fu">merge</span>(achievement, se, <span class="at">by =</span> <span class="st">&quot;id&quot;</span> )</span></code></pre></div>
+<p>As a final step in examining the person parameters, we will calculate descriptive statistics and use a histogram to examine the distribution of student locations on the logit scale:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="Dich-Rasch-model.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(achievement)</span></code></pre></div>
+<pre><code>##  Person Parameter    NAgroup  Interpolated         id           
+##  Min.   :-2.916   Min.   :1   Mode :logical   Length:425        
+##  1st Qu.: 1.160   1st Qu.:1   FALSE:374       Class :character  
+##  Median : 1.932   Median :1   TRUE :51        Mode  :character  
+##  Mean   : 2.010   Mean   :1                                     
+##  3rd Qu.: 3.028   3rd Qu.:1                                     
+##  Max.   : 4.201   Max.   :1</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="Dich-Rasch-model.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(achievement<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span>, <span class="at">main =</span> <span class="st">&quot;Histogram of Person Achievement Estimates </span><span class="sc">\n</span><span class="st">for the Transitive Reasoning Data&quot;</span>,</span>
+<span id="cb36-2"><a href="Dich-Rasch-model.html#cb36-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Person Achievement Estimates in Logits&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><strong><em>Item Fit</em></strong></p>
+<p>Next, we will conduct a brief exploration of item fit statistics. We explore item fit in more detail in <a href="MD-fit.html#MD_fit">Chapter 3</a>.</p>
+<p>To calculate numeric item fit statistics, we will use the function <code>itemfit()</code> from eRm on the person parameter object (<code>person.locations.estimate</code>). This function produces several item fit statistics, including infit mean square error (MSE), outfit MSE, and standardized infit and outfit MSE statistics. We will store the item fit results in a new object called <code>item.fit</code>, and then format this object as a data.frame object for easy manipulation and exporting:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="Dich-Rasch-model.html#cb37-1" aria-hidden="true" tabindex="-1"></a>student.locations <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(dichot.transreas)</span>
+<span id="cb37-2"><a href="Dich-Rasch-model.html#cb37-2" aria-hidden="true" tabindex="-1"></a>item.fit <span class="ot">&lt;-</span> <span class="fu">itemfit</span>(student.locations)</span>
+<span id="cb37-3"><a href="Dich-Rasch-model.html#cb37-3" aria-hidden="true" tabindex="-1"></a>item.fit</span></code></pre></div>
+<pre><code>## 
+## Itemfit Statistics: 
+##           Chisq  df p-value Outfit MSQ Infit MSQ Outfit t Infit t Discrim
+## task_01 245.550 373   1.000      0.657     0.761   -1.327  -1.622   0.455
+## task_02 421.904 373   0.041      1.128     1.087    1.071   1.187   0.054
+## task_03 218.155 373   1.000      0.583     0.745   -2.742  -2.688   0.583
+## task_04 478.894 373   0.000      1.280     1.158    2.442   2.268  -0.014
+## task_05 346.015 373   0.839      0.925     0.991   -0.625  -0.109   0.184
+## task_06  65.613 373   1.000      0.175     0.611   -2.789  -1.781   0.620
+## task_07 244.494 373   1.000      0.654     0.804   -2.768  -2.475   0.493
+## task_08 125.478 373   1.000      0.336     0.687   -2.205  -1.569   0.563
+## task_09 394.207 373   0.216      1.054     0.904    0.462  -1.727   0.022
+## task_10 326.534 373   0.960      0.873     0.898   -1.822  -2.408   0.226</code></pre>
+<p>Next, we will request a summary of the numeric fit statistics using the <em>summary()</em> function:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="Dich-Rasch-model.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(item.fit)</span></code></pre></div>
+<pre><code>##             Length Class  Mode   
+## i.fit         10   -none- numeric
+## i.df          10   -none- numeric
+## st.res      3740   -none- numeric
+## i.outfitMSQ   10   -none- numeric
+## i.infitMSQ    10   -none- numeric
+## i.outfitZ     10   -none- numeric
+## i.infitZ      10   -none- numeric
+## i.disc        10   -none- numeric</code></pre>
+<p>The <code>item.fit</code> object includes mean square error (<em>MSE</em>) and standardized (<em>Z</em>) versions of the Outfit and Infit statistics for each item included in the analysis.These statistics are summaries of the residuals associated with each item. When data fit Rasch model expectations, the MSE versions of Outfit and Infit are expected to be close to 1.00 and the standardized versions of Outfit and Infit are expected to be around 0.00. Please refer to <a href="MD-fit.html#MD_fit">Chapter 3</a> for a more-detailed discussion of item fit.</p>
+<p>As a final step in examining item fit, we will calculate the <em>reliability of separation statistic for items</em>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="Dich-Rasch-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item scores</span></span>
+<span id="cb41-2"><a href="Dich-Rasch-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a>ItemScores <span class="ot">&lt;-</span> <span class="fu">colSums</span>(transreas.responses)</span>
+<span id="cb41-3"><a href="Dich-Rasch-model.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="Dich-Rasch-model.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Item SD</span></span>
+<span id="cb41-5"><a href="Dich-Rasch-model.html#cb41-5" aria-hidden="true" tabindex="-1"></a>ItemSD <span class="ot">&lt;-</span> <span class="fu">apply</span>(transreas.responses,<span class="dv">2</span>,sd)</span>
+<span id="cb41-6"><a href="Dich-Rasch-model.html#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="Dich-Rasch-model.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the se of the Item</span></span>
+<span id="cb41-8"><a href="Dich-Rasch-model.html#cb41-8" aria-hidden="true" tabindex="-1"></a>ItemSE <span class="ot">&lt;-</span> ItemSD<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(ItemSD))</span>
+<span id="cb41-9"><a href="Dich-Rasch-model.html#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="Dich-Rasch-model.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Observed Variance (also known as Total Person Variability or Squared Standard Deviation)</span></span>
+<span id="cb41-11"><a href="Dich-Rasch-model.html#cb41-11" aria-hidden="true" tabindex="-1"></a>SSD.ItemScores <span class="ot">&lt;-</span> <span class="fu">var</span>(ItemScores)</span>
+<span id="cb41-12"><a href="Dich-Rasch-model.html#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="Dich-Rasch-model.html#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Mean Square Measurement error (also known as Model Error variance)</span></span>
+<span id="cb41-14"><a href="Dich-Rasch-model.html#cb41-14" aria-hidden="true" tabindex="-1"></a>Item.MSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((ItemSE)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(ItemSE)</span>
+<span id="cb41-15"><a href="Dich-Rasch-model.html#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="Dich-Rasch-model.html#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the Item Separation Reliability</span></span>
+<span id="cb41-17"><a href="Dich-Rasch-model.html#cb41-17" aria-hidden="true" tabindex="-1"></a>item.separation.reliability <span class="ot">&lt;-</span> (SSD.ItemScores<span class="sc">-</span>Item.MSE) <span class="sc">/</span> SSD.ItemScores</span>
+<span id="cb41-18"><a href="Dich-Rasch-model.html#cb41-18" aria-hidden="true" tabindex="-1"></a>item.separation.reliability</span></code></pre></div>
+<pre><code>## [1] 0.9999984</code></pre>
+<p>Briefly, the <em>item reliability of separation statistic</em> describes the degree to which items have unique locations on the logit-scale. Please refer to <a href="MD-fit.html#MD_fit">Chapter 3</a> for more details about item reliability analysis.</p>
+<p><strong><em>Person Fit</em></strong></p>
+<p>Next, we will conduct a brief exploration of person fit. To calculate numeric person fit statistics, we will use the function <code>personfit()</code> from eRm on the person parameter object (<code>person.locations.estimate</code>). This function produces several person fit statistics, including infit mean square error (MSE), outfit MSE, and standardized infit and outfit MSE statistics. We will store the person fit results in a new object called <code>person.fit</code>, and then format this object as a data.frame for easy manipulation and exporting. Then, we request summaries of the infit MSE and outfit MSE statistics using <code>summary()</code>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="Dich-Rasch-model.html#cb43-1" aria-hidden="true" tabindex="-1"></a>person.fit <span class="ot">&lt;-</span> <span class="fu">personfit</span>(student.locations)</span>
+<span id="cb43-2"><a href="Dich-Rasch-model.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit<span class="sc">$</span>p.infitMSQ)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.4060  0.4910  0.7487  0.9102  1.1740  2.2483</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="Dich-Rasch-model.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit<span class="sc">$</span>p.outfitMSQ)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1723  0.2399  0.5468  0.7665  0.9592  7.3060</code></pre>
+<p>We can calculate the <em>reliability of person separation statistic</em> using eRm. This value is interpreted similarly to Cronbach’s alpha <span class="citation">(<a href="#ref-Cronbach" role="doc-biblioref">Cronbach 1951</a>)</span> when there is good fit between the data and the Rasch model <span class="citation">(<a href="#ref-Person_Sep" role="doc-biblioref">Andrich 1982</a>)</span>. However, it is important to note that these coefficients are not equivalent because alpha is based on an assumption of linearity and the Rasch reliabilty of separation statistic is based on a linear, interval-level scale when good model-data fit (discussed in <a href="MD-fit.html#MD_fit">Chapter 3</a>) is observed.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="Dich-Rasch-model.html#cb47-1" aria-hidden="true" tabindex="-1"></a>person_rel <span class="ot">&lt;-</span> <span class="fu">SepRel</span>(student.locations)</span>
+<span id="cb47-2"><a href="Dich-Rasch-model.html#cb47-2" aria-hidden="true" tabindex="-1"></a>person_rel<span class="sc">$</span>sep.rel</span></code></pre></div>
+<pre><code>## [1] 0.2061478</code></pre>
+<p><strong><em>Summarize the Results in Tables</em></strong></p>
+<p>As a final step, we will create tables that summarize the calibrations of the items and persons from our dichotomous Rasch model analysis with eRm.</p>
+<p>Table 1 is an overall model summary table that provides an overview of the logit scale locations, standard errors, fit statistics, and reliability statistics for items and persons. This type of table is useful for reporting the results from Rasch model analyses because it provides a quick overview of the location estimates and numeric model-data fit statistics for the items and persons in the analysis.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="Dich-Rasch-model.html#cb49-1" aria-hidden="true" tabindex="-1"></a>summary.table.statistics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Logit Scale Location Mean&quot;</span>,</span>
+<span id="cb49-2"><a href="Dich-Rasch-model.html#cb49-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Logit Scale Location SD&quot;</span>,</span>
+<span id="cb49-3"><a href="Dich-Rasch-model.html#cb49-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Standard Error Mean&quot;</span>,</span>
+<span id="cb49-4"><a href="Dich-Rasch-model.html#cb49-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Standard Error SD&quot;</span>,</span>
+<span id="cb49-5"><a href="Dich-Rasch-model.html#cb49-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Outfit MSE Mean&quot;</span>,</span>
+<span id="cb49-6"><a href="Dich-Rasch-model.html#cb49-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Outfit MSE SD&quot;</span>,</span>
+<span id="cb49-7"><a href="Dich-Rasch-model.html#cb49-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Infit MSE Mean&quot;</span>,</span>
+<span id="cb49-8"><a href="Dich-Rasch-model.html#cb49-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Infit MSE SD&quot;</span>,</span>
+<span id="cb49-9"><a href="Dich-Rasch-model.html#cb49-9" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Std. Outfit Mean&quot;</span>,</span>
+<span id="cb49-10"><a href="Dich-Rasch-model.html#cb49-10" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Std. Outfit SD&quot;</span>,</span>
+<span id="cb49-11"><a href="Dich-Rasch-model.html#cb49-11" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Std. Infit Mean&quot;</span>,</span>
+<span id="cb49-12"><a href="Dich-Rasch-model.html#cb49-12" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Std. Infit SD&quot;</span>,</span>
+<span id="cb49-13"><a href="Dich-Rasch-model.html#cb49-13" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Reliability of Separation&quot;</span>)</span>
+<span id="cb49-14"><a href="Dich-Rasch-model.html#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-15"><a href="Dich-Rasch-model.html#cb49-15" aria-hidden="true" tabindex="-1"></a>item.summary.results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">mean</span>(difficulty.all),</span>
+<span id="cb49-16"><a href="Dich-Rasch-model.html#cb49-16" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(difficulty.all),</span>
+<span id="cb49-17"><a href="Dich-Rasch-model.html#cb49-17" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(dichot.transreas<span class="sc">$</span>se.beta),</span>
+<span id="cb49-18"><a href="Dich-Rasch-model.html#cb49-18" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(dichot.transreas<span class="sc">$</span>se.beta),</span>
+<span id="cb49-19"><a href="Dich-Rasch-model.html#cb49-19" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(item.fit<span class="sc">$</span>i.outfitMSQ),</span>
+<span id="cb49-20"><a href="Dich-Rasch-model.html#cb49-20" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(item.fit<span class="sc">$</span>i.outfitMSQ),</span>
+<span id="cb49-21"><a href="Dich-Rasch-model.html#cb49-21" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(item.fit<span class="sc">$</span>i.infitMSQ),</span>
+<span id="cb49-22"><a href="Dich-Rasch-model.html#cb49-22" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(item.fit<span class="sc">$</span>i.infitMSQ),</span>
+<span id="cb49-23"><a href="Dich-Rasch-model.html#cb49-23" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(item.fit<span class="sc">$</span>i.outfitZ),</span>
+<span id="cb49-24"><a href="Dich-Rasch-model.html#cb49-24" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(item.fit<span class="sc">$</span>i.outfitZ),</span>
+<span id="cb49-25"><a href="Dich-Rasch-model.html#cb49-25" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(item.fit<span class="sc">$</span>i.infitMSQ),</span>
+<span id="cb49-26"><a href="Dich-Rasch-model.html#cb49-26" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">sd</span>(item.fit<span class="sc">$</span>i.infitZ),</span>
+<span id="cb49-27"><a href="Dich-Rasch-model.html#cb49-27" aria-hidden="true" tabindex="-1"></a>                              item.separation.reliability)</span>
+<span id="cb49-28"><a href="Dich-Rasch-model.html#cb49-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-29"><a href="Dich-Rasch-model.html#cb49-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-30"><a href="Dich-Rasch-model.html#cb49-30" aria-hidden="true" tabindex="-1"></a>person.summary.results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">mean</span>(achievement.with.se<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span>),</span>
+<span id="cb49-31"><a href="Dich-Rasch-model.html#cb49-31" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(achievement.with.se<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span>),</span>
+<span id="cb49-32"><a href="Dich-Rasch-model.html#cb49-32" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mean</span>(achievement.with.se<span class="sc">$</span>person_se, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-33"><a href="Dich-Rasch-model.html#cb49-33" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(achievement.with.se<span class="sc">$</span>person_se, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-34"><a href="Dich-Rasch-model.html#cb49-34" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mean</span>(person.fit<span class="sc">$</span>p.outfitMSQ),</span>
+<span id="cb49-35"><a href="Dich-Rasch-model.html#cb49-35" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(person.fit<span class="sc">$</span>p.outfitMSQ),</span>
+<span id="cb49-36"><a href="Dich-Rasch-model.html#cb49-36" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mean</span>(person.fit<span class="sc">$</span>p.infitMSQ),</span>
+<span id="cb49-37"><a href="Dich-Rasch-model.html#cb49-37" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(person.fit<span class="sc">$</span>p.infitMSQ),</span>
+<span id="cb49-38"><a href="Dich-Rasch-model.html#cb49-38" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mean</span>(person.fit<span class="sc">$</span>p.outfitZ),</span>
+<span id="cb49-39"><a href="Dich-Rasch-model.html#cb49-39" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(person.fit<span class="sc">$</span>p.outfitZ),</span>
+<span id="cb49-40"><a href="Dich-Rasch-model.html#cb49-40" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mean</span>(person.fit<span class="sc">$</span>p.infitZ),</span>
+<span id="cb49-41"><a href="Dich-Rasch-model.html#cb49-41" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">sd</span>(person.fit<span class="sc">$</span>p.infitZ),</span>
+<span id="cb49-42"><a href="Dich-Rasch-model.html#cb49-42" aria-hidden="true" tabindex="-1"></a>                                person_rel<span class="sc">$</span>sep.rel)</span>
+<span id="cb49-43"><a href="Dich-Rasch-model.html#cb49-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-44"><a href="Dich-Rasch-model.html#cb49-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Round the values for presentation in a table:</span></span>
+<span id="cb49-45"><a href="Dich-Rasch-model.html#cb49-45" aria-hidden="true" tabindex="-1"></a>item.summary.results_rounded <span class="ot">&lt;-</span> <span class="fu">round</span>(item.summary.results, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb49-46"><a href="Dich-Rasch-model.html#cb49-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-47"><a href="Dich-Rasch-model.html#cb49-47" aria-hidden="true" tabindex="-1"></a>person.summary.results_rounded <span class="ot">&lt;-</span> <span class="fu">round</span>(person.summary.results, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb49-48"><a href="Dich-Rasch-model.html#cb49-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-49"><a href="Dich-Rasch-model.html#cb49-49" aria-hidden="true" tabindex="-1"></a>Table1 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(summary.table.statistics,</span>
+<span id="cb49-50"><a href="Dich-Rasch-model.html#cb49-50" aria-hidden="true" tabindex="-1"></a>                           item.summary.results_rounded,</span>
+<span id="cb49-51"><a href="Dich-Rasch-model.html#cb49-51" aria-hidden="true" tabindex="-1"></a>                           person.summary.results_rounded)</span>
+<span id="cb49-52"><a href="Dich-Rasch-model.html#cb49-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-53"><a href="Dich-Rasch-model.html#cb49-53" aria-hidden="true" tabindex="-1"></a><span class="co"># add descriptive column labels:</span></span>
+<span id="cb49-54"><a href="Dich-Rasch-model.html#cb49-54" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Table1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Statistic&quot;</span>, <span class="st">&quot;Items&quot;</span>, <span class="st">&quot;Persons&quot;</span>)</span>
+<span id="cb49-55"><a href="Dich-Rasch-model.html#cb49-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-56"><a href="Dich-Rasch-model.html#cb49-56" aria-hidden="true" tabindex="-1"></a>Table1</span></code></pre></div>
+<pre><code>##                                             Statistic Items Persons
+## X                           Logit Scale Location Mean  0.00    1.71
+## X.1                           Logit Scale Location SD  1.58    1.09
+## X.2                               Standard Error Mean  0.17    0.95
+## X.3                                 Standard Error SD  0.06    0.16
+## X.4                                   Outfit MSE Mean  0.77    0.77
+## X.5                                     Outfit MSE SD  0.35    0.80
+## X.6                                    Infit MSE Mean  0.86    0.91
+## X.7                                      Infit MSE SD  0.18    0.47
+## X.8                                  Std. Outfit Mean -1.03    0.08
+## X.9                                    Std. Outfit SD  1.83    0.64
+## X.10                                  Std. Infit Mean  0.86   -0.12
+## X.11                                    Std. Infit SD  1.67    0.91
+## item.separation.reliability Reliability of Separation  1.00    0.21</code></pre>
+<p>Table 2 is a table that summarizes the calibrations of individual items. For data sets with manageable sample sizes such as the transitive reasoning data example in this chapter, we recommend reporting details about each item in a table similar to this one.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="Dich-Rasch-model.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion correct for each task:</span></span>
+<span id="cb51-2"><a href="Dich-Rasch-model.html#cb51-2" aria-hidden="true" tabindex="-1"></a>PropCorrect <span class="ot">&lt;-</span> <span class="fu">apply</span>(transreas.responses, <span class="dv">2</span>, mean)</span>
+<span id="cb51-3"><a href="Dich-Rasch-model.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="Dich-Rasch-model.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine item calibration results in a table:</span></span>
+<span id="cb51-5"><a href="Dich-Rasch-model.html#cb51-5" aria-hidden="true" tabindex="-1"></a>Table2 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(<span class="fu">colnames</span>(transreas.responses),</span>
+<span id="cb51-6"><a href="Dich-Rasch-model.html#cb51-6" aria-hidden="true" tabindex="-1"></a>                           PropCorrect,</span>
+<span id="cb51-7"><a href="Dich-Rasch-model.html#cb51-7" aria-hidden="true" tabindex="-1"></a>                           difficulty.all,</span>
+<span id="cb51-8"><a href="Dich-Rasch-model.html#cb51-8" aria-hidden="true" tabindex="-1"></a>                           dichot.transreas<span class="sc">$</span>se.beta,</span>
+<span id="cb51-9"><a href="Dich-Rasch-model.html#cb51-9" aria-hidden="true" tabindex="-1"></a>                           item.fit<span class="sc">$</span>i.outfitMSQ,</span>
+<span id="cb51-10"><a href="Dich-Rasch-model.html#cb51-10" aria-hidden="true" tabindex="-1"></a>                           item.fit<span class="sc">$</span>i.outfitZ,</span>
+<span id="cb51-11"><a href="Dich-Rasch-model.html#cb51-11" aria-hidden="true" tabindex="-1"></a>                           item.fit<span class="sc">$</span>i.infitMSQ,</span>
+<span id="cb51-12"><a href="Dich-Rasch-model.html#cb51-12" aria-hidden="true" tabindex="-1"></a>                           item.fit<span class="sc">$</span>i.infitZ)</span>
+<span id="cb51-13"><a href="Dich-Rasch-model.html#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Table2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Task ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Item Location&quot;</span>,<span class="st">&quot;Item SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)</span>
+<span id="cb51-14"><a href="Dich-Rasch-model.html#cb51-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-15"><a href="Dich-Rasch-model.html#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort Table 2 by Item difficulty:</span></span>
+<span id="cb51-16"><a href="Dich-Rasch-model.html#cb51-16" aria-hidden="true" tabindex="-1"></a>Table2 <span class="ot">&lt;-</span> Table2[<span class="fu">order</span>(<span class="sc">-</span>Table2<span class="sc">$</span><span class="st">`</span><span class="at">Item Location</span><span class="st">`</span>),]</span>
+<span id="cb51-17"><a href="Dich-Rasch-model.html#cb51-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-18"><a href="Dich-Rasch-model.html#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Round the numeric values (all columns except the first one) to 2 digits:</span></span>
+<span id="cb51-19"><a href="Dich-Rasch-model.html#cb51-19" aria-hidden="true" tabindex="-1"></a>Table2[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(Table2[,<span class="sc">-</span><span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb51-20"><a href="Dich-Rasch-model.html#cb51-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-21"><a href="Dich-Rasch-model.html#cb51-21" aria-hidden="true" tabindex="-1"></a>Table2</span></code></pre></div>
+<pre><code>##         Task ID Proportion Correct Item Location Item SE Outfit MSE Std. Outfit
+## task_09 task_09               0.30          2.92    0.13       1.05        0.46
+## task_10 task_10               0.52          1.84    0.12       0.87       -1.82
+## task_04 task_04               0.78          0.44    0.13       1.28        2.44
+## task_05 task_05               0.80          0.31    0.13       0.93       -0.62
+## task_02 task_02               0.81          0.26    0.13       1.13        1.07
+## task_07 task_07               0.84         -0.02    0.14       0.65       -2.77
+## task_03 task_03               0.88         -0.42    0.16       0.58       -2.74
+## task_01 task_01               0.94         -1.24    0.20       0.66       -1.33
+## task_08 task_08               0.97         -1.91    0.26       0.34       -2.21
+## task_06 task_06               0.97         -2.18    0.29       0.18       -2.79
+##         Infit MSE Std. Infit
+## task_09      0.90      -1.73
+## task_10      0.90      -2.41
+## task_04      1.16       2.27
+## task_05      0.99      -0.11
+## task_02      1.09       1.19
+## task_07      0.80      -2.47
+## task_03      0.75      -2.69
+## task_01      0.76      -1.62
+## task_08      0.69      -1.57
+## task_06      0.61      -1.78</code></pre>
+<p>Finally, Table 3 provides a summary of the person calibrations. When there is a relatively large person sample size, it may be more useful to present the results as they relate to individual persons or subsets of the person sample as they are relevant to the purpose of the analysis. In the following code, we create Table 3 and print the first 6 lines to the console using the <code>head()</code> function.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="Dich-Rasch-model.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate proportion correct for persons:</span></span>
+<span id="cb53-2"><a href="Dich-Rasch-model.html#cb53-2" aria-hidden="true" tabindex="-1"></a>PersonPropCorrect <span class="ot">&lt;-</span> <span class="fu">apply</span>(student.locations<span class="sc">$</span>X.ex, <span class="dv">1</span>, mean)</span>
+<span id="cb53-3"><a href="Dich-Rasch-model.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="Dich-Rasch-model.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine person calibration results in a table:</span></span>
+<span id="cb53-5"><a href="Dich-Rasch-model.html#cb53-5" aria-hidden="true" tabindex="-1"></a>Table3 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(achievement.with.se<span class="sc">$</span>id,</span>
+<span id="cb53-6"><a href="Dich-Rasch-model.html#cb53-6" aria-hidden="true" tabindex="-1"></a>                           PersonPropCorrect,</span>
+<span id="cb53-7"><a href="Dich-Rasch-model.html#cb53-7" aria-hidden="true" tabindex="-1"></a>                           achievement.with.se<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span>,</span>
+<span id="cb53-8"><a href="Dich-Rasch-model.html#cb53-8" aria-hidden="true" tabindex="-1"></a>                           achievement.with.se<span class="sc">$</span>person_se,</span>
+<span id="cb53-9"><a href="Dich-Rasch-model.html#cb53-9" aria-hidden="true" tabindex="-1"></a>                           person.fit<span class="sc">$</span>p.outfitMSQ,</span>
+<span id="cb53-10"><a href="Dich-Rasch-model.html#cb53-10" aria-hidden="true" tabindex="-1"></a>                           person.fit<span class="sc">$</span>p.outfitZ,</span>
+<span id="cb53-11"><a href="Dich-Rasch-model.html#cb53-11" aria-hidden="true" tabindex="-1"></a>                           person.fit<span class="sc">$</span>p.infitMSQ,</span>
+<span id="cb53-12"><a href="Dich-Rasch-model.html#cb53-12" aria-hidden="true" tabindex="-1"></a>                           person.fit<span class="sc">$</span>p.infitZ)</span>
+<span id="cb53-13"><a href="Dich-Rasch-model.html#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-14"><a href="Dich-Rasch-model.html#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Table3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Person ID&quot;</span>, <span class="st">&quot;Proportion Correct&quot;</span>, <span class="st">&quot;Person Location&quot;</span>,<span class="st">&quot;Person SE&quot;</span>,<span class="st">&quot;Outfit MSE&quot;</span>,<span class="st">&quot;Std. Outfit&quot;</span>, <span class="st">&quot;Infit MSE&quot;</span>,<span class="st">&quot;Std. Infit&quot;</span>)</span>
+<span id="cb53-15"><a href="Dich-Rasch-model.html#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="Dich-Rasch-model.html#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Round the numeric values (all columns except the first one) to 2 digits:</span></span>
+<span id="cb53-17"><a href="Dich-Rasch-model.html#cb53-17" aria-hidden="true" tabindex="-1"></a>Table3[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(Table3[,<span class="sc">-</span><span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb53-18"><a href="Dich-Rasch-model.html#cb53-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-19"><a href="Dich-Rasch-model.html#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Table3)</span></code></pre></div>
+<pre><code>##   Person ID Proportion Correct Person Location Person SE Outfit MSE Std. Outfit
+## 1         1                0.8            1.93      0.94       0.24       -0.52
+## 2        10                0.6            1.16      0.83       1.10        0.36
+## 3       100                0.4            1.16      0.83       5.62        3.50
+## 5       101                0.7            3.03      1.19       0.56       -0.37
+## 6       102                0.9            0.52      0.77       0.17        0.12
+## 8       103                0.7            3.03      1.19       0.73       -0.09
+##   Infit MSE Std. Infit
+## 1      0.41      -1.19
+## 2      1.13       0.47
+## 3      2.10       2.55
+## 5      0.71      -0.57
+## 6      0.49      -0.61
+## 8      0.80      -0.34</code></pre>
+</div>
+<div id="dichotomous-rasch-model-analysis-with-mmle-in-tam" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Dichotomous Rasch Model Analysis with MMLE in TAM</h2>
+<p>Next, we will use the <em>“Test Analysis Modules”</em>, or “TAM” package <span class="citation">(<a href="#ref-TAM" role="doc-biblioref">Robitzsch, Kiefer, and Wu 2021</a>)</span> to run the dichotomous Rasch model analyses. By default, the TAM package applies marginal maximum likelihood estimation (MMLE) to estimate the dichotomous Rasch model. Please keep this estimation approach in mind when comparing the results between TAM and other R packages or software programs that use other estimation techniques, such as Winsteps <span class="citation">(<a href="#ref-Winsteps" role="doc-biblioref">Linacre 2020a</a>)</span> or Facets <span class="citation">(<a href="#ref-Facets" role="doc-biblioref">Linacre 2020b</a>)</span>.</p>
+<p>Except where there are significant differences between the eRm and TAM procedures, we provide fewer details about the analysis procedures and interpretations in this section compared to the first illustration.</p>
+<p><strong><em>Prepare for the Analyses</em></strong></p>
+<p>To get started with the “TAM” package, install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="Dich-Rasch-model.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;TAM&quot;</span>)</span>
+<span id="cb55-2"><a href="Dich-Rasch-model.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;TAM&quot;)</span></span>
+<span id="cb55-3"><a href="Dich-Rasch-model.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TAM&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: CDM</code></pre>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## **********************************
+## ** CDM 7.5-15 (2020-03-10 14:19:21)      
+## ** Cognitive Diagnostic Models  **
+## **********************************</code></pre>
+<pre><code>## * TAM 3.7-16 (2021-06-24 14:31:37)</code></pre>
+<p>To facilitate the analysis, we will also use the <em>“WrightMap”</em> package <span class="citation">(<a href="#ref-WrightMap" role="doc-biblioref">Irribarra and Freund 2014</a>)</span>:</p>
+<p>WrightMap:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="Dich-Rasch-model.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">&quot;WrightMap&quot;</span>)</span>
+<span id="cb60-2"><a href="Dich-Rasch-model.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;WrightMap&quot;)</span></span>
+<span id="cb60-3"><a href="Dich-Rasch-model.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;WrightMap&quot;</span>) </span></code></pre></div>
+<p>If you have not already imported the Transitive Reasoning data and prepared it for analysis as described earlier in this chapter by isolating the response matrix, please do so before continuing with the TAM analyses.</p>
+<p><strong><em>Run the Dichotomous Rasch model</em></strong></p>
+<p>Now, we are ready to run the dichotomous Rasch model on the transitive reasoning response data. We will use the <code>tam.mml()</code> function to run the model and store the results in an object called <code>dichot.transreas</code>. We specified <code>constraint = items</code> in order to obtain item locations that are centered at zero logits for ease of interpretation.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="Dich-Rasch-model.html#cb61-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.mml</span>(transreas.responses, <span class="at">constraint =</span> <span class="st">&quot;items&quot;</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>For brevity, we do not include all of the output from the model function in this book. However, after you run the model, you should see some output in the R console that includes information about each iteration in the estimation process.</p>
+<p><strong><em>Overall Model Summary</em></strong></p>
+<p>The next step is to request a summary of the model estimation results in order to begin to understand the results from the analysis. We can do so by applying the <code>summary()</code> function to the model object:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="Dich-Rasch-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dichot.transreas_MMLE)</span></code></pre></div>
+<pre><code>## ------------------------------------------------------------
+## TAM 3.7-16 (2021-06-24 14:31:37) 
+## R version 4.1.0 (2021-05-18) x86_64, darwin17.0 | nodename=Chengs-iMac | login=root 
+## 
+## Date of Analysis: 2021-07-29 22:30:12 
+## Time difference of 0.08011818 secs
+## Computation time: 0.08011818 
+## 
+## Multidimensional Item Response Model in TAM 
+## 
+## IRT Model: PCM2
+## Call:
+## tam.mml(resp = transreas.responses, constraint = &quot;items&quot;, verbose = FALSE)
+## 
+## ------------------------------------------------------------
+## Number of iterations = 72 
+## Numeric integration with 21 integration points
+## 
+## Deviance = 3354.91 
+## Log likelihood = -1677.46 
+## Number of persons = 425 
+## Number of persons used = 425 
+## Number of items = 10 
+## Number of estimated parameters = 11 
+##     Item threshold parameters = 9 
+##     Item slope parameters = 0 
+##     Regression parameters = 1 
+##     Variance/covariance parameters = 1 
+## 
+## AIC = 3377  | penalty=22    | AIC=-2*LL + 2*p 
+## AIC3 = 3388  | penalty=33    | AIC3=-2*LL + 3*p 
+## BIC = 3421  | penalty=66.57    | BIC=-2*LL + log(n)*p 
+## aBIC = 3386  | penalty=31.56    | aBIC=-2*LL + log((n-2)/24)*p  (adjusted BIC) 
+## CAIC = 3432  | penalty=77.57    | CAIC=-2*LL + [log(n)+1]*p  (consistent AIC) 
+## AICc = 3378  | penalty=22.64    | AICc=-2*LL + 2*p + 2*p*(p+1)/(n-p-1)  (bias corrected AIC) 
+## GHP = 0.39728     | GHP=( -LL + p ) / (#Persons * #Items)  (Gilula-Haberman log penalty) 
+## 
+## ------------------------------------------------------------
+## EAP Reliability
+## [1] 0.503
+## ------------------------------------------------------------
+## Covariances and Variances
+##       [,1]
+## [1,] 0.938
+## ------------------------------------------------------------
+## Correlations and Standard Deviations (in the diagonal)
+##       [,1]
+## [1,] 0.968
+## ------------------------------------------------------------
+## Regression Coefficients
+##         [,1]
+## [1,] 1.93558
+## ------------------------------------------------------------
+## Item Parameters -A*Xsi
+##       item   N     M xsi.item AXsi_.Cat1 B.Cat1.Dim1
+## 1  task_01 425 0.941   -1.233     -1.233           1
+## 2  task_02 425 0.809    0.235      0.235           1
+## 3  task_03 425 0.885   -0.432     -0.432           1
+## 4  task_04 425 0.784    0.418      0.418           1
+## 5  task_05 425 0.802    0.286      0.286           1
+## 6  task_06 425 0.974   -2.133     -2.133           1
+## 7  task_07 425 0.845   -0.047     -0.047           1
+## 8  task_08 425 0.967   -1.875     -1.875           1
+## 9  task_09 425 0.301    2.938      2.938           1
+## 10 task_10 425 0.520    1.842      1.842           1
+## 
+## Item Parameters in IRT parameterization
+##       item alpha   beta
+## 1  task_01     1 -1.233
+## 2  task_02     1  0.235
+## 3  task_03     1 -0.432
+## 4  task_04     1  0.418
+## 5  task_05     1  0.286
+## 6  task_06     1 -2.133
+## 7  task_07     1 -0.047
+## 8  task_08     1 -1.875
+## 9  task_09     1  2.938
+## 10 task_10     1  1.842</code></pre>
+<p>From these results, we suggest taking a quick look at the Item Parameters as reported in the table labeled <em>Item Parameters in IRT parameterization.</em></p>
+<p>Because we ran a Rasch model, the <em>alpha</em> (discrimination) parameters are fixed to a constant value of 1. The <em>beta</em> parameters are the item locations on the latent variable. We will explore the item locations in more detail later in the analysis.</p>
+<p><strong><em>Wright Map</em></strong></p>
+<p>A useful feature of Rasch models is that when there is acceptable fit between the model and the data (discussed in detail in <a href="MD-fit.html#MD_fit">Chapter 3</a>), it is possible to visualize and compare item and person locations on a single linear continuum. Professor Bejamin D. Wright popularized an approach to displaying Rasch model results on a linear continuum, and this technique has been widely adopted by Rasch measurement researchers across disciplines. In his honor, these displays are often called <em>Wright Maps.</em> In the literature, researchers also refer to these displays as <em>Variable Maps</em>. Please see Wilson (2011) for a discussion of the term <em>Wright Map</em>.</p>
+<p>As the next step in our analysis, we will use the WrightMap package to create a Wright Map from our model results. We will create the plot using the function <code>IRT.WrightMap()</code> on the model object (<code>dichot.transreas</code>). We will set the option for displaying threshold labels as <code>FALSE</code>, because we are working with dichotomous data. We also used the <code>main.title=</code> option to customize the title of the plot.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="Dich-Rasch-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IRT.WrightMap</span>(dichot.transreas_MMLE, <span class="at">show.thr.lab=</span><span class="cn">FALSE</span>, <span class="at">main.title =</span> <span class="st">&quot;Transitive Reasoning Wright Map (MMLE)&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>In this <em>Wright Map</em> display, the results from the dichotomous Rasch model analysis of the transitive reasoning data are summarized grapihcally. The figure is organized as follows:</p>
+<p>The left panel of the plot shows a histogram of respondent (person) locations on the logit scale that represents the latent variable. Units on the logit scale are shown on the far-right axis of the plot (labeled <em>Logits</em>). In the panel with the person locations, the label “Dim1” means that the distribution of person locations is specific to one dimension. In multi-dimensional Rasch model <span class="citation">(<a href="#ref-Multidi_RM" role="doc-biblioref">Briggs and Wilson 2003</a>)</span> and multidimensional IRT analyses <span class="citation">(<a href="#ref-Multi_IRT_Wes" role="doc-biblioref">Bonifay 2020</a>)</span> or <span class="citation">(<a href="#ref-Multi_IRT" role="doc-biblioref">Reckase 2009</a>)</span>, the Wright Map can show multiple distributions of person locations that correspond to each dimension in the model.</p>
+<div class="figure">
+<img src="screenshots/Cha2_WM.png" alt="" />
+<p class="caption">Wright Map illustration</p>
+</div>
+<p>The large central panel of the plot shows the item locations (item difficulty estimates) on the logit scale that represents the latent variable. Light grey diamond shapes show the logit scale location of each item, as labeled on the x-axis.</p>
+<p>Even though it is not appropriate to fully interpret item and person locations on the logit scale until there is evidence of acceptable model-data fit, we recommend examining the Wright Map during the preliminary stages of an item analysis to get a general sense of the model results and to identify any potential scoring or data entry errors.</p>
+<p>A quick glance at the Wright Map suggests that, on average, the persons are located higher on the logit scale compared to the average item locations. In addition, there appears to be a relatively wide spread of person and item locations on the logit scale, such that the transitive reasoning test appears to be a useful tool for identifying differences in person locations and item locations on the latent variable. We will return to this display for more exploration after checking for acceptable model-data fit, among other psychometric properties.</p>
+<p><strong><em>Item Parameters</em></strong></p>
+<p>As the next step in our analysis, we will examine the item parameters in detail. We will use the <em>$</em> operator to request the item location estimates that are stored in the <code>item_irt</code> table within the <code>dichot.transreas_MMLE</code> object. Then, we will save the item location estimates in a new object called <code>difficulty_MMLE</code>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="Dich-Rasch-model.html#cb65-1" aria-hidden="true" tabindex="-1"></a>difficulty_MMLE <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dichot.transreas_MMLE<span class="sc">$</span>item_irt<span class="sc">$</span>beta)</span>
+<span id="cb65-2"><a href="Dich-Rasch-model.html#cb65-2" aria-hidden="true" tabindex="-1"></a>difficulty_MMLE<span class="sc">$</span>se <span class="ot">&lt;-</span> dichot.transreas_MMLE<span class="sc">$</span>se.AXsi</span>
+<span id="cb65-3"><a href="Dich-Rasch-model.html#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(difficulty_MMLE) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;item_difficulty&quot;</span>, <span class="st">&quot;item_se&quot;</span>)</span></code></pre></div>
+<p>By running this code, we have created a data.frame object that includes two variables: item difficulty estimates, and standard errors. The row labels show the item numbers from our response matrix. The item difficulty parameters and standard errors are interpreted in the same way as in the eRm analysis presented earlier in this chapter.</p>
+<p>Next, let’s calculate descriptive statistics to better understand the distribution of the item locations and standard errors. We will do so using the <code>summary()</code> function and the <code>sd()</code> function:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="Dich-Rasch-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(difficulty_MMLE)</span></code></pre></div>
+<pre><code>##  item_difficulty         item_se.V1            item_se.V2     
+##  Min.   :-2.13288   Min.   :0             Min.   :0.07786662  
+##  1st Qu.:-1.03275   1st Qu.:0             1st Qu.:0.08245890  
+##  Median : 0.09391   Median :0             Median :0.08679307  
+##  Mean   : 0.00000   Mean   :0             Mean   :0.10578784  
+##  3rd Qu.: 0.38541   3rd Qu.:0             3rd Qu.:0.09815207  
+##  Max.   : 2.93795   Max.   :0             Max.   :0.26524247</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="Dich-Rasch-model.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(difficulty_MMLE<span class="sc">$</span>item_difficulty)</span></code></pre></div>
+<pre><code>## [1] 1.567331</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="Dich-Rasch-model.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(difficulty_MMLE<span class="sc">$</span>item_se)</span></code></pre></div>
+<pre><code>## [1] 0.06678788</code></pre>
+<p>We can also visualize the item difficulty estimates using a simple histogram by using the <code>hist()</code> function. In our plot, we specified a custom title using <code>main =</code> and a custom x-axis label using <code>xlab =</code>.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="Dich-Rasch-model.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(difficulty_MMLE<span class="sc">$</span>item_difficulty, <span class="at">main =</span> <span class="st">&quot;Histogram of Item Difficulty Estimates for the Transitive Reasoning Data </span><span class="sc">\n</span><span class="st"> (MMLE)&quot;</span>,</span>
+<span id="cb72-2"><a href="Dich-Rasch-model.html#cb72-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Item Difficulty Estimates in Logits&quot;</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><strong><em>Item Fit</em></strong></p>
+<p>To calculate numeric item fit statistics, we will use the function <code>tam.fit()</code> from TAM on the model object (<code>dichot.transreas_MMLE</code>). We will store the item fit results in a new object called <code>item.fit_MMLE</code>, and then format this object as a data.frame for easy manipulation and exporting.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="Dich-Rasch-model.html#cb73-1" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.fit</span>(dichot.transreas_MMLE) </span>
+<span id="cb73-2"><a href="Dich-Rasch-model.html#cb73-2" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(item.fit_MMLE<span class="sc">$</span>itemfit)</span></code></pre></div>
+<p>Next, we will request a summary of the numeric fit statistics using the <code>summary()</code> function:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="Dich-Rasch-model.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(item.fit_MMLE)</span></code></pre></div>
+<pre><code>##   parameter             Outfit          Outfit_t          Outfit_p        
+##  Length:9           Min.   :0.8333   Min.   :-5.6913   Min.   :0.0000000  
+##  Class :character   1st Qu.:0.9024   1st Qu.:-2.3648   1st Qu.:0.0002643  
+##  Mode  :character   Median :0.9757   Median :-0.5433   Median :0.0180380  
+##                     Mean   :0.9913   Mean   :-0.3450   Mean   :0.2618589  
+##                     3rd Qu.:0.9866   3rd Qu.:-0.3526   3rd Qu.:0.5869528  
+##                     Max.   :1.2685   Max.   : 6.9028   Max.   :0.7244187  
+##   Outfit_pholm         Infit           Infit_t           Infit_p         
+##  Min.   :0.00000   Min.   :0.8301   Min.   :-5.8054   Min.   :0.0000000  
+##  1st Qu.:0.00185   1st Qu.:0.8989   1st Qu.:-2.4461   1st Qu.:0.0001832  
+##  Median :0.09019   Median :0.9790   Median :-0.4626   Median :0.0144426  
+##  Mean   :0.45527   Mean   :0.9936   Mean   :-0.2834   Mean   :0.2845961  
+##  3rd Qu.:1.00000   3rd Qu.:0.9930   3rd Qu.:-0.1814   3rd Qu.:0.6436398  
+##  Max.   :1.00000   Max.   :1.2757   Max.   : 7.0789   Max.   :0.8560563  
+##   Infit_pholm      
+##  Min.   :0.000000  
+##  1st Qu.:0.001282  
+##  Median :0.072213  
+##  Mean   :0.453766  
+##  3rd Qu.:1.000000  
+##  Max.   :1.000000</code></pre>
+<p>The <code>item.fit_MMLE</code> object includes mean square error (<em>MSE</em>) and standardized (<em>t</em>) versions of the Outfit and Infit statistics for Rasch models. TAM also reports a <em>p</em> value for the standardized fit statistics (<code>Outfit_p</code> and <code>Infit_p</code>), along with adjusted significance values (<code>Infit_pholm</code> and <code>Outfit_pholm</code>).</p>
+<p>With the item centering constraint that we used, the TAM package does not report fit statistics for all ten items. We can find approximate item fit statistics for all ten items by running the model without the centering constraint and saving the fit statistics.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="Dich-Rasch-model.html#cb76-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas_MMLE2 <span class="ot">&lt;-</span> <span class="fu">tam</span>(transreas.responses, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb76-2"><a href="Dich-Rasch-model.html#cb76-2" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE2 <span class="ot">&lt;-</span> <span class="fu">tam.fit</span>(dichot.transreas_MMLE2) </span>
+<span id="cb76-3"><a href="Dich-Rasch-model.html#cb76-3" aria-hidden="true" tabindex="-1"></a>item.fit_MMLE2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(item.fit_MMLE2<span class="sc">$</span>itemfit)</span></code></pre></div>
+<p><strong><em>Person Parameters</em></strong></p>
+<p>When the default MMLE method is used to estimate the dichotomous Rasch model in TAM, person parameters are calculated after the item locations are estimated. As a result, the person estimation procedure for this model requires additional iterations.</p>
+<p>In the following code, we calculate person locations that correspond to our model using the <code>tam.wle()</code>function with the dichotomous Rasch model object (<code>dichot.transreas_MMLE</code>). We stored the results in a new data frame called <code>achievement_MMLE</code>, and then requested a summary of the estimation results using <code>summary()</code>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="Dich-Rasch-model.html#cb77-1" aria-hidden="true" tabindex="-1"></a>achievement_MMLE <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">tam.wle</span>(dichot.transreas_MMLE))</span></code></pre></div>
+<p>The <code>achievement_MMLE</code> data frame includes the following variables:</p>
+<ul>
+<li><em>pid</em>: Person identification number (based on person ordering in the item response matrix)</li>
+<li><em>N.items</em>: Number of scored item responses for each person</li>
+<li><em>PersonScores</em>: Sum of scored item responses for each person</li>
+<li><em>PersonMax</em>: Maximum possible score for item responses</li>
+<li><em>theta</em>: Person location estimate on the logit scale that represents the latent variable.</li>
+<li><em>error</em>: Standard error for person location estimate, as described earlier in this chapter.</li>
+<li><em>WLE.rel</em>: Reliability of person separation statistic, as described earlier in this chapter.</li>
+</ul>
+<p>Next, we will calculate descriptive statistics to better understand the distribution of the person estimates. We will do so using the <code>summary()</code> function with the <code>achievement_MMLE</code>object.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="Dich-Rasch-model.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(achievement_MMLE)</span></code></pre></div>
+<pre><code>##       pid         N.items    PersonScores      PersonMax      theta       
+##  Min.   :  1   Min.   :10   Min.   : 1.000   Min.   :10   Min.   :-2.592  
+##  1st Qu.:107   1st Qu.:10   1st Qu.: 7.000   1st Qu.:10   1st Qu.: 1.058  
+##  Median :213   Median :10   Median : 8.000   Median :10   Median : 1.772  
+##  Mean   :213   Mean   :10   Mean   : 7.828   Mean   :10   Mean   : 1.880  
+##  3rd Qu.:319   3rd Qu.:10   3rd Qu.: 9.000   3rd Qu.:10   3rd Qu.: 2.727  
+##  Max.   :425   Max.   :10   Max.   :10.000   Max.   :10   Max.   : 4.283  
+##      error           WLE.rel      
+##  Min.   :0.7508   Min.   :0.3082  
+##  1st Qu.:0.8191   1st Qu.:0.3082  
+##  Median :0.9172   Median :0.3082  
+##  Mean   :1.0227   Mean   :0.3082  
+##  3rd Qu.:1.1106   3rd Qu.:0.3082  
+##  Max.   :1.7628   Max.   :0.3082</code></pre>
+<p>We can also visualize the person location estimates using a simple histogram by using the <code>hist()</code> function. In our plot, we specified a custom title using <code>main =</code> and a custom x-axis label using <code>xlab =</code>.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="Dich-Rasch-model.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(achievement_MMLE<span class="sc">$</span>theta, <span class="at">main =</span> <span class="st">&quot;Histogram of Person Achievement Estimates </span><span class="sc">\n</span><span class="st">for the Transitive Reasoning Data </span><span class="sc">\n</span><span class="st"> (MMLE)&quot;</span>,</span>
+<span id="cb80-2"><a href="Dich-Rasch-model.html#cb80-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Person Achievement Estimates in Logits&quot;</span>, <span class="at">cex.main =</span> .<span class="dv">8</span>) </span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><strong><em>Person Fit</em></strong></p>
+<p>As a final step in our preliminary person analysis, we will conduct a brief exploration of person fit statistics. We explore person fit in more detail in <a href="MD-fit.html#MD_fit">Chapter 3</a>.</p>
+<p>To calculate numeric person fit statistics, we will use the function <code>tam.personfit()</code> from TAM on the model object (<code>dichot.transreas_MMLE</code>). We will store the person fit results in a new object called <code>person.fit_MMLE</code>, which is a data.frame object.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="Dich-Rasch-model.html#cb81-1" aria-hidden="true" tabindex="-1"></a>person.fit_MMLE <span class="ot">&lt;-</span> <span class="fu">tam.personfit</span>(dichot.transreas_MMLE)</span></code></pre></div>
+<p>Next, we will request a summary of the numeric person fit statistics using the <code>summary()</code> function.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="Dich-Rasch-model.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(person.fit_MMLE)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t      infitPerson     infitPerson_t    
+##  Min.   :0.04345   Min.   :-0.95709   Min.   :0.1569   Min.   :-1.5008  
+##  1st Qu.:0.16335   1st Qu.:-0.63496   1st Qu.:0.3613   1st Qu.:-0.9720  
+##  Median :0.46295   Median :-0.06839   Median :0.6428   Median :-0.5789  
+##  Mean   :0.61001   Mean   : 0.05723   Mean   :0.7734   Mean   :-0.2966  
+##  3rd Qu.:0.84557   3rd Qu.: 0.68920   3rd Qu.:1.0647   3rd Qu.: 0.2983  
+##  Max.   :4.21347   Max.   : 2.84202   Max.   :2.2003   Max.   : 2.5764</code></pre>
+<p>The <code>person.fit_MMLE</code> object includes mean square error (<em>MSE</em>) and standardized (<em>t</em>) versions of the person Outfit and Infit statistics for Rasch models. These statistics are summaries of the residuals associated with each person The <em>Outfit</em> and <em>Infit</em> statistics are the MSE versions and the <code>Outfit_t</code> and <code>Infit_t</code>statistics are the standardized versions of the statistics.</p>
+</div>
+<div id="dichotomous-rasch-model-analysis-with-jmle-in-tam" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Dichotomous Rasch Model Analysis with JMLE in TAM</h2>
+<p>We can also use the <code>tam.jml()</code> function to estimate the dichotomous Rasch model using Joint Maximum Likelihood Estimation (JMLE), which is the same estimation method that is used in the Facets software program <span class="citation">(<a href="#ref-Facets" role="doc-biblioref">Linacre 2020b</a>)</span> and the Winsteps software program <span class="citation">(<a href="#ref-Winsteps" role="doc-biblioref">Linacre 2020a</a>)</span>, which are popular standlone software programs for Rasch analyses.</p>
+<p>With the exception of the model estimation code, most of the code for the JMLE approach is the same as the previous analysis with MMLE. Accordingly, we provide fewer explanations in our presentation of this code.</p>
+<p><strong><em>Estimate the Dichotomous Rasch Model</em></strong></p>
+<p>We already prepared the transitive reasoning data for analysis when we checked the data and isolated the item response matrix (<code>transreas.responses</code>) earlier in this chapter. We can begin our analysis using the <code>tam.jml()</code> function with this response matrix.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="Dich-Rasch-model.html#cb84-1" aria-hidden="true" tabindex="-1"></a>dichot.transreas_JMLE <span class="ot">&lt;-</span> <span class="fu">tam.jml</span>(transreas.responses, <span class="at">constraint =</span> <span class="st">&quot;items&quot;</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><strong><em>Overall Model Summary</em></strong></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="Dich-Rasch-model.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Request a summary of the model results</span></span>
+<span id="cb85-2"><a href="Dich-Rasch-model.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dichot.transreas_JMLE)</span></code></pre></div>
+<p><strong><em>Wright Map</em></strong></p>
+<p>When the JMLE estimation method is used, we need to specify the item location estimates and the person location estimates as vectors in the plotting function for the Wright Map. We will also use a different function to plot the Wright Map: <code>wrightMap()</code>, which takes arguments for the item and person locations.</p>
+<p>In the following code, we saved the item locations in a vector called <code>difficulty_JMLE</code>, and the person locations in a vector called <code>theta_JMLE</code>. Then, we used these vectors as arguments in the <code>wrightMap()</code> function to create the Wright Map.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="Dich-Rasch-model.html#cb86-1" aria-hidden="true" tabindex="-1"></a>difficulty_JMLE <span class="ot">&lt;-</span> dichot.transreas_JMLE<span class="sc">$</span>item<span class="sc">$</span>xsi.item</span>
+<span id="cb86-2"><a href="Dich-Rasch-model.html#cb86-2" aria-hidden="true" tabindex="-1"></a>theta_JMLE <span class="ot">&lt;-</span> dichot.transreas_JMLE<span class="sc">$</span>theta</span>
+<span id="cb86-3"><a href="Dich-Rasch-model.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="at">thetas =</span> theta_JMLE, <span class="at">thresholds =</span> difficulty_JMLE, <span class="at">show.thr.lab=</span><span class="cn">FALSE</span>, <span class="at">main.title =</span> <span class="st">&quot;Transitive Reasoning Wright Map: JMLE&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<pre><code>##              [,1]
+##  [1,] -1.22764983
+##  [2,]  0.19372234
+##  [3,] -0.46058464
+##  [4,]  0.37626060
+##  [5,]  0.24499876
+##  [6,] -2.04579773
+##  [7,] -0.08402885
+##  [8,] -1.81784893
+##  [9,]  2.99257136
+## [10,]  1.82835693</code></pre>
+<p><strong><em>Item Parameters</em></strong></p>
+<p>When we plotted the Wright Map, we created an object with the item difficulty parameters. We can find the standard errors for the item estimates by using the <em>$</em> operator to extract <code>errorP</code> from the model results.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="Dich-Rasch-model.html#cb88-1" aria-hidden="true" tabindex="-1"></a>jmle.item.se <span class="ot">&lt;-</span> dichot.transreas_JMLE<span class="sc">$</span>errorP</span>
+<span id="cb88-2"><a href="Dich-Rasch-model.html#cb88-2" aria-hidden="true" tabindex="-1"></a>jmle.item.se</span></code></pre></div>
+<pre><code>## [1] 0.10134872 0.08825844 0.09427051 0.08677937 0.08783074 0.10718132 0.09071165
+## [8] 0.10578694 0.08445690</code></pre>
+<p>Because of the item centering constraint that we included in our analysis, the standard error for item 10 is not reported.</p>
+<p><strong><em>Person Parameters</em></strong></p>
+<p>Unlike the MMLE estimation approach, the JMLE approach calculates item parameters and person parameters in the same step. As a result, we do not need to use a separate function to find the person parameter estimates from our model.</p>
+<p>When we plotted the Wright Map, we already saved the theta estimates in a vector called <code>theta_JMLE</code>. We can find the standard errors for the person estimates by using the <em>$</em> operator to extract <code>errorWLE</code> from the model results.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="Dich-Rasch-model.html#cb90-1" aria-hidden="true" tabindex="-1"></a>jmle.person.se <span class="ot">&lt;-</span> dichot.transreas_JMLE<span class="sc">$</span>errorWLE</span></code></pre></div>
+<p><strong><em>Item and Person Fit</em></strong></p>
+<p>When JMLE is used, TAM calculates both person and item fit using a single function: <code>tam.jml.fit()</code>.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="Dich-Rasch-model.html#cb91-1" aria-hidden="true" tabindex="-1"></a>jmle.fit <span class="ot">&lt;-</span> <span class="fu">tam.jml.fit</span>(dichot.transreas_JMLE)</span></code></pre></div>
+<p>Now that we have calculated fit statistics for items and persons, we will save the item fit statistics in a data frame called <code>jmle.item.fit</code>. We can examine the item fit statistics in more detail by printing the <code>jmle.item.fit</code> object to the console or preview window and calculating summary statistics.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="Dich-Rasch-model.html#cb92-1" aria-hidden="true" tabindex="-1"></a>jmle.item.fit <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(jmle.fit<span class="sc">$</span>fit.item)</span>
+<span id="cb92-2"><a href="Dich-Rasch-model.html#cb92-2" aria-hidden="true" tabindex="-1"></a>jmle.item.fit</span></code></pre></div>
+<pre><code>##            item outfitItem outfitItem_t infitItem infitItem_t
+## task_01 task_01  0.4789486   -1.3892725 0.7618074  -1.6224741
+## task_02 task_02  1.0961304    0.5264972 1.1485741   1.8556014
+## task_03 task_03  0.5213243   -1.9455120 0.7764883  -2.2436599
+## task_04 task_04  1.2730392    1.4251000 1.2202071   2.9097277
+## task_05 task_05  0.8907676   -0.5080772 1.0439175   0.5973591
+## task_06 task_06  0.1379772   -2.0288954 0.5391578  -2.3667045
+## task_07 task_07  0.6110629   -1.8512903 0.8437433  -1.8383988
+## task_08 task_08  0.2378325   -1.7907958 0.6393029  -1.9529903
+## task_09 task_09  0.8683358   -1.0803307 0.8585916  -2.5264478
+## task_10 task_10  0.7954148   -2.2413359 0.8964146  -2.1916767</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="Dich-Rasch-model.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jmle.item.fit)</span></code></pre></div>
+<pre><code>##      item             outfitItem      outfitItem_t       infitItem     
+##  Length:10          Min.   :0.1380   Min.   :-2.2413   Min.   :0.5392  
+##  Class :character   1st Qu.:0.4895   1st Qu.:-1.9220   1st Qu.:0.7655  
+##  Mode  :character   Median :0.7032   Median :-1.5900   Median :0.8512  
+##                     Mean   :0.6911   Mean   :-1.0884   Mean   :0.8728  
+##                     3rd Qu.:0.8852   3rd Qu.:-0.6511   3rd Qu.:1.0070  
+##                     Max.   :1.2730   Max.   : 1.4251   Max.   :1.2202  
+##   infitItem_t     
+##  Min.   :-2.5264  
+##  1st Qu.:-2.2307  
+##  Median :-1.8957  
+##  Mean   :-0.9380  
+##  3rd Qu.: 0.0424  
+##  Max.   : 2.9097</code></pre>
+<p>Next, we will save the person fit statistics in a data frame called <code>jmle.person.fit</code>. We can examine the person fit statistics in more detail by viewing it in the preview window and calculating summary statistics.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="Dich-Rasch-model.html#cb96-1" aria-hidden="true" tabindex="-1"></a>jmle.person.fit <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(jmle.fit<span class="sc">$</span>fit.person)</span>
+<span id="cb96-2"><a href="Dich-Rasch-model.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jmle.person.fit)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t     infitPerson     infitPerson_t     
+##  Min.   :0.02708   Min.   :-0.9354   Min.   :0.1067   Min.   :-1.51822  
+##  1st Qu.:0.17379   1st Qu.:-0.5101   1st Qu.:0.4296   1st Qu.:-0.71666  
+##  Median :0.49116   Median : 0.2006   Median :0.6515   Median :-0.31480  
+##  Mean   :0.69108   Mean   : 0.2507   Mean   :0.8560   Mean   :-0.05799  
+##  3rd Qu.:0.89769   3rd Qu.: 0.7786   3rd Qu.:1.1756   3rd Qu.: 0.56986  
+##  Max.   :4.95982   Max.   : 3.0980   Max.   :2.3619   Max.   : 2.54349</code></pre>
+</div>
+<div id="example-results-section" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Example Results Section</h2>
+<p>Table 1 presents a summary of the results from the analysis of the transitive reasoning data <span class="citation">(<a href="#ref-Intro_nonparametric" role="doc-biblioref">Sijtsma and Molenaar 2002</a>)</span> (<a href="https://methods.sagepub.com/book/introduction-to-nonparametric-item-response-theory" class="uri">https://methods.sagepub.com/book/introduction-to-nonparametric-item-response-theory</a>) [Dr.Wind: Is this need the real data link?] using the dichotomous Rasch model <span class="citation">(<a href="#ref-Rasch_Ori" role="doc-biblioref"><strong>Rasch_Ori?</strong></a>)</span> (<a href="https://eric.ed.gov/?id=ED419814" class="uri">https://eric.ed.gov/?id=ED419814</a>)). Specifically, the calibration of students (<em>N</em> = 425) and tasks (<em>N</em> = 10) are summarized using average logit-scale calibrations, standard errors, and model-data fit statistics. Examination of the results indicates that, on average, the students were located higher on the logit scale (<em>M</em> = 1.71,<em>SD</em> = 1.09), compared to tasks, whose locations were centered at zero logits (<em>M</em> = 0.00, <em>SD</em> = 1.58). This finding suggests that the items were relatively easy for the sample of students who participated in this transitive reasoning test. However, average values of the Standard Error (<em>SE</em>) were slightly larger for students (<em>M</em> = 0.95) compared to Tasks (<em>M</em> = 0.17), indicating that there may be some issues related to targeting for some of the students who participated in the assessment. Average values of model-data fit statistics indicate overall adequate fit to the model, with average Infit and Outfit mean square statistics around 1.00, and average standardized Infit and Outfit statistics near the expected value of 0.00 when data fit the model. This finding of overall adequate fit to the model supports the interpretation of item and person calibrations on the logit scale as indicators of their locations on the latent variable measured by the test.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="Dich-Rasch-model.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Table 1:</span></span>
+<span id="cb98-2"><a href="Dich-Rasch-model.html#cb98-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb98-3"><a href="Dich-Rasch-model.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  Table1, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb98-4"><a href="Dich-Rasch-model.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;Model Summary Table&#39;</span></span>
+<span id="cb98-5"><a href="Dich-Rasch-model.html#cb98-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-51">Table 2.1: </span>Model Summary Table</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Statistic</th>
+<th align="right">Items</th>
+<th align="right">Persons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">X</td>
+<td align="left">Logit Scale Location Mean</td>
+<td align="right">0.00</td>
+<td align="right">1.71</td>
+</tr>
+<tr class="even">
+<td align="left">X.1</td>
+<td align="left">Logit Scale Location SD</td>
+<td align="right">1.58</td>
+<td align="right">1.09</td>
+</tr>
+<tr class="odd">
+<td align="left">X.2</td>
+<td align="left">Standard Error Mean</td>
+<td align="right">0.17</td>
+<td align="right">0.95</td>
+</tr>
+<tr class="even">
+<td align="left">X.3</td>
+<td align="left">Standard Error SD</td>
+<td align="right">0.06</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="odd">
+<td align="left">X.4</td>
+<td align="left">Outfit MSE Mean</td>
+<td align="right">0.77</td>
+<td align="right">0.77</td>
+</tr>
+<tr class="even">
+<td align="left">X.5</td>
+<td align="left">Outfit MSE SD</td>
+<td align="right">0.35</td>
+<td align="right">0.80</td>
+</tr>
+<tr class="odd">
+<td align="left">X.6</td>
+<td align="left">Infit MSE Mean</td>
+<td align="right">0.86</td>
+<td align="right">0.91</td>
+</tr>
+<tr class="even">
+<td align="left">X.7</td>
+<td align="left">Infit MSE SD</td>
+<td align="right">0.18</td>
+<td align="right">0.47</td>
+</tr>
+<tr class="odd">
+<td align="left">X.8</td>
+<td align="left">Std. Outfit Mean</td>
+<td align="right">-1.03</td>
+<td align="right">0.08</td>
+</tr>
+<tr class="even">
+<td align="left">X.9</td>
+<td align="left">Std. Outfit SD</td>
+<td align="right">1.83</td>
+<td align="right">0.64</td>
+</tr>
+<tr class="odd">
+<td align="left">X.10</td>
+<td align="left">Std. Infit Mean</td>
+<td align="right">0.86</td>
+<td align="right">-0.12</td>
+</tr>
+<tr class="even">
+<td align="left">X.11</td>
+<td align="left">Std. Infit SD</td>
+<td align="right">1.67</td>
+<td align="right">0.91</td>
+</tr>
+<tr class="odd">
+<td align="left">item.separation.reliability</td>
+<td align="left">Reliability of Separation</td>
+<td align="right">1.00</td>
+<td align="right">0.21</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2 includes detailed results for the 10 tasks included in the Transitive Reasoning test. For each item, the proportion of correct responses is presented, followed by the logit-scale location (<em>δ</em>), SE, and model-data fit statistics. Examination of these results indicates that Task 9 was the most difficult (<em>Proportion Correct</em> = 0.30; <em>δ</em> = 2.92 ; <em>SE</em> = 0.13), followed by Task 10 (Proportion Correct = 0.52; <em>δ</em> = 1.84; <em>SE</em> = 0.12). The easiest item was Task 6 (<em>Proportion Correct</em> = 0.97; <em>δ</em> = -2.18; <em>SE</em> = 0.29).</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="Dich-Rasch-model.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Table 2:</span></span>
+<span id="cb99-2"><a href="Dich-Rasch-model.html#cb99-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb99-3"><a href="Dich-Rasch-model.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  Table2, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb99-4"><a href="Dich-Rasch-model.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;Item Calibration&#39;</span></span>
+<span id="cb99-5"><a href="Dich-Rasch-model.html#cb99-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-52">Table 2.2: </span>Item Calibration</caption>
+<colgroup>
+<col width="7%" />
+<col width="7%" />
+<col width="18%" />
+<col width="13%" />
+<col width="7%" />
+<col width="10%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Task ID</th>
+<th align="right">Proportion Correct</th>
+<th align="right">Item Location</th>
+<th align="right">Item SE</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">task_09</td>
+<td align="left">task_09</td>
+<td align="right">0.30</td>
+<td align="right">2.92</td>
+<td align="right">0.13</td>
+<td align="right">1.05</td>
+<td align="right">0.46</td>
+<td align="right">0.90</td>
+<td align="right">-1.73</td>
+</tr>
+<tr class="even">
+<td align="left">task_10</td>
+<td align="left">task_10</td>
+<td align="right">0.52</td>
+<td align="right">1.84</td>
+<td align="right">0.12</td>
+<td align="right">0.87</td>
+<td align="right">-1.82</td>
+<td align="right">0.90</td>
+<td align="right">-2.41</td>
+</tr>
+<tr class="odd">
+<td align="left">task_04</td>
+<td align="left">task_04</td>
+<td align="right">0.78</td>
+<td align="right">0.44</td>
+<td align="right">0.13</td>
+<td align="right">1.28</td>
+<td align="right">2.44</td>
+<td align="right">1.16</td>
+<td align="right">2.27</td>
+</tr>
+<tr class="even">
+<td align="left">task_05</td>
+<td align="left">task_05</td>
+<td align="right">0.80</td>
+<td align="right">0.31</td>
+<td align="right">0.13</td>
+<td align="right">0.93</td>
+<td align="right">-0.62</td>
+<td align="right">0.99</td>
+<td align="right">-0.11</td>
+</tr>
+<tr class="odd">
+<td align="left">task_02</td>
+<td align="left">task_02</td>
+<td align="right">0.81</td>
+<td align="right">0.26</td>
+<td align="right">0.13</td>
+<td align="right">1.13</td>
+<td align="right">1.07</td>
+<td align="right">1.09</td>
+<td align="right">1.19</td>
+</tr>
+<tr class="even">
+<td align="left">task_07</td>
+<td align="left">task_07</td>
+<td align="right">0.84</td>
+<td align="right">-0.02</td>
+<td align="right">0.14</td>
+<td align="right">0.65</td>
+<td align="right">-2.77</td>
+<td align="right">0.80</td>
+<td align="right">-2.47</td>
+</tr>
+<tr class="odd">
+<td align="left">task_03</td>
+<td align="left">task_03</td>
+<td align="right">0.88</td>
+<td align="right">-0.42</td>
+<td align="right">0.16</td>
+<td align="right">0.58</td>
+<td align="right">-2.74</td>
+<td align="right">0.75</td>
+<td align="right">-2.69</td>
+</tr>
+<tr class="even">
+<td align="left">task_01</td>
+<td align="left">task_01</td>
+<td align="right">0.94</td>
+<td align="right">-1.24</td>
+<td align="right">0.20</td>
+<td align="right">0.66</td>
+<td align="right">-1.33</td>
+<td align="right">0.76</td>
+<td align="right">-1.62</td>
+</tr>
+<tr class="odd">
+<td align="left">task_08</td>
+<td align="left">task_08</td>
+<td align="right">0.97</td>
+<td align="right">-1.91</td>
+<td align="right">0.26</td>
+<td align="right">0.34</td>
+<td align="right">-2.21</td>
+<td align="right">0.69</td>
+<td align="right">-1.57</td>
+</tr>
+<tr class="even">
+<td align="left">task_06</td>
+<td align="left">task_06</td>
+<td align="right">0.97</td>
+<td align="right">-2.18</td>
+<td align="right">0.29</td>
+<td align="right">0.18</td>
+<td align="right">-2.79</td>
+<td align="right">0.61</td>
+<td align="right">-1.78</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3 includes detailed results for first 10 students who participated in the Transitive Reasoning Test. For each student, the proportion of correct responses is presented, followed by their logit-scale location estimate (<em>θ</em>), <em>SE</em>, and model-data fit statistics.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="Dich-Rasch-model.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first 10 rows of Table 3 in a neat way:</span></span>
+<span id="cb100-2"><a href="Dich-Rasch-model.html#cb100-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb100-3"><a href="Dich-Rasch-model.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(Table3,<span class="dv">10</span>), <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb100-4"><a href="Dich-Rasch-model.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;Person Calibration&#39;</span></span>
+<span id="cb100-5"><a href="Dich-Rasch-model.html#cb100-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-53">Table 2.3: </span>Person Calibration</caption>
+<colgroup>
+<col width="2%" />
+<col width="9%" />
+<col width="18%" />
+<col width="15%" />
+<col width="9%" />
+<col width="10%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Person ID</th>
+<th align="right">Proportion Correct</th>
+<th align="right">Person Location</th>
+<th align="right">Person SE</th>
+<th align="right">Outfit MSE</th>
+<th align="right">Std. Outfit</th>
+<th align="right">Infit MSE</th>
+<th align="right">Std. Infit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">0.8</td>
+<td align="right">1.93</td>
+<td align="right">0.94</td>
+<td align="right">0.24</td>
+<td align="right">-0.52</td>
+<td align="right">0.41</td>
+<td align="right">-1.19</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">10</td>
+<td align="right">0.6</td>
+<td align="right">1.16</td>
+<td align="right">0.83</td>
+<td align="right">1.10</td>
+<td align="right">0.36</td>
+<td align="right">1.13</td>
+<td align="right">0.47</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">100</td>
+<td align="right">0.4</td>
+<td align="right">1.16</td>
+<td align="right">0.83</td>
+<td align="right">5.62</td>
+<td align="right">3.50</td>
+<td align="right">2.10</td>
+<td align="right">2.55</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">101</td>
+<td align="right">0.7</td>
+<td align="right">3.03</td>
+<td align="right">1.19</td>
+<td align="right">0.56</td>
+<td align="right">-0.37</td>
+<td align="right">0.71</td>
+<td align="right">-0.57</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">102</td>
+<td align="right">0.9</td>
+<td align="right">0.52</td>
+<td align="right">0.77</td>
+<td align="right">0.17</td>
+<td align="right">0.12</td>
+<td align="right">0.49</td>
+<td align="right">-0.61</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">103</td>
+<td align="right">0.7</td>
+<td align="right">3.03</td>
+<td align="right">1.19</td>
+<td align="right">0.73</td>
+<td align="right">-0.09</td>
+<td align="right">0.80</td>
+<td align="right">-0.34</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">104</td>
+<td align="right">0.9</td>
+<td align="right">1.93</td>
+<td align="right">0.94</td>
+<td align="right">0.17</td>
+<td align="right">0.12</td>
+<td align="right">0.49</td>
+<td align="right">-0.61</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">105</td>
+<td align="right">0.7</td>
+<td align="right">1.16</td>
+<td align="right">0.83</td>
+<td align="right">0.43</td>
+<td align="right">-0.64</td>
+<td align="right">0.59</td>
+<td align="right">-0.96</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">106</td>
+<td align="right">0.9</td>
+<td align="right">1.93</td>
+<td align="right">0.94</td>
+<td align="right">0.17</td>
+<td align="right">0.12</td>
+<td align="right">0.49</td>
+<td align="right">-0.61</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">107</td>
+<td align="right">0.9</td>
+<td align="right">1.16</td>
+<td align="right">0.83</td>
+<td align="right">1.47</td>
+<td align="right">0.92</td>
+<td align="right">1.64</td>
+<td align="right">0.97</td>
+</tr>
+</tbody>
+</table>
+<p>Figure 1.1 illustrates the calibrations of the Participants and Items on the logit scale that represents the latent variable. The calibrations shown in this figure correspond to the results presented in Table 2 and Table 3 for tasks and students, respectively. Starting at the bottom of the figure, the horizontal axis (labeled <em>Latent Dimension</em>) is the logit scale that represents the latent variable. In this analysis, lower numbers indicate less transitive reasoning ability, and higher numbers indicate more transitive reasoning ability. The central panel of the figure shows item difficulty locations on the logit scale for the 10 transitive reasoning tasks that were included in the analysis; the y-axis for this panel shows the item labels. By default in eRm, the items are ordered according to their original order in the response matrix. The upper panel of the figure shows a histogram of person (in this case, student) location estimates on the logit scale. Small vertical lines on the x-axis of this histogram show the points on the logit scale at which information (variance) is maximized for the sample of persons and items in the analysis.</p>
+<p>On average, the persons (students) are located higher on the logit scale compared to the average item (task) locations. In addition, there appears to be a relatively wide spread of person and item locations on the logit scale, such that the transitive reasoning test appears to be a useful tool for identifying differences in person locations and item locations on the latent variable.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="Dich-Rasch-model.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure 1.1</span></span>
+<span id="cb101-2"><a href="Dich-Rasch-model.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPImap</span>(dichot.transreas, <span class="at">main =</span> <span class="st">&quot;Liking for Science Rating Scale Model Wright Map&quot;</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+</div>
+<div id="exercise" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Exercise</h2>
+<p>Try to estimate item and person locations with the dichotomous Rasch model for the Exercise 1 data using any of the estimation procedures used in this chapter. Then, try writing a results section similar to the example in this chapter based on your findings.</p>
+</div>
+<div id="supplementary-learning-materials" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Supplementary Learning Materials</h2>
+<p><a href="https://www.rasch.org/moulton.xls">Rasch Estimation Demonstration Spreadsheet</a></p>
+<p><a href="https://link.springer.com/content/pdf/10.3758/BF03192809.pdf">Li, Y. Using the open-source statistical language R to analyze the dichotomous Rasch model. Behavior Research Methods 38, 532–541 (2006). https://doi.org/10.3758/BF03192809</a></p>
+<p><a href="https://eric.ed.gov/?id=ED419814">Rasch, G. (1960/1980). Probabilistic models for some intelligence and attainment tests.(Copenhagen, Danish Institute for Educational Research), expanded edition (1980) with foreword and afterword by B.D. Wright. Chicago: The University of Chicago Press.</a></p>
+<p><a href="https://pdfs.semanticscholar.org/8083/5035228bc338840ed6c67e879b4bcef11e07.pdf?_ga=2.216101590.1797749273.1596845271-1703835138.1596845271">Wright, B. D., &amp; Masters, G. N. (1982). Rating Scale Analysis: Rasch Measurement. Chicago, IL: MESA Press.</a></p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Person_Sep" class="csl-entry">
+Andrich, David. 1982. <span>“An Index of Person Separation in Latent Trait Theory, the Traditional KR-20 Index, and the Guttman Scale Response Pattern.”</span> <em>Education Research and Perspectives</em> 9(1). https://doi.org/<a href="https://search.informit.org/doi/10.3316/aeipt.13636">https://search.informit.org/doi/10.3316/aeipt.13636</a>.
+</div>
+<div id="ref-Multi_IRT_Wes" class="csl-entry">
+Bonifay, Wes. 2020. <em>Multidimensional Item Response Theory</em>. 1st ed. SAGE Publications.
+</div>
+<div id="ref-Multidi_RM" class="csl-entry">
+Briggs, Derek, and Mark Wilson. 2003. <span>“An Introduction to Multidimensional Measurement Using Rasch Models.”</span> <em>Journal of Applied Measurement</em> 4(1). <a href="https://doi.org/87-100">https://doi.org/87-100</a>.
+</div>
+<div id="ref-Cronbach" class="csl-entry">
+Cronbach, Lee Joseph. 1951. <span>“Coefficient Alpha and the Internal Structure of Tests.”</span> <em>Psychometrika</em> 16.
+</div>
+<div id="ref-WrightMap" class="csl-entry">
+Irribarra, David Torres, and Rebecca Freund. 2014. <em>Wright Map: IRT Item-Person Map with ConQuest Integration</em>. <a href="http://github.com/david-ti/wrightmap">http://github.com/david-ti/wrightmap</a>.
+</div>
+<div id="ref-Winsteps" class="csl-entry">
+Linacre, John Michael. 2020a. <em>A User’s Guide to WINSTEPS MINISTEP Rasch-Model Computer Programs</em> (version 4.7.0). <a href="https://www.winsteps.com/winman/copyright.htm">https://www.winsteps.com/winman/copyright.htm</a>.
+</div>
+<div id="ref-Facets" class="csl-entry">
+———. 2020b. <em>Facets Computer Program for Many-Facet Rasch Measurement</em> (version 3.83.4). Beaverton, Oregon. <a href="https://Winsteps.com">Winsteps.com</a>.
+</div>
+<div id="ref-eRm" class="csl-entry">
+Mair, Patrick, Reinhold Hatzinger, and Marco Johannes Maier. 2021. <em><span class="nocase">eRm: Extended Rasch Modeling</span></em>. <a href="https://cran.r-project.org/package=eRm">https://cran.r-project.org/package=eRm</a>.
+</div>
+<div id="ref-Rasch_ori" class="csl-entry">
+Rasch, Georg. 1960. <em>Probabilistic Models for Some Intelligence and Achievement Tests</em>. Expanded Edition, 1980. Vienna, Austria: University of Chicago Press.
+</div>
+<div id="ref-Multi_IRT" class="csl-entry">
+Reckase, Mark D. 2009. <em>Multidimensional Item Response Theory</em>. New York, NY: Springer. https://doi.org/<a href="https://doi.org/10.1007/978-0-387-89976-3">https://doi.org/10.1007/978-0-387-89976-3</a>.
+</div>
+<div id="ref-TAM" class="csl-entry">
+Robitzsch, Alexander, Thomas Kiefer, and Margaret Wu. 2021. <em>TAM: Test Analysis Modules</em>. <a href="https://CRAN.R-project.org/package=TAM">https://CRAN.R-project.org/package=TAM</a>.
+</div>
+<div id="ref-Intro_nonparametric" class="csl-entry">
+Sijtsma, Klaas, and Ivo W Molenaar. 2002. <em>Introduction to Nonparametric Item Response Modeling</em>. Thousand Oaks. https://doi.org/<a href="https://dx.doi.org/10.4135/9781412984676">https://dx.doi.org/10.4135/9781412984676</a>.
+</div>
+<div id="ref-Overview_RM" class="csl-entry">
+Wright, Benjamin D., and Magdalena Mo Ching Mok. 2004. <span>“An Overview of the Family of Rasch Measurement Models.”</span> In <em>Introduction to Rasch Measurement</em>, edited by Everett V. Smith and Richard M. Smith, 1–24. JAM Press.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="MD-fit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/02-DichotomousRaschModel.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

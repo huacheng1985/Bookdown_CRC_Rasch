@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 PCM Application with Marginal Maximum Likelihood Estimation in TAM | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</title>
+  <meta name="description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 PCM Application with Marginal Maximum Likelihood Estimation in TAM | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 PCM Application with Marginal Maximum Likelihood Estimation in TAM | Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners" />
+  
+  <meta name="twitter:description" content="The purpose of the proposed book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages.The book will include some background information about Rasch models, but the primary objective will be to demonstrate how to apply the models to data using R packages and interpret the results. The academic level for this book is graduate students or professionals who have already been exposed to Rasch measurement theory and who have a basic working knowledge of the R software." />
+  
+
+<meta name="author" content="Stefanie A. Wind &amp; Cheng Hua" />
+
+
+<meta name="date" content="2021-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="plot-a-wright-map-to-visualize-item-and-person-locations.html"/>
+<link rel="next" href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Rasch R Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>1.1</b> Overview of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#online-resources"><i class="fa fa-check"></i><b>1.2</b> Online Resources</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>1.3</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html"><i class="fa fa-check"></i><b>2</b> Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>2.1</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>2.2</b> Dichotomous Rasch Model Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>2.2.2</b> Run the Dichotomous Rasch Model</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary"><i class="fa fa-check"></i><b>2.2.3</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map"><i class="fa fa-check"></i><b>2.2.4</b> Wright Map</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters"><i class="fa fa-check"></i><b>2.2.5</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-response-functions"><i class="fa fa-check"></i><b>2.2.6</b> Item Response Functions</a></li>
+<li class="chapter" data-level="2.2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-and-item-fit"><i class="fa fa-check"></i><b>2.2.7</b> Person Parameters and Item Fit</a></li>
+<li class="chapter" data-level="2.2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit"><i class="fa fa-check"></i><b>2.2.8</b> Person Fit</a></li>
+<li class="chapter" data-level="2.2.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>2.2.9</b> Summarize the Results in Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>2.3</b> Dichotomous Rasch Model Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>2.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-data-for-analysis"><i class="fa fa-check"></i><b>2.3.2</b> Prepare Data for Analysis</a></li>
+<li class="chapter" data-level="2.3.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#run-the-dichotomous-rasch-model-1"><i class="fa fa-check"></i><b>2.3.3</b> Run the Dichotomous Rasch model</a></li>
+<li class="chapter" data-level="2.3.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-1"><i class="fa fa-check"></i><b>2.3.4</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.3.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-1"><i class="fa fa-check"></i><b>2.3.5</b> Wright Map</a></li>
+<li class="chapter" data-level="2.3.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-1"><i class="fa fa-check"></i><b>2.3.6</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.3.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit"><i class="fa fa-check"></i><b>2.3.7</b> Item Fit</a></li>
+<li class="chapter" data-level="2.3.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters"><i class="fa fa-check"></i><b>2.3.8</b> Person Parameters</a></li>
+<li class="chapter" data-level="2.3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit-1"><i class="fa fa-check"></i><b>2.3.9</b> Person Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#dichotomous-rasch-model-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>2.4</b> Dichotomous Rasch Model Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#estimate-the-dichotomous-rasch-model-using-jmle"><i class="fa fa-check"></i><b>2.4.1</b> Estimate the Dichotomous Rasch Model using JMLE</a></li>
+<li class="chapter" data-level="2.4.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#overall-model-summary-2"><i class="fa fa-check"></i><b>2.4.2</b> Overall Model Summary</a></li>
+<li class="chapter" data-level="2.4.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-2"><i class="fa fa-check"></i><b>2.4.3</b> Wright Map</a></li>
+<li class="chapter" data-level="2.4.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-2"><i class="fa fa-check"></i><b>2.4.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="2.4.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-1"><i class="fa fa-check"></i><b>2.4.5</b> Person Parameters</a></li>
+<li class="chapter" data-level="2.4.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-and-person-fit"><i class="fa fa-check"></i><b>2.4.6</b> Item and Person Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>2.5</b> Example Results Section based on the eRm CMLE results:</a></li>
+<li class="chapter" data-level="2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exericise"><i class="fa fa-check"></i><b>2.6</b> Exericise</a></li>
+<li class="chapter" data-level="2.7" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>2.7</b> Bibliography</a></li>
+<li class="chapter" data-level="2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#supplementary-learning-materials"><i class="fa fa-check"></i><b>2.8</b> Supplementary Learning Materials</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="MD-fit.html"><a href="MD-fit.html"><i class="fa fa-check"></i><b>3</b> Evaluating the Quality of Measures</a><ul>
+<li class="chapter" data-level="3.1" data-path="MD-fit.html"><a href="MD-fit.html#evaluating-measurement-quality-from-the-perspective-of-rasch-measurement-theory"><i class="fa fa-check"></i><b>3.1</b> Evaluating Measurement Quality from the Perspective of Rasch Measurement Theory</a></li>
+<li class="chapter" data-level="3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-data-transitive-reasoning-test"><i class="fa fa-check"></i><b>3.2</b> Example Data: Transitive Reasoning Test</a></li>
+<li class="chapter" data-level="3.3" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>3.3</b> Rasch Model Fit Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>3.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="3.3.2" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-analysis"><i class="fa fa-check"></i><b>3.3.2</b> Rasch Model Analysis</a></li>
+<li class="chapter" data-level="3.3.3" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality"><i class="fa fa-check"></i><b>3.3.3</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="3.3.4" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations"><i class="fa fa-check"></i><b>3.3.4</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.3.5" data-path="MD-fit.html"><a href="MD-fit.html#summaries-of-residuals-infit-outfit-statistics"><i class="fa fa-check"></i><b>3.3.5</b> Summaries of Residuals: Infit &amp; Outfit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="MD-fit.html"><a href="MD-fit.html#graphical-displays-for-evaluating-model-data-fit"><i class="fa fa-check"></i><b>3.4</b> Graphical Displays for Evaluating Model-Data Fit</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="MD-fit.html"><a href="MD-fit.html#plots-of-standardized-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Plots of Standardized Residuals</a></li>
+<li class="chapter" data-level="3.4.2" data-path="MD-fit.html"><a href="MD-fit.html#empirical-item-response-functions"><i class="fa fa-check"></i><b>3.4.2</b> Empirical Item Response Functions</a></li>
+<li class="chapter" data-level="3.4.3" data-path="MD-fit.html"><a href="MD-fit.html#reliability"><i class="fa fa-check"></i><b>3.4.3</b> Reliability</a></li>
+<li class="chapter" data-level="3.4.4" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-person-separation"><i class="fa fa-check"></i><b>3.4.4</b> Reliability of Person Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>3.5</b> Rasch Model Fit Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>3.5.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="MD-fit.html"><a href="MD-fit.html#run-the-rasch-model"><i class="fa fa-check"></i><b>3.6</b> Run the Rasch Model</a></li>
+<li class="chapter" data-level="3.7" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality-1"><i class="fa fa-check"></i><b>3.7</b> Evaluate Unidimensionality</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations-1"><i class="fa fa-check"></i><b>3.7.1</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.7.2" data-path="MD-fit.html"><a href="MD-fit.html#numeric-fit-statistics"><i class="fa fa-check"></i><b>3.7.2</b> Numeric Fit Statistics</a></li>
+<li class="chapter" data-level="3.7.3" data-path="MD-fit.html"><a href="MD-fit.html#graphical-fit-analysis"><i class="fa fa-check"></i><b>3.7.3</b> Graphical Fit Analysis</a></li>
+<li class="chapter" data-level="3.7.4" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-separation"><i class="fa fa-check"></i><b>3.7.4</b> Reliability of Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="MD-fit.html"><a href="MD-fit.html#rasch-model-fit-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>3.8</b> Rasch Model Fit Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="MD-fit.html"><a href="MD-fit.html#run-the-rasch-model-1"><i class="fa fa-check"></i><b>3.8.1</b> Run the Rasch Model</a></li>
+<li class="chapter" data-level="3.8.2" data-path="MD-fit.html"><a href="MD-fit.html#evaluate-unidimensionality-2"><i class="fa fa-check"></i><b>3.8.2</b> Evaluate Unidimensionality</a></li>
+<li class="chapter" data-level="3.8.3" data-path="MD-fit.html"><a href="MD-fit.html#principal-components-analysis-of-standardized-residual-correlations-2"><i class="fa fa-check"></i><b>3.8.3</b> Principal Components Analysis of Standardized Residual Correlations</a></li>
+<li class="chapter" data-level="3.8.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-and-person-fit"><i class="fa fa-check"></i><b>3.8.4</b> Item and Person Fit</a></li>
+<li class="chapter" data-level="3.8.5" data-path="MD-fit.html"><a href="MD-fit.html#reliability-of-separation-1"><i class="fa fa-check"></i><b>3.8.5</b> Reliability of Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#exericise"><i class="fa fa-check"></i><b>3.9</b> Exericise</a></li>
+<li class="chapter" data-level="3.10" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>3.10</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="RS-model.html"><a href="RS-model.html"><i class="fa fa-check"></i><b>4</b> Rating Scale Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>4.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="4.2" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-conditional-maximum-likelihood-estimation-in-erm"><i class="fa fa-check"></i><b>4.2</b> Rating Scale Model Analysis with Conditional Maximum Likelihood Estimation in eRm</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>4.2.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="4.2.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>4.2.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map"><i class="fa fa-check"></i><b>4.2.3</b> Wright Map</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters"><i class="fa fa-check"></i><b>4.2.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.2.5" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>4.2.5</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.2.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters-and-item-fit"><i class="fa fa-check"></i><b>4.2.6</b> Person Parameters and Item Fit</a></li>
+<li class="chapter" data-level="4.2.7" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit"><i class="fa fa-check"></i><b>4.2.7</b> Person Fit</a></li>
+<li class="chapter" data-level="4.2.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>4.2.8</b> Summarize the Results in Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-marginal-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>4.3</b> Rating Scale Model Analysis with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages-1"><i class="fa fa-check"></i><b>4.3.1</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-data-for-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Prepare Data for Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model-1"><i class="fa fa-check"></i><b>4.3.3</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-1"><i class="fa fa-check"></i><b>4.3.4</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.3.5" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>4.3.5</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-fit"><i class="fa fa-check"></i><b>4.3.6</b> Item Fit</a></li>
+<li class="chapter" data-level="4.3.7" data-path="RS-model.html"><a href="RS-model.html#person-paramters"><i class="fa fa-check"></i><b>4.3.7</b> Person Paramters</a></li>
+<li class="chapter" data-level="4.3.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-fit-1"><i class="fa fa-check"></i><b>4.3.8</b> Person FIt</a></li>
+<li class="chapter" data-level="4.3.9" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-1"><i class="fa fa-check"></i><b>4.3.9</b> Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="RS-model.html"><a href="RS-model.html#rating-scale-model-analysis-with-joint-maximum-likelihood-estimation-in-tam"><i class="fa fa-check"></i><b>4.4</b> Rating Scale Model Analysis with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="RS-model.html"><a href="RS-model.html#prepare-for-the-analyses"><i class="fa fa-check"></i><b>4.4.1</b> Prepare for the Analyses</a></li>
+<li class="chapter" data-level="4.4.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model-2"><i class="fa fa-check"></i><b>4.4.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#item-parameters-2"><i class="fa fa-check"></i><b>4.4.3</b> Item Parameters</a></li>
+<li class="chapter" data-level="4.4.4" data-path="RS-model.html"><a href="RS-model.html#item-response-functions-rating-scale-category-probability-plots-2"><i class="fa fa-check"></i><b>4.4.4</b> Item Response Functions (Rating Scale Category Probability Plots)</a></li>
+<li class="chapter" data-level="4.4.5" data-path="RS-model.html"><a href="RS-model.html#item-fit-1"><i class="fa fa-check"></i><b>4.4.5</b> Item Fit</a></li>
+<li class="chapter" data-level="4.4.6" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#person-parameters"><i class="fa fa-check"></i><b>4.4.6</b> Person Parameters</a></li>
+<li class="chapter" data-level="4.4.7" data-path="RS-model.html"><a href="RS-model.html#person-fit-2"><i class="fa fa-check"></i><b>4.4.7</b> Person Fit</a></li>
+<li class="chapter" data-level="4.4.8" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#wright-map-2"><i class="fa fa-check"></i><b>4.4.8</b> Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>4.5</b> Example Results Section based on the eRm CMLE Results:</a></li>
+<li class="chapter" data-level="4.6" data-path="RS-model.html"><a href="RS-model.html#exercise"><i class="fa fa-check"></i><b>4.6</b> Exercise</a></li>
+<li class="chapter" data-level="4.7" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>4.7</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="PC-model.html"><a href="PC-model.html"><i class="fa fa-check"></i><b>5</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="PC-model.html"><a href="PC-model.html#partial-credit-model"><i class="fa fa-check"></i><b>5.1</b> Partial Credit Model</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="PC-model.html"><a href="PC-model.html#model-requirements"><i class="fa fa-check"></i><b>5.1.1</b> Model Requirements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html"><i class="fa fa-check"></i><b>6</b> Running the Partial Credit Model in R</a><ul>
+<li class="chapter" data-level="6.1" data-path="RS-model.html"><a href="RS-model.html#example-data-liking-for-science"><i class="fa fa-check"></i><b>6.1</b> Example Data: Liking for Science</a></li>
+<li class="chapter" data-level="6.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#prepare-for-the-analyses-install-and-load-packages"><i class="fa fa-check"></i><b>6.2</b> Prepare for the Analyses: Install and Load Packages</a></li>
+<li class="chapter" data-level="6.3" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#getting-started"><i class="fa fa-check"></i><b>6.3</b> Getting Started</a></li>
+<li class="chapter" data-level="6.4" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>6.4</b> Run the Partial Credit Model</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html"><i class="fa fa-check"></i><b>7</b> Plot a Wright Map to visualize item and person locations:</a><ul>
+<li class="chapter" data-level="7.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-parameters"><i class="fa fa-check"></i><b>7.1</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#plot-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>7.1.1</b> Plot item response functions (rating scale category probability plots)</a></li>
+<li class="chapter" data-level="7.1.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-parameters"><i class="fa fa-check"></i><b>7.1.2</b> Examine person parameters</a></li>
+<li class="chapter" data-level="7.1.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-item-fit-statistics"><i class="fa fa-check"></i><b>7.1.3</b> Examine item fit statistics</a></li>
+<li class="chapter" data-level="7.1.4" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#examine-person-fit-statistics"><i class="fa fa-check"></i><b>7.1.4</b> Examine person fit statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#summarize-the-results-in-tables"><i class="fa fa-check"></i><b>7.2</b> Summarize the results in tables</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#model-summary-table"><i class="fa fa-check"></i><b>7.2.1</b> Model summary table:</a></li>
+<li class="chapter" data-level="7.2.2" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#item-calibration-table"><i class="fa fa-check"></i><b>7.2.2</b> Item calibration table:</a></li>
+<li class="chapter" data-level="7.2.3" data-path="plot-a-wright-map-to-visualize-item-and-person-locations.html"><a href="plot-a-wright-map-to-visualize-item-and-person-locations.html#person-calibration-table"><i class="fa fa-check"></i><b>7.2.3</b> Person calibration table:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>8</b> PCM Application with Marginal Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="8.1" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#getting-started-1"><i class="fa fa-check"></i><b>8.1</b> Getting Started</a></li>
+<li class="chapter" data-level="8.2" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>8.2</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="8.3" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#run-the-partial-credit-model-1"><i class="fa fa-check"></i><b>8.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="8.4" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-1"><i class="fa fa-check"></i><b>8.4</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots"><i class="fa fa-check"></i><b>8.4.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit"><i class="fa fa-check"></i><b>8.5</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="8.6" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-1"><i class="fa fa-check"></i><b>8.6</b> Examine person parameters</a></li>
+<li class="chapter" data-level="8.7" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit"><i class="fa fa-check"></i><b>8.7</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="8.8" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map"><i class="fa fa-check"></i><b>8.8</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><i class="fa fa-check"></i><b>9</b> PCM Application with Joint Maximum Likelihood Estimation in TAM</a><ul>
+<li class="chapter" data-level="9.1" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#getting-started-2"><i class="fa fa-check"></i><b>9.1</b> Getting Started</a></li>
+<li class="chapter" data-level="9.2" data-path="RS-model.html"><a href="RS-model.html#run-the-rating-scale-model"><i class="fa fa-check"></i><b>9.2</b> Run the Rating Scale Model</a></li>
+<li class="chapter" data-level="9.3" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-parameters-2"><i class="fa fa-check"></i><b>9.3</b> Examine item parameters</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-item-response-functions-rating-scale-category-probability-plots-1"><i class="fa fa-check"></i><b>9.3.1</b> Examine item response functions (rating scale category probability plots)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-item-fit-1"><i class="fa fa-check"></i><b>9.4</b> Evaluate item fit</a></li>
+<li class="chapter" data-level="9.5" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#examine-person-parameters-2"><i class="fa fa-check"></i><b>9.5</b> Examine person parameters</a></li>
+<li class="chapter" data-level="9.6" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#evaluate-person-fit-1"><i class="fa fa-check"></i><b>9.6</b> Evaluate person fit</a></li>
+<li class="chapter" data-level="9.7" data-path="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html#plot-the-wright-map-1"><i class="fa fa-check"></i><b>9.7</b> Plot the Wright Map:</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Dich-Rasch-model.html"><a href="Dich-Rasch-model.html#example-results-section-based-on-the-erm-cmle-results"><i class="fa fa-check"></i><b>10</b> Example results section based on the eRm CMLE results:</a><ul>
+<li class="chapter" data-level="10.1" data-path="RS-model.html"><a href="RS-model.html#exercise"><i class="fa fa-check"></i><b>10.1</b> Exercise</a></li>
+<li class="chapter" data-level="10.2" data-path="index.html"><a href="index.html#bibliography"><i class="fa fa-check"></i><b>10.2</b> Bibliography</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="MFR-model.html"><a href="MFR-model.html"><i class="fa fa-check"></i><b>11</b> Many Facet Rasch Model</a><ul>
+<li class="chapter" data-level="11.1" data-path="MFR-model.html"><a href="MFR-model.html#many-facet-rasch-model"><i class="fa fa-check"></i><b>11.1</b> Many-Facet Rasch Model</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="PC-model.html"><a href="PC-model.html#model-requirements"><i class="fa fa-check"></i><b>11.1.1</b> Model Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#getting-started"><i class="fa fa-check"></i><b>11.2</b> Getting Started</a></li>
+<li class="chapter" data-level="11.3" data-path="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#prepare-the-data-for-analysis"><i class="fa fa-check"></i><b>11.3</b> Prepare the data for analysis</a></li>
+<li class="chapter" data-level="11.4" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-components-of-the-mfr-model"><i class="fa fa-check"></i><b>11.4</b> Specify the components of the MFR model</a></li>
+<li class="chapter" data-level="11.5" data-path="MFR-model.html"><a href="MFR-model.html#specify-the-mfrm-formula"><i class="fa fa-check"></i><b>11.5</b> Specify the MFRM formula:</a></li>
+<li class="chapter" data-level="11.6" data-path="MFR-model.html"><a href="MFR-model.html#run-the-pc-mfr-model"><i class="fa fa-check"></i><b>11.6</b> Run the PC-MFR model</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="MFR-model.html"><a href="MFR-model.html#center-the-item-parameter-estimates-for-ease-of-interpretation"><i class="fa fa-check"></i><b>11.6.1</b> Center the item parameter estimates for ease of interpretation</a></li>
+<li class="chapter" data-level="11.6.2" data-path="MFR-model.html"><a href="MFR-model.html#examine-education-locations"><i class="fa fa-check"></i><b>11.6.2</b> Examine education locations:</a></li>
+<li class="chapter" data-level="11.6.3" data-path="MFR-model.html"><a href="MFR-model.html#examine-person-locations"><i class="fa fa-check"></i><b>11.6.3</b> Examine person locations:</a></li>
+<li class="chapter" data-level="11.6.4" data-path="MFR-model.html"><a href="MFR-model.html#store-person-parameters-and-their-standard-errors-in-a-dataframe-object"><i class="fa fa-check"></i><b>11.6.4</b> Store person parameters and their standard errors in a dataframe object:</a></li>
+<li class="chapter" data-level="11.6.5" data-path="MFR-model.html"><a href="MFR-model.html#subtract-the-original-uncentered-item-mean-location-from-the-person-locations"><i class="fa fa-check"></i><b>11.6.5</b> Subtract the original (uncentered) item mean location from the person locations:</a></li>
+<li class="chapter" data-level="11.6.6" data-path="MFR-model.html"><a href="MFR-model.html#student-estimates"><i class="fa fa-check"></i><b>11.6.6</b> Student Estimates</a></li>
+<li class="chapter" data-level="11.6.7" data-path="MFR-model.html"><a href="MFR-model.html#domainrater-fit"><i class="fa fa-check"></i><b>11.6.7</b> Domain/Rater Fit:</a></li>
+<li class="chapter" data-level="11.6.8" data-path="MFR-model.html"><a href="MFR-model.html#plots"><i class="fa fa-check"></i><b>11.6.8</b> Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="DIF.html"><a href="DIF.html"><i class="fa fa-check"></i><b>12</b> Basics of Differential Item Functioning</a><ul>
+<li class="chapter" data-level="12.1" data-path="DIF.html"><a href="DIF.html#purpose"><i class="fa fa-check"></i><b>12.1</b> Purpose</a></li>
+<li class="chapter" data-level="12.2" data-path="DIF.html"><a href="DIF.html#r-lab-1-dif-analysis-with-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2</b> R-lab 1: DIF Analysis with the Dichotomous Rasch Model</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="DIF.html"><a href="DIF.html#prepare-the-r-package-and-data-set"><i class="fa fa-check"></i><b>12.2.1</b> Prepare the R-package and data set</a></li>
+<li class="chapter" data-level="12.2.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data"><i class="fa fa-check"></i><b>12.2.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.2.3" data-path="DIF.html"><a href="DIF.html#run-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.3</b> Run dichotomous Rasch model</a></li>
+<li class="chapter" data-level="12.2.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-dichotomous-rasch-model"><i class="fa fa-check"></i><b>12.2.4</b> Analyze the data using the dichotomous Rasch model:</a></li>
+<li class="chapter" data-level="12.2.5" data-path="DIF.html"><a href="DIF.html#identify-subgroups"><i class="fa fa-check"></i><b>12.2.5</b> Identify subgroups</a></li>
+<li class="chapter" data-level="12.2.6" data-path="DIF.html"><a href="DIF.html#visualize-the-test-statistics-for-the-item-comparison"><i class="fa fa-check"></i><b>12.2.6</b> Visualize the test statistics for the item comparison</a></li>
+<li class="chapter" data-level="12.2.7" data-path="DIF.html"><a href="DIF.html#export-the-item-comparison-results-for-later-use-using-the-following-code."><i class="fa fa-check"></i><b>12.2.7</b> Export the item comparison results for later use using the following code.</a></li>
+<li class="chapter" data-level="12.2.8" data-path="DIF.html"><a href="DIF.html#plot-the-item-difference"><i class="fa fa-check"></i><b>12.2.8</b> Plot the item difference</a></li>
+<li class="chapter" data-level="12.2.9" data-path="DIF.html"><a href="DIF.html#dif-scatterplots"><i class="fa fa-check"></i><b>12.2.9</b> DIF Scatterplots:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands"><i class="fa fa-check"></i><b>12.3</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.4" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot"><i class="fa fa-check"></i><b>12.4</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.4.1</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="DIF.html"><a href="DIF.html#r-lab-2-dif-analysis-with-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5</b> R-lab 2: DIF Analysis with the Partial Credit Model</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="DIF.html"><a href="DIF.html#load-the-data-into-your-working-environment-and-generate-a-summary-of-responses"><i class="fa fa-check"></i><b>12.5.1</b> Load the data into your working environment and generate a summary of responses</a></li>
+<li class="chapter" data-level="12.5.2" data-path="DIF.html"><a href="DIF.html#load-summarize-the-example-data-1"><i class="fa fa-check"></i><b>12.5.2</b> Load &amp; summarize the example data:</a></li>
+<li class="chapter" data-level="12.5.3" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.3</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="12.5.4" data-path="DIF.html"><a href="DIF.html#analyze-the-data-using-the-partial-credit-model"><i class="fa fa-check"></i><b>12.5.4</b> Analyze the data using the Partial Credit model:</a></li>
+<li class="chapter" data-level="12.5.5" data-path="DIF.html"><a href="DIF.html#conduct-dif-analyses"><i class="fa fa-check"></i><b>12.5.5</b> Conduct DIF analyses</a></li>
+<li class="chapter" data-level="12.5.6" data-path="DIF.html"><a href="DIF.html#dif-analysis"><i class="fa fa-check"></i><b>12.5.6</b> DIF analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="DIF.html"><a href="DIF.html#compare-thresholds-between-groups"><i class="fa fa-check"></i><b>12.6</b> Compare thresholds between groups:</a></li>
+<li class="chapter" data-level="12.7" data-path="DIF.html"><a href="DIF.html#get-overall-item-se-values"><i class="fa fa-check"></i><b>12.7</b> Get overall item SE values:</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="DIF.html"><a href="DIF.html#make-a-scatterplot"><i class="fa fa-check"></i><b>12.7.1</b> Make a scatterplot</a></li>
+<li class="chapter" data-level="12.7.2" data-path="DIF.html"><a href="DIF.html#create-scatterplot-of-item-measures"><i class="fa fa-check"></i><b>12.7.2</b> Create scatterplot of item measures</a></li>
+<li class="chapter" data-level="12.7.3" data-path="DIF.html"><a href="DIF.html#dif-scatterplot"><i class="fa fa-check"></i><b>12.7.3</b> DIF Scatterplot:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="DIF.html"><a href="DIF.html#first-calculate-values-for-constructing-the-confidence-bands-1"><i class="fa fa-check"></i><b>12.8</b> First, calculate values for constructing the confidence bands:</a></li>
+<li class="chapter" data-level="12.9" data-path="DIF.html"><a href="DIF.html#make-the-scatterplot-1"><i class="fa fa-check"></i><b>12.9</b> make the scatterplot:</a><ul>
+<li class="chapter" data-level="12.9.1" data-path="DIF.html"><a href="DIF.html#create-bar-plot-of-item-differences"><i class="fa fa-check"></i><b>12.9.1</b> Create bar plot of item differences</a></li>
+<li class="chapter" data-level="12.9.2" data-path="DIF.html"><a href="DIF.html#bar-plot-of-item-differences-1"><i class="fa fa-check"></i><b>12.9.2</b> Bar plot of item differences:</a></li>
+</ul></li>
+<li class="chapter" data-level="12.10" data-path="DIF.html"><a href="DIF.html#example-apa-format-results-section-for-basic-dif-analysis"><i class="fa fa-check"></i><b>12.10</b> Example APA-format results section for basic DIF analysis</a></li>
+<li class="chapter" data-level="12.11" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>12.11</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="RS-Eval.html"><a href="RS-Eval.html"><i class="fa fa-check"></i><b>13</b> Rating Scale Evaluation</a><ul>
+<li class="chapter" data-level="13.1" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-purpose"><i class="fa fa-check"></i><b>13.1</b> R-lab purpose</a></li>
+<li class="chapter" data-level="13.2" data-path="RS-Eval.html"><a href="RS-Eval.html#r-lab-rating-scale-analysis-on-example-survey-data"><i class="fa fa-check"></i><b>13.2</b> R-lab: Rating Scale Analysis on Example Survey Data</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="RS-Eval.html"><a href="RS-Eval.html#load-and-investigate-the-data-set"><i class="fa fa-check"></i><b>13.2.1</b> Load and investigate the data set</a></li>
+<li class="chapter" data-level="13.2.2" data-path="running-the-partial-credit-model-in-r.html"><a href="running-the-partial-credit-model-in-r.html#run-the-partial-credit-model"><i class="fa fa-check"></i><b>13.2.2</b> Run the Partial Credit Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="RS-Eval.html"><a href="RS-Eval.html#check-categories-for-monotonicity"><i class="fa fa-check"></i><b>13.2.3</b> Check Categories for Monotonicity</a></li>
+<li class="chapter" data-level="13.2.4" data-path="RS-Eval.html"><a href="RS-Eval.html#examine-category-probability-curves"><i class="fa fa-check"></i><b>13.2.4</b> Examine Category Probability curves</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="RS-Eval.html"><a href="RS-Eval.html#example-apa-format-results-section-for-rating-scale-analysis"><i class="fa fa-check"></i><b>13.3</b> Example APA-format Results section for rating scale analysis</a></li>
+<li class="chapter" data-level="13.4" data-path="DIF.html"><a href="DIF.html#references"><i class="fa fa-check"></i><b>13.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="Ref1.html"><a href="Ref1.html"><i class="fa fa-check"></i><b>14</b> Reference &amp; Other Good Stuff</a><ul>
+<li class="chapter" data-level="14.1" data-path="Ref1.html"><a href="Ref1.html#rasch-glossary"><i class="fa fa-check"></i><b>14.1</b> Rasch Glossary</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="Ref1.html"><a href="Ref1.html#rasch-models"><i class="fa fa-check"></i><b>14.1.1</b> Rasch Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="Ref1.html"><a href="Ref1.html#diagnostic-and-exploratory-rasch-figures"><i class="fa fa-check"></i><b>14.1.2</b> Diagnostic and Exploratory Rasch Figures</a></li>
+<li class="chapter" data-level="14.1.3" data-path="Ref1.html"><a href="Ref1.html#estimation-methods-and-estimates"><i class="fa fa-check"></i><b>14.1.3</b> Estimation methods and Estimates</a></li>
+<li class="chapter" data-level="14.1.4" data-path="Ref1.html"><a href="Ref1.html#popular-r-packages-for-running-rasch-model"><i class="fa fa-check"></i><b>14.1.4</b> Popular R-Packages for running Rasch Model</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="Ref1.html"><a href="Ref1.html#rasch-friendly-jounrals"><i class="fa fa-check"></i><b>14.2</b> <span>Rasch friendly Jounrals</span></a></li>
+<li class="chapter" data-level="14.3" data-path="Ref1.html"><a href="Ref1.html#rasch-model-application-tempaltes"><i class="fa fa-check"></i><b>14.3</b> Rasch Model Application Tempaltes</a></li>
+<li class="chapter" data-level="14.4" data-path="Ref1.html"><a href="Ref1.html#reference-for-this-book"><i class="fa fa-check"></i><b>14.4</b> Reference for this book</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> PCM Application with Marginal Maximum Likelihood Estimation in TAM</h1>
+<p>The next section of this chapter includes an illustration of PCM analyses with the <em>Test Analysis Modules</em> or TAM package (Robitzsch et al., 2020) with Marginal Maximum Likelihood Estimation (MMLE). After this illustration, we also demonstrate the use of TAM to estimate the PCM with Joint Maximum Likelihood Estimation (JMLE). These illustrations use the Liking for Science data set that we described earlier in this chapter.</p>
+<p>Except where there are significant differences between the eRm and TAM procedures, we provide fewer details about the analysis procedures and interpretations in this section compared to the first illustration.</p>
+<div id="getting-started-1" class="section level2">
+<h2><span class="header-section-number">8.1</span> Getting Started</h2>
+<p>To get started with the TAM package, view the citation information, and then install and load it into your R environment using the following code:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb38-1"></a><span class="kw">citation</span>(<span class="st">&quot;TAM&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## To cite the &#39;TAM&#39; package in publications use:
+## 
+##   Robitzsch, A., Kiefer, T., &amp; Wu, M. (2020). TAM: Test Analysis
+##   Modules. R package version 3.5-19.
+##   https://CRAN.R-project.org/package=TAM
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{TAM_3.5-19,
+##     title = {TAM: Test Analysis Modules},
+##     author = {Alexander Robitzsch and Thomas Kiefer and Margaret Wu},
+##     year = {2020},
+##     note = {R package version 3.5-19},
+##     url = {https://CRAN.R-project.org/package=TAM},
+##   }</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb40-1"></a><span class="co"># install.packages(&quot;TAM&quot;)</span></span>
+<span id="cb40-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb40-2"></a><span class="co">#install.packages(&quot;TAM&quot;)</span></span>
+<span id="cb40-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb40-3"></a><span class="kw">library</span>(<span class="st">&quot;TAM&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: CDM</code></pre>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## **********************************
+## ** CDM 7.5-15 (2020-03-10 14:19:21)      
+## ** Cognitive Diagnostic Models  **
+## **********************************</code></pre>
+<pre><code>## * TAM 3.5-19 (2020-05-05 22:45:39)</code></pre>
+<p>To facilitate the example analysis, we will also use the <em>WrightMap</em> package (Torres Irribarra &amp; Freund, 2014):</p>
+<p>WrightMap:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb45-1"></a><span class="kw">citation</span>(<span class="st">&quot;WrightMap&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## To cite WrightMap in publications, please use:
+## 
+##   Torres Irribarra, D. &amp; Freund, R. (2014). Wright Map: IRT item-person
+##   map with ConQuest integration. Available at
+##   http://github.com/david-ti/wrightmap
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     author = {David Torres Irribarra and Rebecca Freund},
+##     title = {Wright Map: IRT item-person map with ConQuest integration},
+##     year = {2014},
+##     url = {http://github.com/david-ti/wrightmap},
+##   }</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb47-1"></a><span class="co"># install.packages(&quot;WrightMap&quot;)</span></span>
+<span id="cb47-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb47-2"></a><span class="kw">library</span>(<span class="st">&quot;WrightMap&quot;</span>) </span></code></pre></div>
+</div>
+<div id="prepare-the-data-for-analysis" class="section level2">
+<h2><span class="header-section-number">8.2</span> Prepare the data for analysis</h2>
+<p>If you have not already imported the Liking for Science data and prepared it for analysis as described earlier in this chapter and isolated the response matrix, please do so before continuing with the TAM analyses.</p>
+</div>
+<div id="run-the-partial-credit-model-1" class="section level2">
+<h2><span class="header-section-number">8.3</span> Run the Partial Credit Model</h2>
+<p>In order to obtain Rasch-Andrich thresholds (i.e., adjacent-categories thresholds) from our analysis, we need to generate a design matrix for the model that includes specifications for those parameters. We will do this using the <em>designMatrices()</em> function from TAM and save the result in a new object called <em>design.matrix</em>:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb48-1"></a>design.matrix &lt;-<span class="st"> </span><span class="kw">designMatrices</span>(<span class="dt">resp=</span>science.responses, <span class="dt">modeltype=</span><span class="st">&quot;PCM&quot;</span>, <span class="dt">constraint =</span> <span class="st">&quot;items&quot;</span>)<span class="op">$</span>A</span></code></pre></div>
+<p>Now we can run the RSM with our design matrix using the <em>tam.mml()</em> function with several specifications. After we run the model, we will request a summary of the model results using the <em>summary()</em> function.
+-[] omit the model run output, keep the summary output.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb49-1"></a>PCM.science_MMLE &lt;-<span class="st"> </span><span class="kw">tam.mml</span>(science.responses, <span class="dt">irtmodel=</span><span class="st">&quot;PCM&quot;</span>, <span class="dt">A =</span> design.matrix, <span class="dt">constraint =</span> <span class="st">&quot;items&quot;</span>) </span></code></pre></div>
+<pre><code>## ....................................................
+## Processing Data      2021-04-23 12:17:06 
+##     * Response Data: 75 Persons and  25 Items 
+##     * Numerical integration with 21 nodes
+##     * Created Design Matrices   ( 2021-04-23 12:17:06 )
+##     * Calculated Sufficient Statistics   ( 2021-04-23 12:17:06 )
+## ....................................................
+## Iteration 1     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2905.1771
+##   Maximum item intercept parameter change: 0.993437
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.04932
+##   Maximum variance parameter change: 0.263328
+## ....................................................
+## Iteration 2     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2873.5512 | Absolute change: 31.6259 | Relative change: 0.01100588
+##   Maximum item intercept parameter change: 0.777474
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.001981
+##   Maximum variance parameter change: 0.025049
+## ....................................................
+## Iteration 3     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2871.5571 | Absolute change: 1.9941 | Relative change: 0.00069443
+##   Maximum item intercept parameter change: 0.506991
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.000801
+##   Maximum variance parameter change: 0.001063
+## ....................................................
+## Iteration 4     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.8903 | Absolute change: 0.6668 | Relative change: 0.00023226
+##   Maximum item intercept parameter change: 0.470697
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.000505
+##   Maximum variance parameter change: 0.002129
+## ....................................................
+## Iteration 5     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.6931 | Absolute change: 0.1973 | Relative change: 6.872e-05
+##   Maximum item intercept parameter change: 0.469948
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.000493
+##   Maximum variance parameter change: 0.004207
+## ....................................................
+## Iteration 6     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.6414 | Absolute change: 0.0516 | Relative change: 1.799e-05
+##   Maximum item intercept parameter change: 0.469501
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.000102
+##   Maximum variance parameter change: 0.001245
+## ....................................................
+## Iteration 7     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.6197 | Absolute change: 0.0217 | Relative change: 7.55e-06
+##   Maximum item intercept parameter change: 0.469219
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 0.000101
+##   Maximum variance parameter change: 0.001117
+## ....................................................
+## Iteration 8     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.6076 | Absolute change: 0.0122 | Relative change: 4.24e-06
+##   Maximum item intercept parameter change: 0.469044
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 2.2e-05
+##   Maximum variance parameter change: 0.00039
+## ....................................................
+## Iteration 9     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.6003 | Absolute change: 0.0073 | Relative change: 2.54e-06
+##   Maximum item intercept parameter change: 0.468934
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 6.4e-05
+##   Maximum variance parameter change: 0.000269
+## ....................................................
+## Iteration 10     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5958 | Absolute change: 0.0045 | Relative change: 1.57e-06
+##   Maximum item intercept parameter change: 0.468865
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.2e-05
+##   Maximum variance parameter change: 0.000106
+## ....................................................
+## Iteration 11     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.593 | Absolute change: 0.0028 | Relative change: 9.8e-07
+##   Maximum item intercept parameter change: 0.468822
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.9e-05
+##   Maximum variance parameter change: 5.7e-05
+## ....................................................
+## Iteration 12     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5912 | Absolute change: 0.0018 | Relative change: 6.1e-07
+##   Maximum item intercept parameter change: 0.468795
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 2.4e-05
+## ....................................................
+## Iteration 13     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5901 | Absolute change: 0.0011 | Relative change: 3.8e-07
+##   Maximum item intercept parameter change: 0.468778
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 1e-05
+## ....................................................
+## Iteration 14     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5894 | Absolute change: 7e-04 | Relative change: 2.4e-07
+##   Maximum item intercept parameter change: 0.468768
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 3e-06
+## ....................................................
+## Iteration 15     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.589 | Absolute change: 4e-04 | Relative change: 1.5e-07
+##   Maximum item intercept parameter change: 0.468761
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 16     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5887 | Absolute change: 3e-04 | Relative change: 1e-07
+##   Maximum item intercept parameter change: 0.468757
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 17     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5885 | Absolute change: 2e-04 | Relative change: 6e-08
+##   Maximum item intercept parameter change: 0.468754
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 18     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5884 | Absolute change: 1e-04 | Relative change: 4e-08
+##   Maximum item intercept parameter change: 0.468753
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.7e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 19     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5883 | Absolute change: 1e-04 | Relative change: 2e-08
+##   Maximum item intercept parameter change: 0.468752
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 20     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5883 | Absolute change: 0 | Relative change: 2e-08
+##   Maximum item intercept parameter change: 0.468751
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 21     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5883 | Absolute change: 0 | Relative change: 1e-08
+##   Maximum item intercept parameter change: 0.468751
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 22     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 1e-08
+##   Maximum item intercept parameter change: 0.46875
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 23     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.46875
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 24     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.46875
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 25     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.46875
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.6e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 26     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.458333
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 27     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.425
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 28     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.466912
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 29     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.42381
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 30     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.458333
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 31     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.458333
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 32     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.466912
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 33     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 1.430555
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.5e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 34     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.458334
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 35     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 1.437501
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 36     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 1.395452
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 37     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5882 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 1.430542
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 38     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 2.349715
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 39     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.467038
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 40     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.458088
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 41     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.459159
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.4e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 42     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 1.397947
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 43     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.455216
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 44     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.431881
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 45     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 2.779138
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 46     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |--
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.5
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 47     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.25
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5e-05
+##   Maximum variance parameter change: 1e-06
+## ....................................................
+## Iteration 48     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.46875
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 49     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.607143
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 50     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |----
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 0.623334
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.3e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Iteration 51     2021-04-23 12:17:06
+## E Step
+## M Step Intercepts   |--
+##   Deviance = 2870.5881 | Absolute change: 0 | Relative change: 0
+##   Maximum item intercept parameter change: 5.2e-05
+##   Maximum item slope parameter change: 0
+##   Maximum regression parameter change: 5.2e-05
+##   Maximum variance parameter change: 0
+## ....................................................
+## Item Parameters
+##    xsi.index xsi.label      est
+## 1          1   i1_Cat1  -3.2111
+## 2          2   i1_Cat2  -0.0059
+## 3          3   i2_Cat1  -1.5836
+## 4          4   i2_Cat2  -1.0546
+## 5          5   i3_Cat1  -1.5387
+## 6          6   i3_Cat2   0.6098
+## 7          7   i4_Cat1  -0.2210
+## 8          8   i4_Cat2   2.1289
+## 9          9   i5_Cat1   0.9189
+## 10        10   i5_Cat2   1.7186
+## 11        11   i6_Cat1  -1.6186
+## 12        12   i6_Cat2   0.4695
+## 13        13   i7_Cat1  -0.5443
+## 14        14   i7_Cat2   0.9902
+## 15        15   i8_Cat1  -0.1808
+## 16        16   i8_Cat2   1.8116
+## 17        17   i9_Cat1  -0.7165
+## 18        18   i9_Cat2   0.4213
+## 19        19  i10_Cat1  -3.0506
+## 20        20  i10_Cat2  -1.4751
+## 21        21  i11_Cat1  -3.4014
+## 22        22  i11_Cat2  -0.7489
+## 23        23  i12_Cat1 -35.5562
+## 24        24  i12_Cat2  -1.8548
+## 25        25  i13_Cat1  -1.1333
+## 26        26  i13_Cat2  -2.0553
+## 27        27  i14_Cat1  -1.4031
+## 28        28  i14_Cat2   0.5075
+## 29        29  i15_Cat1  -2.0108
+## 30        30  i15_Cat2  -0.5336
+## 31        31  i16_Cat1  -1.5008
+## 32        32  i16_Cat2   0.9293
+## 33        33  i17_Cat1  -1.5285
+## 34        34  i17_Cat2   0.1576
+## 35        35  i18_Cat1  -2.2979
+## 36        36  i18_Cat2  -3.5648
+## 37        37  i19_Cat1  -3.0787
+## 38        38  i19_Cat2  -2.6031
+## 39        39  i20_Cat1   0.1146
+## 40        40  i20_Cat2   1.7190
+## 41        41  i21_Cat1  -1.9684
+## 42        42  i21_Cat2  -1.0499
+## 43        43  i22_Cat1  -1.4773
+## 44        44  i22_Cat2   0.0031
+## 45        45  i23_Cat1   0.7419
+## 46        46  i23_Cat2   1.4704
+## 47        47  i24_Cat1  -1.5174
+## 48        48  i24_Cat2  -0.5568
+## 49        49  i25_Cat1  -1.0815
+## 50        50  i25_Cat2   0.4385
+## ...................................
+## Regression Coefficients
+##         [,1]
+## [1,] 0.05447
+## 
+## Variance:
+##       [,1]
+## [1,] 1.278
+## 
+## 
+## EAP Reliability:
+## [1] 0.9
+## 
+## -----------------------------
+## Start:  2021-04-23 12:17:06
+## End:  2021-04-23 12:17:06 
+## Time difference of 0.04652119 secs</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb51-1"></a><span class="kw">summary</span>(PCM.science_MMLE)</span></code></pre></div>
+<pre><code>## ------------------------------------------------------------
+## TAM 3.5-19 (2020-05-05 22:45:39) 
+## R version 3.6.3 (2020-02-29) x86_64, darwin15.6.0 | nodename=Chengs-iMac | login=root 
+## 
+## Date of Analysis: 2021-04-23 12:17:06 
+## Time difference of 0.04652119 secs
+## Computation time: 0.04652119 
+## 
+## Multidimensional Item Response Model in TAM 
+## 
+## IRT Model: PCM2
+## Call:
+## tam.mml(resp = science.responses, irtmodel = &quot;PCM&quot;, constraint = &quot;items&quot;, 
+##     A = design.matrix)
+## 
+## ------------------------------------------------------------
+## Number of iterations = 51 
+## Numeric integration with 21 integration points
+## 
+## Deviance = 2870.59 
+## Log likelihood = -1435.29 
+## Number of persons = 75 
+## Number of persons used = 75 
+## Number of items = 25 
+## Number of estimated parameters = 52 
+##     Item threshold parameters = 50 
+##     Item slope parameters = 0 
+##     Regression parameters = 1 
+##     Variance/covariance parameters = 1 
+## 
+## AIC = 2975  | penalty=104    | AIC=-2*LL + 2*p 
+## AIC3 = 3027  | penalty=156    | AIC3=-2*LL + 3*p 
+## BIC = 3095  | penalty=224.51    | BIC=-2*LL + log(n)*p 
+## aBIC = 2928  | penalty=57.85    | aBIC=-2*LL + log((n-2)/24)*p  (adjusted BIC) 
+## CAIC = 3147  | penalty=276.51    | CAIC=-2*LL + [log(n)+1]*p  (consistent AIC) 
+## AICc = 3225  | penalty=354.55    | AICc=-2*LL + 2*p + 2*p*(p+1)/(n-p-1)  (bias corrected AIC) 
+## GHP = 0.79322     | GHP=( -LL + p ) / (#Persons * #Items)  (Gilula-Haberman log penalty) 
+## 
+## ------------------------------------------------------------
+## EAP Reliability
+## [1] 0.9
+## ------------------------------------------------------------
+## Covariances and Variances
+##       [,1]
+## [1,] 1.278
+## ------------------------------------------------------------
+## Correlations and Standard Deviations (in the diagonal)
+##      [,1]
+## [1,] 1.13
+## ------------------------------------------------------------
+## Regression Coefficients
+##         [,1]
+## [1,] 0.05447
+## ------------------------------------------------------------
+## Item Parameters -A*Xsi
+##    item  N     M xsi.item AXsi_.Cat1 AXsi_.Cat2 B.Cat1.Dim1 B.Cat2.Dim1
+## 1    i1 75 1.453   -1.609     -3.211     -3.217           1           2
+## 2    i2 75 1.547   -1.319     -1.584     -2.638           1           2
+## 3    i3 75 1.173   -0.464     -1.539     -0.929           1           2
+## 4    i4 75 0.693    0.954     -0.221      1.908           1           2
+## 5    i5 75 0.493    1.319      0.919      2.637           1           2
+## 6    i6 75 1.213   -0.575     -1.619     -1.149           1           2
+## 7    i7 75 0.920    0.223     -0.544      0.446           1           2
+## 8    i8 75 0.720    0.815     -0.181      1.631           1           2
+## 9    i9 75 1.067   -0.148     -0.717     -0.295           1           2
+## 10  i10 75 1.733   -2.263     -3.051     -4.526           1           2
+## 11  i11 75 1.613   -2.075     -3.401     -4.150           1           2
+## 12  i12 75 1.827  -18.706    -35.556    -37.411           1           2
+## 13  i13 75 1.693   -1.594     -1.133     -3.189           1           2
+## 14  i14 75 1.173   -0.448     -1.403     -0.896           1           2
+## 15  i15 75 1.480   -1.272     -2.011     -2.544           1           2
+## 16  i16 75 1.107   -0.286     -1.501     -0.572           1           2
+## 17  i17 75 1.267   -0.685     -1.529     -1.371           1           2
+## 18  i18 75 1.933   -2.931     -2.298     -5.863           1           2
+## 19  i19 75 1.880   -2.841     -3.079     -5.682           1           2
+## 20  i20 75 0.667    0.917      0.115      1.834           1           2
+## 21  i21 75 1.587   -1.509     -1.968     -3.018           1           2
+## 22  i22 75 1.293   -0.737     -1.477     -1.474           1           2
+## 23  i23 75 0.560    1.106      0.742      2.212           1           2
+## 24  i24 75 1.427   -1.037     -1.517     -2.074           1           2
+## 25  i25 75 1.133   -0.322     -1.082     -0.643           1           2
+## 
+## Item Parameters Xsi
+##              xsi      se.xsi
+## i1_Cat1   -3.211       0.612
+## i1_Cat2   -0.006       0.260
+## i2_Cat1   -1.584       0.414
+## i2_Cat2   -1.055       0.276
+## i3_Cat1   -1.539       0.335
+## i3_Cat2    0.610       0.280
+## i4_Cat1   -0.221       0.264
+## i4_Cat2    2.129       0.406
+## i5_Cat1    0.919       0.279
+## i5_Cat2    1.719       0.423
+## i6_Cat1   -1.619       0.345
+## i6_Cat2    0.470       0.275
+## i7_Cat1   -0.544       0.278
+## i7_Cat2    0.990       0.312
+## i8_Cat1   -0.181       0.265
+## i8_Cat2    1.812       0.378
+## i9_Cat1   -0.716       0.292
+## i9_Cat2    0.421       0.286
+## i10_Cat1  -3.051       0.748
+## i10_Cat2  -1.475       0.296
+## i11_Cat1  -3.401       0.741
+## i11_Cat2  -0.749       0.267
+## i12_Cat1 -35.556 5931641.602
+## i12_Cat2  -1.855       0.326
+## i13_Cat1  -1.133       0.447
+## i13_Cat2  -2.055       0.319
+## i14_Cat1  -1.403       0.327
+## i14_Cat2   0.507       0.278
+## i15_Cat1  -2.011       0.431
+## i15_Cat2  -0.534       0.265
+## i16_Cat1  -1.501       0.325
+## i16_Cat2   0.929       0.292
+## i17_Cat1  -1.528       0.347
+## i17_Cat2   0.158       0.269
+## i18_Cat1  -2.298       1.049
+## i18_Cat2  -3.565       0.538
+## i19_Cat1  -3.079       1.041
+## i19_Cat2  -2.603       0.397
+## i20_Cat1   0.115       0.265
+## i20_Cat2   1.719       0.381
+## i21_Cat1  -1.968       0.463
+## i21_Cat2  -1.050       0.276
+## i22_Cat1  -1.477       0.348
+## i22_Cat2   0.003       0.268
+## i23_Cat1   0.742       0.275
+## i23_Cat2   1.470       0.391
+## i24_Cat1  -1.517       0.377
+## i24_Cat2  -0.557       0.267
+## i25_Cat1  -1.082       0.309
+## i25_Cat2   0.439       0.281
+## 
+## Item Parameters in IRT parameterization
+##    item alpha    beta tau.Cat1 tau.Cat2
+## 1    i1     1  -1.609   -1.603    1.603
+## 2    i2     1  -1.319   -0.264    0.264
+## 3    i3     1  -0.464   -1.074    1.074
+## 4    i4     1   0.954   -1.175    1.175
+## 5    i5     1   1.319   -0.400    0.400
+## 6    i6     1  -0.575   -1.044    1.044
+## 7    i7     1   0.223   -0.767    0.767
+## 8    i8     1   0.815   -0.996    0.996
+## 9    i9     1  -0.148   -0.569    0.569
+## 10  i10     1  -2.263   -0.788    0.788
+## 11  i11     1  -2.075   -1.326    1.326
+## 12  i12     1 -18.706  -16.851   16.851
+## 13  i13     1  -1.594    0.461   -0.461
+## 14  i14     1  -0.448   -0.955    0.955
+## 15  i15     1  -1.272   -0.739    0.739
+## 16  i16     1  -0.286   -1.215    1.215
+## 17  i17     1  -0.685   -0.843    0.843
+## 18  i18     1  -2.931    0.633   -0.633
+## 19  i19     1  -2.841   -0.238    0.238
+## 20  i20     1   0.917   -0.802    0.802
+## 21  i21     1  -1.509   -0.459    0.459
+## 22  i22     1  -0.737   -0.740    0.740
+## 23  i23     1   1.106   -0.364    0.364
+## 24  i24     1  -1.037   -0.480    0.480
+## 25  i25     1  -0.322   -0.760    0.760</code></pre>
+<p>The summary of the PCM output includes details about the number of iterations, global model fit statistics, a summary of the model parameters, and several other statistics.</p>
+</div>
+<div id="examine-item-parameters-1" class="section level2">
+<h2><span class="header-section-number">8.4</span> Examine item parameters</h2>
+<p>Next, we will examine the item difficulty location and rating scale category threshold estimates. As of this writing, the TAM package does not provide centered item estimates (mean set to zero logits) with the design matrix that we specified in our analysis. As a result, we need to manually center the item locations at zero logits for ease in interpretation. We will use the same procedure that we used earlier to do the centering.</p>
+<p>First, we need to extract the item location estimates from the model object (<em>PCM.science_MMLE</em>). The item locations are stored in the <em>item_irt</em> component of the model object, so we will extract them using the <em>$</em> operator. The <em>item_irt</em> component includes other item parameters as well, including threshold estimates. We will examine those later. For now, we will save the overall item locations in an object called <em>items_MMLE</em>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb53-1"></a>items_MMLE &lt;-<span class="st"> </span>PCM.science_MMLE<span class="op">$</span>item_irt<span class="op">$</span>beta</span></code></pre></div>
+<p>Next, we will center the item parameter estimates that are stored in <em>items_MMLE</em> at zero logits, and request summary statistics for the estimates to check our work:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb54-1"></a>uncentered.item.locations_MMLE &lt;-<span class="st"> </span>items_MMLE</span>
+<span id="cb54-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb54-2"></a>centered.item.locations_MMLE &lt;-<span class="st"> </span><span class="kw">scale</span>(uncentered.item.locations_MMLE, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb54-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb54-3"></a><span class="kw">summary</span>(centered.item.locations_MMLE)</span></code></pre></div>
+<pre><code>##        V1          
+##  Min.   :-17.2861  
+##  1st Qu.: -0.1748  
+##  Median :  0.7340  
+##  Mean   :  0.0000  
+##  3rd Qu.:  1.2718  
+##  Max.   :  2.7382</code></pre>
+<p>We need to find the rating scale category threshold parameter estimates for our rating scale. In our example with the Liking for Science data, our rating scale has three categories, so there are two threshold parameters for each item in which all three categories are observed. The following code extracts the adjacent-categories threshold parameters from the <em>item_ parameter table_irt</em> component of the <em>PCM.science_MMLE</em> object, and then stores them in an object called <em>tau.estimates_MMLE</em>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb56-1"></a><span class="co"># View the item parameter table (note that the overall item location shown here is not centered):</span></span>
+<span id="cb56-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb56-2"></a>PCM.science_MMLE<span class="op">$</span>item_irt</span></code></pre></div>
+<pre><code>##    item alpha        beta    tau.Cat1   tau.Cat2
+## 1    i1     1  -1.6085608  -1.6026205  1.6026205
+## 2    i2     1  -1.3191447  -0.2644809  0.2644809
+## 3    i3     1  -0.4644800  -1.0742281  1.0742281
+## 4    i4     1   0.9539062  -1.1749688  1.1749688
+## 5    i5     1   1.3186795  -0.3998251  0.3998251
+## 6    i6     1  -0.5746150  -1.0440675  1.0440675
+## 7    i7     1   0.2229379  -0.7672587  0.7672587
+## 8    i8     1   0.8153482  -0.9962123  0.9962123
+## 9    i9     1  -0.1476474  -0.5688748  0.5688748
+## 10  i10     1  -2.2628895  -0.7877182  0.7877182
+## 11  i11     1  -2.0751855  -1.3262766  1.3262766
+## 12  i12     1 -18.7055607 -16.8506773 16.8506773
+## 13  i13     1  -1.5943198   0.4610254 -0.4610254
+## 14  i14     1  -0.4478595  -0.9552836  0.9552836
+## 15  i15     1  -1.2722326  -0.7386321  0.7386321
+## 16  i16     1  -0.2857903  -1.2150324  1.2150324
+## 17  i17     1  -0.6854922  -0.8430159  0.8430159
+## 18  i18     1  -2.9313602   0.6334594 -0.6334594
+## 19  i19     1  -2.8409900  -0.2378016  0.2378016
+## 20  i20     1   0.9167558  -0.8022381  0.8022381
+## 21  i21     1  -1.5091750  -0.4592364  0.4592364
+## 22  i22     1  -0.7371205  -0.7402169  0.7402169
+## 23  i23     1   1.1061274  -0.3642530  0.3642530
+## 24  i24     1  -1.0371728  -0.4803081  0.4803081
+## 25  i25     1  -0.3215573  -0.7600186  0.7600186</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb58-1"></a><span class="co"># Save only the threshold estimates, which begin in column 4:</span></span>
+<span id="cb58-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb58-2"></a>tau.estimates_MMLE &lt;-<span class="st"> </span>PCM.science_MMLE<span class="op">$</span>item_irt[, <span class="kw">c</span>(<span class="dv">4</span> <span class="op">:</span><span class="st"> </span>(<span class="dv">3</span><span class="op">+</span>n.thresholds))]</span>
+<span id="cb58-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb58-3"></a></span>
+<span id="cb58-4"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb58-4"></a><span class="co"># View the threshold estimates:</span></span>
+<span id="cb58-5"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb58-5"></a>tau.estimates_MMLE</span></code></pre></div>
+<pre><code>##       tau.Cat1   tau.Cat2
+## 1   -1.6026205  1.6026205
+## 2   -0.2644809  0.2644809
+## 3   -1.0742281  1.0742281
+## 4   -1.1749688  1.1749688
+## 5   -0.3998251  0.3998251
+## 6   -1.0440675  1.0440675
+## 7   -0.7672587  0.7672587
+## 8   -0.9962123  0.9962123
+## 9   -0.5688748  0.5688748
+## 10  -0.7877182  0.7877182
+## 11  -1.3262766  1.3262766
+## 12 -16.8506773 16.8506773
+## 13   0.4610254 -0.4610254
+## 14  -0.9552836  0.9552836
+## 15  -0.7386321  0.7386321
+## 16  -1.2150324  1.2150324
+## 17  -0.8430159  0.8430159
+## 18   0.6334594 -0.6334594
+## 19  -0.2378016  0.2378016
+## 20  -0.8022381  0.8022381
+## 21  -0.4592364  0.4592364
+## 22  -0.7402169  0.7402169
+## 23  -0.3642530  0.3642530
+## 24  -0.4803081  0.4803081
+## 25  -0.7600186  0.7600186</code></pre>
+<p>Note that the threshold values shown in the <em>tau.estimates_MMLE</em> must be added to the overall item location to obtain the location on the logit scale at which there is an equal probability for a rating in the corresponding adjacent categories. These values correspond to the graphical displays of rating scale category probabilities for the PCM.</p>
+<div id="examine-item-response-functions-rating-scale-category-probability-plots" class="section level3">
+<h3><span class="header-section-number">8.4.1</span> Examine item response functions (rating scale category probability plots)</h3>
+<p>Next, we will examine rating scale category probability plots for the 25 items in our analysis.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb60-1"></a><span class="co">#graphics.off()</span></span>
+<span id="cb60-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb60-2"></a><span class="kw">plot</span>(PCM.science_MMLE, <span class="dt">type=</span><span class="st">&quot;items&quot;</span>)</span></code></pre></div>
+<pre><code>## Iteration in WLE/MLE estimation  1   | Maximal change  1.1208 
+## Iteration in WLE/MLE estimation  2   | Maximal change  0.1558 
+## Iteration in WLE/MLE estimation  3   | Maximal change  0.0048 
+## Iteration in WLE/MLE estimation  4   | Maximal change  2e-04 
+## Iteration in WLE/MLE estimation  5   | Maximal change  0 
+## ----
+##  WLE Reliability= 0.89</code></pre>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-1.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-2.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-3.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-4.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-5.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-6.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-7.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-8.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-9.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-10.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-11.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-12.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-13.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-14.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-15.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-16.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-17.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-18.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-19.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-20.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-21.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-22.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-23.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-24.png" width="672" /><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-29-25.png" width="672" /></p>
+<pre><code>## ....................................................
+##  Plots exported in png format into folder:
+##  /Users/chenghua/Documents/GitHub/The Rasch Book/Plots</code></pre>
+<p>This code generates plots of rating scale category probabilities for each item. These plots have the same interpretation as the rating scale category probability plots that we generated using eRm, where the x-axis is the logit scale that represents the latent variable, the y-axis is the probability for a rating in each category, and individual lines show the conditional probability for a rating in each category.</p>
+</div>
+</div>
+<div id="evaluate-item-fit" class="section level2">
+<h2><span class="header-section-number">8.5</span> Evaluate item fit</h2>
+<p>Next, we will examine numeric and graphical item fit indices using the <em>itemfit()</em> function from TAM. We will save the results in an object called <em>item.fit_MMLE</em> and then view summary statistics for the fit statistics.</p>
+<p>-[] omit the MMLE_fit output, keep the summary output.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb63-1"></a>MMLE_fit &lt;-<span class="st"> </span><span class="kw">tam.fit</span>(PCM.science_MMLE)</span></code></pre></div>
+<pre><code>## Item fit calculation based on 100 simulations
+## |**********|
+## |----------|</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb65-1"></a>item.fit_MMLE &lt;-<span class="st"> </span>MMLE_fit<span class="op">$</span>itemfit</span>
+<span id="cb65-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb65-2"></a><span class="kw">summary</span>(item.fit_MMLE)</span></code></pre></div>
+<pre><code>##     parameter      Outfit           Outfit_t          Outfit_p       
+##  i1_Cat1 : 1   Min.   : 0.0000   Min.   :-3.9437   Min.   :0.000000  
+##  i1_Cat2 : 1   1st Qu.: 0.6389   1st Qu.:-2.2096   1st Qu.:0.001257  
+##  i10_Cat1: 1   Median : 0.7590   Median :-1.3190   Median :0.043504  
+##  i10_Cat2: 1   Mean   : 1.6432   Mean   : 0.2428   Mean   :0.189619  
+##  i11_Cat1: 1   3rd Qu.: 1.0758   3rd Qu.: 0.5523   3rd Qu.:0.262621  
+##  i11_Cat2: 1   Max.   :18.5668   Max.   :20.8307   Max.   :0.846600  
+##  (Other) :44                     NA&#39;s   :1         NA&#39;s   :1         
+##   Outfit_pholm         Infit           Infit_t           Infit_p         
+##  Min.   :0.00000   Min.   :0.0000   Min.   :-2.4736   Min.   :0.0000002  
+##  1st Qu.:0.04651   1st Qu.:0.8297   1st Qu.:-0.8655   1st Qu.:0.0545064  
+##  Median :1.00000   Median :0.9182   Median :-0.2740   Median :0.5298786  
+##  Mean   :0.63268   Mean   :0.9800   Mean   :-0.1143   Mean   :0.4651075  
+##  3rd Qu.:1.00000   3rd Qu.:1.0324   3rd Qu.: 0.3207   3rd Qu.:0.7589679  
+##  Max.   :1.00000   Max.   :1.8095   Max.   : 5.2332   Max.   :0.9877023  
+##  NA&#39;s   :1                          NA&#39;s   :1         NA&#39;s   :1          
+##   Infit_pholm       
+##  Min.   :0.0000082  
+##  1st Qu.:1.0000000  
+##  Median :1.0000000  
+##  Mean   :0.8876907  
+##  3rd Qu.:1.0000000  
+##  Max.   :1.0000000  
+##  NA&#39;s   :1</code></pre>
+<p>The <em>tam.fit()</em> function provides mean square error (<em>MSE</em>) and standardized (<em>t</em>) versions of the Outfit and Infit statistics for Rasch models. The <em>Outfit</em> and <em>Infit</em> statistics are the <em>MSE</em> versions and the <em>Outfit_t</em> and <em>Infit_t</em> statistics are the standardized versions of the statistics. TAM also reports a <em>p</em> value for the standardized fit statistics (<em>Outfit_p</em> and <em>Infit_p</em>), along with adjusted significance values (<em>Infit_pholm</em> and <em>Outfit_pholm</em>). Please see Chapter 3 for a detailed consideration of procedures for evaluating item fit in detail, including the use of graphical tools to evaluate item fit.</p>
+</div>
+<div id="examine-person-parameters-1" class="section level2">
+<h2><span class="header-section-number">8.6</span> Examine person parameters</h2>
+<p>Now we will examine person parameter estimates. With the MMLE procedure in TAM, person parameters are calculated after the item estimates using the <em>tam.wle()</em> function. The following code calculates person parameter estimates and saves them in an object called person.locations_MMLE.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb67-1"></a><span class="co"># Use the tam.wle function to calculate person location parameters:</span></span>
+<span id="cb67-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb67-2"></a>person.locations.estimate_MMLE &lt;-<span class="st"> </span><span class="kw">tam.wle</span>(PCM.science_MMLE)</span></code></pre></div>
+<pre><code>## Iteration in WLE/MLE estimation  1   | Maximal change  1.1208 
+## Iteration in WLE/MLE estimation  2   | Maximal change  0.1558 
+## Iteration in WLE/MLE estimation  3   | Maximal change  0.0048 
+## Iteration in WLE/MLE estimation  4   | Maximal change  2e-04 
+## Iteration in WLE/MLE estimation  5   | Maximal change  0 
+## ----
+##  WLE Reliability= 0.89</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-1"></a><span class="co"># Store person parameters and their standard errors in a dataframe object:</span></span>
+<span id="cb69-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-2"></a>person.locations_MMLE &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(person.locations.estimate_MMLE<span class="op">$</span>theta,</span>
+<span id="cb69-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-3"></a>                                     person.locations.estimate_MMLE<span class="op">$</span>error)</span>
+<span id="cb69-4"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-4"></a><span class="kw">names</span>(person.locations_MMLE) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;theta&quot;</span>, <span class="st">&quot;SE&quot;</span>)</span>
+<span id="cb69-5"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-5"></a></span>
+<span id="cb69-6"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-6"></a><span class="co"># View summary statistics for person parameters:</span></span>
+<span id="cb69-7"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb69-7"></a><span class="kw">summary</span>(person.locations_MMLE)</span></code></pre></div>
+<pre><code>##      theta                SE        
+##  Min.   :-2.34128   Min.   :0.3329  
+##  1st Qu.:-0.70831   1st Qu.:0.3360  
+##  Median :-0.14172   Median :0.3468  
+##  Mean   : 0.07548   Mean   :0.3902  
+##  3rd Qu.: 0.74655   3rd Qu.:0.3775  
+##  Max.   : 4.61967   Max.   :1.4665</code></pre>
+<p>Because we centered the item location estimates at zero logits for our interpretation earlier, we need to adjust the person location estimates so that they can be compared to the centered item locations. We will do this by subtracting the original (uncentered) item mean from the person locations.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb71-1"></a><span class="co"># Subtract the original (uncentered) item mean location from the person locations:</span></span>
+<span id="cb71-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb71-2"></a>person.locations_MMLE<span class="op">$</span>theta_adjusted &lt;-<span class="st"> </span>person.locations_MMLE<span class="op">$</span>theta <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(uncentered.item.locations_MMLE)</span>
+<span id="cb71-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb71-3"></a></span>
+<span id="cb71-4"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb71-4"></a><span class="co"># Summary of person location estimates:</span></span>
+<span id="cb71-5"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb71-5"></a><span class="kw">summary</span>(person.locations_MMLE)</span></code></pre></div>
+<pre><code>##      theta                SE         theta_adjusted   
+##  Min.   :-2.34128   Min.   :0.3329   Min.   :-0.9218  
+##  1st Qu.:-0.70831   1st Qu.:0.3360   1st Qu.: 0.7112  
+##  Median :-0.14172   Median :0.3468   Median : 1.2778  
+##  Mean   : 0.07548   Mean   :0.3902   Mean   : 1.4950  
+##  3rd Qu.: 0.74655   3rd Qu.:0.3775   3rd Qu.: 2.1660  
+##  Max.   : 4.61967   Max.   :1.4665   Max.   : 6.0392</code></pre>
+<p>If analysts do not prefer to use the zero-centered item location estimates, they should also use the original person parameters without subtracting the mean item location.</p>
+</div>
+<div id="evaluate-person-fit" class="section level2">
+<h2><span class="header-section-number">8.7</span> Evaluate person fit</h2>
+<p>We can evaluate person fit using the <em>tam.personfit()</em> function from TAM. This function uses the model object as an argument and it produces infit and outfit statistics, as well as standardized versions of these statistics, for each person in the response matrix.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb73-1"></a>person.fit.results_MMLE &lt;-<span class="st"> </span><span class="kw">tam.personfit</span>(PCM.science_MMLE)</span>
+<span id="cb73-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb73-2"></a><span class="kw">summary</span>(person.fit.results_MMLE)</span></code></pre></div>
+<pre><code>##   outfitPerson     outfitPerson_t      infitPerson      infitPerson_t    
+##  Min.   :0.01954   Min.   :-2.79349   Min.   :0.04306   Min.   :-3.9200  
+##  1st Qu.:0.52350   1st Qu.:-0.85955   1st Qu.:0.67417   1st Qu.:-1.1723  
+##  Median :0.71988   Median :-0.35536   Median :0.84032   Median :-0.4059  
+##  Mean   :0.99718   Mean   : 0.08412   Mean   :0.94654   Mean   :-0.2672  
+##  3rd Qu.:1.12702   3rd Qu.: 0.58251   3rd Qu.:1.07092   3rd Qu.: 0.3322  
+##  Max.   :4.13635   Max.   : 4.75431   Max.   :3.16631   Max.   : 5.1259</code></pre>
+</div>
+<div id="plot-the-wright-map" class="section level2">
+<h2><span class="header-section-number">8.8</span> Plot the Wright Map:</h2>
+<p>Next, we will create a Wright Map from our model results. This display will provide us with an overview of the distribution of person, item, and threshold parameters. We will create the plot using the WrightMap package function <em>IRT.WrightMap</em> on the model object (<em>PCM.science_MMLE</em>).</p>
+<p>For ease in interpretation, we will use the centered item and person locations that we calculated in this analysis. We need to specify these modified parameter estimates in the WrightMap function. The following code prepares the parameter estimates and plots the Wright Map using them.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-1"></a><span class="co"># Combine centered item estimates with thresholds:</span></span>
+<span id="cb75-2"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-2"></a>n.items &lt;-<span class="st"> </span><span class="kw">ncol</span>(science.responses)</span>
+<span id="cb75-3"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-3"></a></span>
+<span id="cb75-4"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-4"></a>thresholds_MMLE &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> n.items, <span class="dt">ncol =</span> n.thresholds)</span>
+<span id="cb75-5"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-5"></a></span>
+<span id="cb75-6"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-6"></a><span class="cf">for</span>(item.number <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n.items){</span>
+<span id="cb75-7"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-7"></a>  <span class="cf">for</span>(tau <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n.thresholds){</span>
+<span id="cb75-8"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-8"></a>  thresholds_MMLE[item.number, tau] &lt;-<span class="st"> </span>centered.item.locations_MMLE[item.number] <span class="op">+</span></span>
+<span id="cb75-9"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-9"></a><span class="st">      </span>tau.estimates_MMLE[item.number, tau]</span>
+<span id="cb75-10"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-10"></a>  } </span>
+<span id="cb75-11"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-11"></a>}</span>
+<span id="cb75-12"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-12"></a></span>
+<span id="cb75-13"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-13"></a>thetas_MMLE &lt;-<span class="st"> </span>person.locations_MMLE<span class="op">$</span>theta_adjusted</span>
+<span id="cb75-14"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-14"></a></span>
+<span id="cb75-15"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-15"></a><span class="co"># Plot the Variable Map</span></span>
+<span id="cb75-16"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-16"></a><span class="kw">wrightMap</span>(<span class="dt">thetas =</span> thetas_MMLE,</span>
+<span id="cb75-17"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-17"></a>        <span class="dt">thresholds =</span> thresholds_MMLE,</span>
+<span id="cb75-18"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-18"></a>         <span class="dt">main.title =</span> <span class="st">&quot;Liking for Science Partial Credit Model Wright Map (MMLE)&quot;</span>,</span>
+<span id="cb75-19"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-19"></a>        <span class="dt">show.thr.lab	=</span> <span class="ot">TRUE</span>, <span class="dt">dim.names =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb75-20"><a href="pcm-application-with-marginal-maximum-likelihood-estimation-in-tam.html#cb75-20"></a>        <span class="dt">label.items.rows=</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="The-Rasch-Book_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre><code>##               [,1]        [,2]
+##  [1,]  -1.79168537  1.41355566
+##  [2,]  -0.16412962  0.36483222
+##  [3,]  -0.11921210  2.02924408
+##  [4,]   1.19843341  3.54837099
+##  [5,]   2.33835028  3.13800056
+##  [6,]  -0.19918655  1.88894843
+##  [7,]   0.87517515  2.40969249
+##  [8,]   1.23863180  3.23105644
+##  [9,]   0.70297369  1.84072336
+## [10,]  -1.63111171 -0.05567529
+## [11,]  -1.98196615  0.67058715
+## [12,] -34.13674207 -0.43538740
+## [13,]   0.28620152 -0.63584920
+## [14,]   0.01635288  1.92692012
+## [15,]  -0.59136874  0.88589537
+## [16,]  -0.08132677  2.34873810
+## [17,]  -0.10901213  1.57701969
+## [18,]  -0.87840486 -2.14532359
+## [19,]  -1.65929569 -1.18369244
+## [20,]   1.53401361  3.13848983
+## [21,]  -0.54891546  0.36955727
+## [22,]  -0.05784151  1.42259238
+## [23,]   2.16137030  2.88987639
+## [24,]  -0.09798495  0.86263120
+## [25,]   0.33791999  1.85795727</code></pre>
+<p>In this <em>Wright Map</em> display, the results from the PCM analysis of the Liking for Science data are summarized graphically. The figure is organized as follows:</p>
+<p>The left panel of the plot shows a histogram of respondent (children) locations on the logit scale that represents the latent variable. Units on the logit scale are shown on the far-right axis of the plot (labeled <em>Logits</em>).</p>
+<p>The large central panel of the plot shows the rating scale category threshold estimates specific to each item on the logit scale that represents the latent variable. Light grey diamond shapes show the logit scale location of the threshold estimates for each item, as labeled on the x-axis. Thresholds are labeled using tau symbols followed by an integer that shows the threshold number. In our example, $$1 is the threshold between rating scale categories <em>x</em> = 0 and <em>x</em> = 1, and $$2 is the threshold between rating scale categories <em>x</em> = 1 and <em>x</em> = 2.</p>
+<p>Even though it is not appropriate to fully interpret item and person locations on the logit scale until there is evidence of acceptable model-data fit, we recommend examining the Wright Map during the preliminary stages of an item analysis to get a general sense of the model results and to identify any potential scoring or data entry errors.</p>
+<p>A quick glance at the Wright Map suggests that, on average, the persons are located higher on the logit scale compared to the average item threshold locations. In addition, there appears to be a relatively wide spread of person and item locations on the logit scale, such that the Liking for Science questionnaire appears to be a useful tool for identifying differences in children’s attitudes toward science activities as well as the difficulty to find each of the activities as favorable. Finally, the distance between rating scale category thresholds displays notable variability across the items in the survey. This finding supports the use of the PCM to analyze the Liking for Science data.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="plot-a-wright-map-to-visualize-item-and-person-locations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pcm-application-with-joint-maximum-likelihood-estimation-in-tam.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/huacheng1985/bookdown-demo/edit/master/05-PC_model.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["The Rasch Book.pdf", "The Rasch Book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,60 +1,85 @@
 --- 
-title: "A Chapman & Hall/CRC Book Example Using bookdown"
-author: "Frida Gomam"
+title: "Rasch Measurement Theory Analysis in R: Illustrations and Practical Guidance for Researchers and Practitioners"
+author: "Stefanie A. Wind & Cheng Hua"
 date: "`r Sys.Date()`"
-documentclass: krantz
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-colorlinks: yes
-lot: yes
-lof: yes
-site: bookdown::bookdown_site
-description: "A book example for a Chapman & Hall book."
-github-repo: yihui/bookdown-crc
-graphics: yes
-#cover-image: images/cover.jpg
+description: "The purpose of this book is to illustrate techniques for conducting Rasch measurement theory analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using existing R packages and how to interpret the results. The intended audience for this book is graduate students or professionals who have a basic familiarity with Rasch measurement theory and who have a basic working knowledge of the R software."
 ---
 
-```{r setup, include=FALSE}
-options(
-  htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
-)
+# Introduction
 
-# install the packages needed by this book; you fill out c(), e.g. c('ggplot2', 'dplyr')
-lapply(c('xfun'), function(pkg) {
-  if (system.file(package = pkg) == '') install.packages(pkg)
-})
-```
+  The purpose of this book is to illustrate techniques for conducting Rasch measurement theory [@Rasch_ori] analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using R packages and how to interpret the results.
 
-# Preface {-}
+  The primary audience for this book is graduate students or professionals who are familiar with Rasch measurement theory at a basic level, and who want to use the R software program [@R-base] to conduct their Rasch analyses. We provide a brief overview of several key features of Rasch measurement theory in this chapter, and we provide descriptions of basic characteristics of the models and analytic techniques in each of the following chapters. Accordingly, we encourage readers who are new to Rasch measurement theory to use this book as a supplement to other excellent introductory texts on the subject that include a detailed theoretical and statistical introduction to Rasch measurement. For example, interested readers may find the following texts useful to begin learning about Rasch measurement theory:
 
-Hi there, this is my great book.
+[@A_Course]
 
-## Why read this book {-}
+> Andrich, David, and Ida Marais. 2019. *A Course in Rasch Measurement Theory: Measuring in the Educational, Social and Health Sciences.* Singapore: Springer. 
 
-It is very important...
+[@Applying_RM]
 
-## Structure of the book {-}
+> Bond, Trevor G., Zi Yan, and Moritz Heene. 2020. *Applying the Rasch Model: Fundamental Measurement in the Human Sciences (4th Ed.)*. New York: Routledge, Taylor & Francis Group.   
 
-Chapters \@ref(introduction) introduces a new topic, and ...
+[@RM_measurement]
 
-## Software information and conventions {-}
+> Engelhard, George, and Jue Wang. *Rasch Models for solving measurement problems: Invariant Measurement in the Social Sciences.* Vol.187. SAGE, 2020.  https://us.sagepub.com/en-us/nam/rasch-models-for-solving-measurement-problems/book267292
 
-I used the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@R-bookdown] to compile my book. My R session information is shown below:
+This book also assumes a basic working knowledge of the R software and programming language. To use this book, readers will need to know how to run existing code in R or R Studio, and how to make basic edits to existing code in order to adapt it for use with their own data. Readers who are new to R may find the following resources helpful for learning how to use this program:
+  
+- [What is R & R Studio](https://libguides.library.kent.edu/statconsulting/r) Visit: https://libguides.library.kent.edu/statconsulting/r
 
-```{r}
-xfun::session_info()
-```
+- [Install R & R-Studio](https://rstudio-education.github.io/hopr/starting.html) Visit: https://rstudio-education.github.io/hopr/starting.html
 
-Package names are in bold text (e.g., **rmarkdown**), and inline code and filenames are formatted in a typewriter font (e.g., `knitr::knit('foo.Rmd')`). Function names are followed by parentheses (e.g., `bookdown::render_book()`).
+- [R Tutorial for beginners](https://www.statmethods.net/r-tutorial/index.html)
+Visit: https://rstudio-education.github.io/hopr/starting.html
 
-## Acknowledgments {-}
+In addition, readers should note that our descriptions of the R code generally assume that the analyses are being conducted in [R Studio](https://rstudio.com/). However, all of the R code will work in both R and R Studio.
 
-A lot of people helped me when I was writing the book.
+## Overview of Rasch Measurement Theory
 
-```{block2, type='flushright', html.tag='p'}
-Frida Gomam  
-on the Mars
-```
+Georg Rasch was a Danish psychometrician who introduced a theory and approach to social science measurement in his classic text entitled *Probabilistic Models for Some Intelligence and Attainment Tests* [@Rasch_ori]. This approach to measurement involves transforming ordinal item responses, such as the data that are collected in a multiple-choice educational assessment of middle school students’ understanding of engineering design [@Develop_EDPA], a survey designed to measure self-efficacy for making career decisions [@apsy_eval], or a diagnostic scale used to identify individuals with depression [@RMA_depression], to interval-level measures for examinees and items. Now called Rasch measurement theory, this approach is based on principles and requirements that reflect measurement in the physical sciences. 
+
+  Chief among the defining features of Rasch measurement theory is the emphasis on *invariance* in measurement. In the context of Rasch measurement theory, invariance occurs when the following properties are observed in item response data [@General_laws]: 
+
+•	The comparison between two stimuli should be independent of which particular individuals were instrumental for the comparison; 
+
+•	and it should also be independent of which stimuli within the considered class were or might also have been compared.
+
+•	Symmetrically, a comparison between two individuals should be independent of which particular stimuli with the class considered were instrumental for the comparison; 
+
+•	and it should also be independent of which other individuals were also compared on the same or on some other occasion.
+
+  Rasch used the term *specific objectivity* [@Spec_objectivty] to describe the importance of identifying specific situations in which the requirements for invariant measurement are approximated. In emphasizing invariance, Rasch noted that meaningful interpretation and use of social science measurement instruments is not possible unless invariance is approximated.
+
+  Rather than assuming that data will adhere perfectly to the model requirements, researchers who use Rasch models do so in order to identify deviations from these requirements when they occur. Information about departures from model requirements can help analysts identify areas for additional research, including qualitative investigations of persons and items, as well as guidance for improving the quality of a measurement procedure. This perspective in which the *measurement theory* (i.e., the model) is emphasized as a guide for understanding the quality of the data by comparing it to strict requirements, is a key distinguishing feature between Rasch measurement theory and other item response theory (IRT) approaches. In typical IRT analyses, analysts attempt to identify a model that is the most accurate representation of the characteristics of the *data* [@IRT_psy]. For example, many researchers select the three-parameter logistic model [@LTM] when analyzing responses to multiple-choice educational assessments because the model directly incorporates instances of guessing and differences in item discrimination. However, researchers guided by a Rasch perspective would instead use the Rasch model to identify unexpected observations that could alert them to potential guessing and inconsistent item ordering over examinee achievement levels (as reflected by differences in item discrimination). These unexpected observations could then lead to additional exploration and the improvement of the assessment procedure. Although there are many situations in which reproducing the characteristics of item response data may be useful or necessary, the general perspective that characterizes Rasch measurement theory is that the theory (i.e., the model) provides a framework for evaluating data according to its adherence to fundamental measurement properties. Rasch measurement theory scholars argue that evidence of adherence to model requirements is necessary before data can be used to make inferences about persons and items (e.g., in statistical analyses). As Bond and Fox [@Applying_RM] noted, “researchers should spend more time investigating their scales than investigating with their scales”. 
+
+  In addition to providing useful information about adherence to fundamental measurement properties, Rasch models have several other theoretical and practical features that have contributed to their widespread popularity across disciplines in the social, behavioral, and health sciences (please see [@Review_RM] for a review). [@Overview_RM] summarized the key theoretical and practical features of the Rasch measurement approach as follows:
+
+  In order to construct inference from observation, the measurement model must: (a) produce linear measures, (b) overcome missing data, (c) give estimates of precision, (d) have devices for detecting misfit, (e) the parameters of the object being measured and of the measurement instrument must be separable. Only the family of Rasch measurement models solve these problems. (p. 4)
+
+  To help researchers take advantage of these useful features in a practical way, our book provides an overview of several key models within the family of Rasch models, offers basic guidance on the estimation of the models using available R packages, and provides suggestions and advice for interpreting the results from the analyses.
+  
+## Online Resources
+
+  This book includes several supplemental resources that are available online, including copies of the R code, example data sets, and data sets for the challenge exercises at the end of some of the chapters. All of the materials used in this book including the R software, R packages, and data sets, are free to download. The following table provides details about how to download all the relevant learning materials.
+  
+| Title | Version | Download Link |
+| :---  |  :----  | :----:  |
+| [R Programming Language](https://cran.r-project.org/src/base/R-4/) | 4.0.3 (latest) | cran.r-project.org |
+| [R Studio](https://rstudio.com/products/rstudio/download/) | 1.3 | rstudio.com  |
+| [Rasch Book Online Version](https://bookdown.org/connect/#/apps/5286/access/1060) | Beta 0.2 | []Need Final Address |
+| [Source Code for this Book](https://github.com/huacheng1985/TheRaschBook) | Github | []Need Final Address |
+| Data set  | Beta | See in Each Chapter |
+Table 1.1 Online Resources
+
+
+
+
+    
+    
 

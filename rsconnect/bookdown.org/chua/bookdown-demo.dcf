@@ -1,0 +1,12 @@
+name: bookdown-demo
+title: bookdown-demo
+username: chua
+account: chua
+server: bookdown.org
+hostUrl: https://bookdown.org/__api__
+appId: 5282
+bundleId: 26826
+url: https://bookdown.org/chua/bookdown-demo/
+when: 1597803116.35477
+asMultiple: FALSE
+asStatic: FALSE
