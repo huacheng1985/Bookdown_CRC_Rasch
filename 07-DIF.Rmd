@@ -375,7 +375,6 @@ Then, we will calculate test statistics ($Z$) for the differences in overall ite
 ```{r}
 z <- (group1_item.diffs.overall - group2_item.diffs.overall)/
   sqrt(group1_item.se.overall^2 + group2_item.se.overall^2)
-
 z
 ```
 
@@ -459,7 +458,7 @@ threshold.estimates <- subset(facet.estimates, facet.estimates$facet == "item:st
 interaction.estimates <- subset(facet.estimates, facet.estimates$facet == "item:language")
 ```
 
-We can examine the relative magnitude of each interaction term by plotting the values in a simple scatterplot. The first 21 values in the `interaction.estimates` object show the interaction between each rater and group 1 (language other than English), and the second ten values show the interaction between each rater and group 2 (English). We will construct separate plots for each subgroup.
+We can examine the relative magnitude of each interaction term by plotting the values in a simple scatterplot. The first 21 values in the `interaction.estimates` object show the interaction between each rater and group 1 (language other than English), and the second 21 values show the interaction between each rater and group 2 (English). We will construct separate plots for each subgroup.
 
 ```{r}
 plot(interaction.estimates$xsi[1:21], main = "Interaction Effects for Language Other than English", ylab = "Interaction Estimate in Logits", xlab = "Item (Rater) Number", ylim = c(-0.5, 0.5))

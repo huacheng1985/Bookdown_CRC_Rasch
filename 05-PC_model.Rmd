@@ -551,7 +551,6 @@ We can evaluate person fit using the `tam.personfit()` function from *TAM*. This
 
 ```{r}
 person.fit.results_MMLE <- tam.personfit(PCM.science_MMLE)
-
 summary(person.fit.results_MMLE)
 ```
 
@@ -755,7 +754,7 @@ for(item.number in 1:n.items){
 
 thetas_JMLE <- person.locations_JMLE$theta_adjusted
 
-# Plot the Wrighy Map
+# Plot the Wright Map
 wrightMap(thetas = thetas_JMLE,
         thresholds = thresholds_JMLE,
          main.title = "Liking for Science Partial Credit Model Wright Map (JMLE)",
