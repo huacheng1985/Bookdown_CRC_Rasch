@@ -1,7 +1,4 @@
-Companion to BER 670: Rasch Techniques for Constructing and Evaluating Measurement Instruments
+The purpose of this book is to illustrate techniques for conducting Rasch measurement theory [@Rasch_ori] analyses using existing R packages. The book includes some background information about Rasch models, and the primary objective is to demonstrate how to apply the models to data using R packages and how to interpret the results.
 
-This book is still in progress !!! This is a draft. Several sections are still incomplete or unedited.
+  The primary audience for this book is graduate students or professionals who are familiar with Rasch measurement theory at a basic level, and who want to use the R software program to conduct their Rasch analyses. We provide a brief overview of several key features of Rasch measurement theory in this chapter, and we provide descriptions of basic characteristics of the models and analytic techniques in each of the following chapters. Accordingly, we encourage readers who are new to Rasch measurement theory to use this book as a supplement to other excellent introductory texts on the subject that include a detailed theoretical and statistical introduction to Rasch measurement. 
 
-This book is written to help students enrolled in the University of Alabama, Rasch Measurement Theory (BER 670) course led by Professor Stefanie Wind.
-
-We hope that the book will be a useful resource to help you learn both R and statistics. If you have any suggestions for improvements, please get in touch with your lovely TA: Cheng Hua, at chua@crimson.ua.edu
