@@ -704,7 +704,7 @@ plotPImap(dichot.transreas, main = "Liking for Science Rating Scale Model Wright
 
 ## Exercise
 
-Try to estimate item and person locations with the dichotomous Rasch model for the Exercise 1 data using any of the estimation procedures used in this chapter. Then, try writing a results section similar to the example in this chapter based on your findings.
+Estimate item and person locations with the dichotomous Rasch model for the Chapter 2 Exercise data using any of the estimation procedures included in this chapter. The Exercise 2 data include responses from 500 students to a mathematics achievement test that includes 35 items scored as incorrect ($x=0$) or correct ($x=1$). Then, try writing a results section similar to the example in this chapter to report your findings.
 
 
 ## Supplementary Learning Materials

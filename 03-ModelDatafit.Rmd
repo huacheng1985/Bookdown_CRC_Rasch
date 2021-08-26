@@ -632,4 +632,5 @@ item.separation.reliability
 
 ## Exercise
 
-Try to evaluate model-data fit for the Exercise 1 data using any of the estimation procedures used in this chapter.
+Evaluate model-data fit with the dichotomous Rasch model for the Chapter 3 Exercise data using  the procedures included in this chapter. The Exercise 3 data are the same as the Exercise 2 data from Chapter 2; the data include responses from 500 students to a mathematics achievement test that includes 35 items scored as incorrect ($x=0$) or correct ($x=1$). Then, try writing a results section similar to the example in this chapter to report your findings.
+

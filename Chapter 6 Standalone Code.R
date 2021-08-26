@@ -16,7 +16,7 @@ library("psych")
 #* Note: Update your working directory or include the complete file path to apply the read.csv() function]
 style <- read.csv("style_ratings.csv")
 
-# printing the first six rows of the data frame object
+# print the first six rows of the data frame object
 head(style)
 
 # explore the data using descriptive statistics
@@ -104,7 +104,7 @@ wrightMap(thetas = cbind(student.locations_RSMFR$theta, subgroup.estimates$xsi),
           label.items.rows= 2,
           label.items = rater.estimates$parameter,
           axis.items = "Raters",
-          main.title = "Rating Scale Many-Facet Rasch Model Wright Map:\n Style Ratings",
+          main.title = "Rating Scale Many-Facet Rasch Model \nWright Map: Style Ratings",
           cex.main = .6)
 
 ### Evaluate Model-Data Fit
@@ -180,6 +180,7 @@ pca <- pca(std.resid.matrix, nfactors = ncol(ratings), rotate = "none")
 
 contrasts <- c(pca$values[1], pca$values[2], pca$values[3], pca$values[4], pca$values[5])
 
+graphics.off()
 plot(contrasts, ylab = "Eigenvalues for Contrasts", xlab = "Contrast Number", main = "Contrasts from PCA of Standardized Residual Correlations", ylim = c(0, 2))
 
 ### Summaries of Residuals: Infit & Outfit Statistics
@@ -266,8 +267,9 @@ for(rater.number in 1:ncol(ratings)){
   for(group in 1:ngroups){
     std_outfit_mse_labels[group] <- paste("Std.Outfit_MSE_Group", group, sep = "")
   }
+}
 
-  names(rater.fit_results) <- c("Rater", outfit_mse_labels, infit_mse_labels,
+names(rater.fit_results) <- c("Rater", outfit_mse_labels, infit_mse_labels,
                                 std_outfit_mse_labels, std_infit_mse_labels)
 
 # Display the rater fit results for the first six raters using the head() function:

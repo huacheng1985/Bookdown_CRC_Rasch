@@ -807,5 +807,5 @@ Figure 1 illustrates the calibrations of the children and items on the logit sca
 
 ## Exercise
 
-Please use the *eRm* or *TAM* package to estimate item, threshold, and person locations with the PCM for the Exercise 5 data. The Exercise 5 data include responses from 500 participants to an attitude survey that includes 20 items with a 5-category rating scale. This dataset is the same as the Exercise 4 data. After completing the analysis, try writing a results section similar to the example in this chapter based on your findings.
+Please use the *eRm* or *TAM* package to estimate item, threshold, and person locations with the PCM for the Exercise 5 data. The Exercise 5 data include responses from 500 participants to an attitude survey that includes 20 items with a 5-category rating scale. The Chapter 5 exercise data is the same as the Exercise 4 data. After you complete the analysis, try writing a results section similar to the example in this chapter to report on your findings.
 
